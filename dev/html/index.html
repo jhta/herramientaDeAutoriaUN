@@ -55,9 +55,9 @@
                         <li class="" ng-repeat="respuesta in respuestas">
                             <div  role="alert" class="alert  respuesta alert-{{colors[respuesta.valor]}}">
                               <strong>{{respuesta.respuesta}}</strong>  {{respuesta.texto}}
-                              <span class="glyphicon glyphicon-remove pull-right respuesta-icon"></span>
+                              <span ng-click="eliminarRespuesta($index)" class="glyphicon glyphicon-remove pull-right respuesta-icon"></span>
                               
-                              <span class="glyphicon glyphicon-pencil pull-right respuesta-icon"></span>
+                              <span data-toggle="modal" data-target="#myModalA" class="glyphicon glyphicon-pencil pull-right respuesta-icon"></span>
                             </div>
                         </li>
                         
@@ -75,7 +75,49 @@
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                  <form ng-submit="agregarRespuesta()">
+                  <form name="forma" ng-submit="agregarRespuesta()">
+                    
+                  
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Agrega respuestas!</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h5>Respuesta:</h5>      
+                      <div class="form-group has-feedback" ng-class="{'has-error':forma.respuesta.$invalid, 'has-success': forma.respuesta.$valid}">
+                      
+                          <input type="text" required  name="respuesta" ng-model="nuevaRespuesta" class="form-control " size="3" placeholder="Respuesta">
+                      </div>
+                      <h5>Texto Explicativo:</h5>
+                      <textarea type="text" ng-model="nuevoTexto" name="texto" required  class="form-control has-feedback"  ng-class="{'has-error':forma.texto.$invalid, 'has-success': forma.texto.$valid}"  placeholder="Agrega un texto adicional"></textarea>
+                      <h5>Valor: </h5>
+                      <!--<div class="form-group">
+                          <input type="number" class="form-control contenedor-variables-input" value="0" max="5" min="0" placeholder="valor">
+                      </div>-->
+                      <input id="valor" class="rating" ng-model="nuevoValor"  name="valor" data-min="0" data-max="5" data-step="1">
+                      
+                      
+                        
+                    </div>
+                    
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                      <button type="submit" ng-disabled="forma.$invalid"class="btn btn-success">Agregar
+                          <span class="glyphicon glyphicon-ok "></span>
+                      </button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              <!-- Modal update 
+              <div class="modal fade" id="myModalA" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                  <form ng-submit="actualizarRespuesta($index)">
                     
                   
                     <div class="modal-header">
@@ -85,15 +127,15 @@
                     <div class="modal-body">
                       <h5>Respuesta:</h5>      
                       <div class="form-group">
-                          <input type="text" ng-model="nuevaRespuesta" class="form-control " size="3" placeholder="Respuesta">
+                          <input type="text" ng-model="nuevaRespuestaA" class="form-control " size="3" placeholder="Respuesta">
                       </div>
                       <h5>Texto Explicativo:</h5>
-                      <textarea type="text" ng-model="nuevoTexto" class="form-control "  placeholder="Agrega un texto adicional"></textarea>
+                      <textarea type="text" ng-model="nuevoTextoA" class="form-control "  placeholder="Agrega un texto adicional"></textarea>
                       <h5>Valor: </h5>
                       <!--<div class="form-group">
                           <input type="number" class="form-control contenedor-variables-input" value="0" max="5" min="0" placeholder="valor">
-                      </div>-->
-                      <input id="valor" class="rating" ng-model="nuevoValor"  data-min="0" data-max="5" data-step="1">
+                      </div>
+                      <input id="valorA" class="rating" ng-model="nuevoValor"  data-min="0" data-max="5" data-step="1">
                       
                       
                         
@@ -101,14 +143,15 @@
                     
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                      <button type="submit" class="btn btn-success">Agregar
+                      <button type="submit" class="btn btn-success">Actualizar
                           <span class="glyphicon glyphicon-ok "></span>
                       </button>
                     </div>
                     </form>
                   </div>
                 </div>
-              </div>  
+              </div>  -->
+              
             </div>
             
         </div>

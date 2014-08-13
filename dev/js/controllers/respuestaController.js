@@ -5,7 +5,7 @@ function respuestaController($scope){
         {respuesta:'Default Error', texto: 'Parcero esta grave :( ', valor: 0}
         
         ];
-    $scope.colors=['danger', 'danger', 'warning','info','primary', 'success'];
+    $scope.colors=['danger', 'danger', 'warning','info','info', 'success'];
 
     $scope.agregarRespuesta= function(){
       $scope.respuestas.push({
@@ -20,7 +20,15 @@ function respuestaController($scope){
       $scope.nuevoValor=0;
     };
     
-    $scope.eliminarRespuesta=function(){
-        
+    $scope.eliminarRespuesta=function(idx){
+        var rEliminada=$scope.respuestas[idx];
+        $scope.respuestas.splice(idx,1);
     };
+   /* 
+    $scope.actualizarRespuesta= function(idx){
+        /*$scope.respuestas[idx].texto=$scope.nuevoTextoA;
+        $scope.respuestas[idx].valor= $('#valorA').val();
+        $scope.respuestas[idx].respuesta=$scope.nuevaRespuestaA;*/
+        /*console.log(idx);
+    }*/
 }
