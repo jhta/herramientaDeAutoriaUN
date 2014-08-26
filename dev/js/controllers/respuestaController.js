@@ -1,6 +1,6 @@
 function respuestaController($scope){
     $scope.respuestas=[
-        {respuesta:'3X*(Y/Z)', texto: 'Esta es la respuesta correcta :D ', valor: 5},
+        {respuesta:'3X/Z)', texto: 'Esta es la respuesta correcta :D ', valor: 5},
         {respuesta:'3X*Y', texto: 'No estas usando la variable Z :/', valor: 2},
         {respuesta:'Default Error', texto: 'Parcero esta grave :( ', valor: 0}
         
