@@ -38,6 +38,7 @@
                             <div class="form-group ">
                                 <textarea type="text" class="form-control contenedor-panel-input" placeholder="Escribe aqui tu pregunta"></textarea>
                             </div>
+                            <div class="contenedor-panel-prev" id="previsualizador"></div>
                             <div class="pager wizard">
                                 <li class="next">
                                     <a href="#" class="btn btn-success u-btn">
@@ -175,12 +176,12 @@
                         <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Especifica</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Uniforme</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Categorica</a></li>
+                        <li role="presentation"><a role="menuitem" id="varEspecifica" tabindex="-1" href="#">Especifica</a></li>
+                        <li role="presentation"><a role="menuitem" id="varUniforme" tabindex="-1" href="#">Uniforme</a></li>
+                        <li role="presentation"><a role="menuitem" id="varCategorica" tabindex="-1" href="#">Categorica</a></li>
                       </ul>
                     </div>
-                        <form class="form-inline" role="form">
+                        <form class="form-inline u-no_display" role="form" id="formUniforme">
                           <!--input variable-->
                           <div class="form-group">
                             <input type="text" ng-model="test"  class="form-control contenedor-variables-input" size="3" placeholder="var">
@@ -204,7 +205,7 @@
 
 
                         <div>
-                            <form class="form-inline" role="form">
+                            <form class="form-inline u-no_display" role="form" id="formEspecifica">
                               <!--input variable-->
                               <div class="form-group">
                                 <input type="text" class="form-control contenedor-variables-input" size="3" placeholder="var">
@@ -221,7 +222,7 @@
                         </div>
 
                         <div>
-                            <form class="form-inline" role="form">
+                            <form class="form-inline u-no_display" role="form" id="formCategorica">
                               <!--input variable-->
                               <div class="form-group">
                                 <input type="text" class="form-control contenedor-variables-input" size="3" placeholder="var">
@@ -250,10 +251,25 @@
         </article>
         <article class="row">
             <div class="col-xs-8 u-pad0">
-                <div class="panel panel-default">Aqui van las coassa para ecuaciones</div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                        Expresiones    
+                    </div>
+                    <div class="panel-body">
+                    
+                    </div>
+                </div>
             </div>
             <div class="col-xs-4">
-                <div class="panel panel-default">Aqui van las variables</div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                        Variables definidas    
+                    </div>
+                    <div class="panel-body">
+                    
+                    </div>
+                </div>
+                </div>
             </div>
         </article>
     </section>
