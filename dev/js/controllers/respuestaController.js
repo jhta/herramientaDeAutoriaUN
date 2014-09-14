@@ -30,5 +30,5 @@ function respuestaController($scope){
         $scope.respuestas[idx].valor= $('#valorA').val();
         $scope.respuestas[idx].respuesta=$scope.nuevaRespuestaA;*/
         /*console.log(idx);
-    }*/
+ https://herramientadeautoriaun-c9-jhta.c9.io/   }*/
 }
