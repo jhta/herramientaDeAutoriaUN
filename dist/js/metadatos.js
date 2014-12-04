@@ -1,39 +1,120 @@
 $(document).ready(function(){
-    /* Eventos javascript que se ejecutan con ciertas acciones
+   
+    
+    //Metadatos
+     /* Eventos javascript que se ejecutan con ciertas acciones
     en el formulario de los metadatos*/
+   var file_json;
+   var eleccion;
+   /* Esta función  obtiene un JSON el cual contiene el contenido de 
+   la clasificación según la Nomenclatura Internacional de la Unesco
+   y lo carga en el primer select
+   */
+    $.getJSON( "dist/js/tipos.json", function( data ) {
+  file_json=data;
+  $.each( data, function( key, val ) {
+   $("#ccabecera").append($("<option>").attr("value", key).text(key));
+    
+  });
+    });
+   /*
+   Esta función se encarga de actualizar el select cespecificos cuando
+   la persona elige  una de las opciones disponibles del select ccabecera
+   con el fin de mostrar dichos datos en este select cespecificos correspondientes a 
+   ccabecera
+   */
     $('#ccabecera').on('change', function() {
-  $("#cespecificos").empty();
-  if(this.value=="Matemáticas"){
-       $('#group-ccespecificos').show();
-        $("#cespecificos").append($("<option>").attr("value", "Álgebra").text("Álgebra"));
-        $("#cespecificos").append($("<option>").attr("value", "Análisis y análisis funcional").text("Análisis y análisis funcional"));
-        $("#cespecificos").append($("<option>").attr("value", "Ciencia de los ordenadores ").text("Ciencia de los ordenadores "));
-        $("#cespecificos").append($("<option>").attr("value", "Geometría").text("Geometría"));
-        $("#cespecificos").append($("<option>").attr("value", "Teoría de números").text("Teoría de números"));
-        $("#cespecificos").append($("<option>").attr("value", "Análisis numérico").text("Análisis numérico"));
-        $("#cespecificos").append($("<option>").attr("value", "Investigación operativa").text("Investigación operativa"));
-        $("#cespecificos").append($("<option>").attr("value", "Probabilidad").text("Probabilidad"));
-        $("#cespecificos").append($("<option>").attr("value", "Estadística").text("Estadística"));
-        $("#cespecificos").append($("<option>").attr("value", " Topología").text(" Topología"));
-        $("#cespecificos").append($("<option>").attr("value", "Otras especialidades matemáticas").text("Otras especialidades matemáticas"));
-  }
-   else if(this.value=="Lógica"){
-       $('#group-ccespecificos').show();
-        $("#cespecificos").append($("<option>").attr("value", "Aplicaciones de la lógica").text("Aplicaciones de la lógica"));
-        $("#cespecificos").append($("<option>").attr("value", " Lógica deductiva").text(" Lógica deductiva"));
-        $("#cespecificos").append($("<option>").attr("value", "Lógica general").text("Lógica general"));
-        $("#cespecificos").append($("<option>").attr("value", "Lógica inductiva").text("Lógica inductiva"));
-        $("#cespecificos").append($("<option>").attr("value", "Metodología").text("Metodología"));
-        $("#cespecificos").append($("<option>").attr("value", "Otras especialidades relativas a la lógica").text("Otras especialidades relativas a la lógica"));
-  }
     
    if(this.value=="--"){
        $('#group-ccespecificos').hide();
        $('.mostrar').hide();
+       eleccion="";
   }else{
+      $("#cespecificos").empty();
+  $("#cespecificos").append($("<option>").attr("value", "--").text("--"));
+   $('#group-ccespecificos').show();
+   
+   $.each( file_json[this.value]["especificos"], function( key, val ) {
+   $("#cespecificos").append($("<option>").attr("value", val["nombre"]).text(val["nombre"]));
+
+   });
        $('.mostrar').show();
+        eleccion= file_json[this.value]["codigo"];
+   $("#codigo").text("Codigo: "+eleccion);
+   $("#descripcion").text("Descripcion: "+this.value);
         
   }
 });
+/*
+   Esta función se encarga de actualizar el select subitems cuando
+   la persona elige  una de las opciones disponibles del select cespecificos
+   con el fin de mostrar dichos datos en este select subitems correspondientes a 
+   cespecificos
+   */
+ $('#cespecificos').on('change', function() {
+    
+ 
+   if($('#cespecificos').val()=="--"){
+       $('#group-subitems').hide();
+       
+       eleccion= file_json[$('#ccabecera').val()]["codigo"];
+   $("#codigo").text("Codigo: "+eleccion);
+   $("#descripcion").text("Descripcion: "+$('#ccabecera').val());
+  }else{
+    $("#subitems").empty();
+  $("#subitems").append($("<option>").attr("value", "--").text("--"));
+  
+   $('#group-subitems').show();
+   $.each( file_json[$('#ccabecera').val()]["especificos"], function( key, val ) {
+       if( val["nombre"]==$('#cespecificos').val()){
+           eleccion= val["codigo"];
+            $.each( val["subitems"], function( key2, val2 ) {
+            
+              $("#subitems").append($("<option>").attr("value", val2["nombre"]).text(val2["nombre"]));
+            });
+       }
 
+   });
+   $("#codigo").text("Codigo: "+eleccion);
+   $("#descripcion").text("Descripcion: "+$('#ccabecera').val()+" - "+$('#cespecificos').val());
+  }
+});
+/*
+   Esta funcion se encarga de actualizar la variable "eleccion"
+   la cual se usa para mostrar al usuario la informacion de la 
+   clasificación elegida, como el código y el nombre de esta. Para este caso
+   verifica si se cambió el select subitems que es el de más profundidad, teniendo
+   en cuenta si se elegió "--" el cual devuelve elección al select que lo precede o
+   en caso contrario al código y nombre que le pertenece.
+   */
+$('#subitems').on('change', function() {
+    
+   if($('#subitems').val()=="--"){
+      
+  $.each( file_json[$('#ccabecera').val()]["especificos"], function( key, val ) {
+       if( val["nombre"]==$('#cespecificos').val()){
+           eleccion= val["codigo"];
+       }
+   });
+   $("#codigo").text("Codigo: "+eleccion);
+   $("#descripcion").text("Descripcion: "+$('#ccabecera').val()+" - "+$('#cespecificos').val());
+  }else{
+    $.each( file_json[$('#ccabecera').val()]["especificos"], function( key, val ) {
+       if( val["nombre"]==$('#cespecificos').val()){
+          
+            $.each( val["subitems"], function( key2, val2 ) {
+             if( val2["nombre"]==$('#subitems').val()){
+                  eleccion= val2["codigo"];
+             }
+            });
+       }
+   });
+   $("#codigo").text("Codigo: "+eleccion);
+   $("#descripcion").text("Descripcion: "+$('#ccabecera').val()+" - "+$('#cespecificos').val()+" - "+$('#subitems').val());
+  
+ 
+  }
+});
+
+    //
 });

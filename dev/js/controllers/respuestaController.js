@@ -32,3 +32,34 @@ function respuestaController($scope){
         /*console.log(idx);
  https://herramientadeautoriaun-c9-jhta.c9.io/   }*/
 }
+
+
+
+
+function palabraController($scope){
+    $scope.palabras=[
+        {texto: 'math'},
+        {texto: 'disp'},
+        ];
+    
+    $scope.agregarPalabra= function(){
+      $scope.palabras.push({
+          texto: $('#keyword').val()
+          
+      }); 
+      console.log($('#keyword').val());
+      $scope.nuevaPalabra='';
+    };
+   /* 
+    $scope.eliminarRespuesta=function(idx){
+        var rEliminada=$scope.respuestas[idx];
+        $scope.respuestas.splice(idx,1);
+    };
+   
+    $scope.actualizarRespuesta= function(idx){
+        /*$scope.respuestas[idx].texto=$scope.nuevoTextoA;
+        $scope.respuestas[idx].valor= $('#valorA').val();
+        $scope.respuestas[idx].respuesta=$scope.nuevaRespuestaA;*/
+        /*console.log(idx);
+ https://herramientadeautoriaun-c9-jhta.c9.io/   }*/
+}
