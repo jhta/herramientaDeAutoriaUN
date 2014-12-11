@@ -7,6 +7,7 @@ body
     background-size: cover;
     
 .contenedor
+    padding:30px
     margin-top 30px
     
 .contenedor-variables
@@ -31,7 +32,7 @@ body
     
 .contenedor-panel-prev
     margin-top 30px
-    height  120px !important    
+    min-height: 200px
     
 .step.active
     background: #5cb85c !important;
@@ -77,19 +78,39 @@ ul
     box-shadow: 0px 0px 5px #bbb;
     -webkit-box-shadow: 0px 0px 5px #bbb;
     -moz-box-shadow: 0px 0px 5px #bbb;
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    margin: 0;
+}
+#launchPad {
+    border: 1px solid #eaeaea;
+    color: black;
+}
 #dropZone {
     float:right;
     border: 1px solid #eaeaea;
-    background-color: #ffffcc;
+    color: black;
 }
-.card { 
-    min-width: 75px; 
-    width: auto;
+.card {
+
+    border:1px solid #ccc;
+    background-color: #eaeaea;
+    display: inline-block;
+    margin: 2px;
+}
+
+.card2 {
+    margin: 0 6px;
     padding: 5px 10px;
-    margin:5px;
     border:1px solid #ccc;
     background-color: #eaeaea;
 }
+
 .stack {
     width: 180px;
     border: 1px solid #ccc;
@@ -99,46 +120,125 @@ ul
 .stackHdr {
     background-color: #eaeaea;
     border: 1px solid #fff;
-    padding: 5px 
+    padding: 5px
 }
 .stackDrop1, .stackDrop2 {
     min-height:100px;
     padding: 15px;
 }
-
-.panel-2{
+.panel-2 {
     float: right;
-    //width: 400px;
-    //height: 80px;
+    right: 0;
+    width: 400px;
+    min-height: 700px;
     background: rgba(233, 186, 186, 0.43);
     font-size:20px;
 }
 
-.spa{
-    width: 10px;
-    height: 10px;
-    background: red;
-    padding: 0 6px;
-}
-.drop-p{
-    background: blue;
-}
-.drop-2{
-    background: green;
-    width: 100px;
-}
-.drop-2{
-    background: green;
-    width: 100px;
+.spa {
+    min-height: 30px;
+    border: 1px dotted gray;
 }
 
-.drop-3{
-    background: yellow;
-    width: 100px;
-    padding: 5px 30px;
+.card2 > p {
+    margin: 0;
 }
-.var{
-    padding: 3px;
+
+.panel-2 .spa{
+    display: block;
+}
+.drop-p {
+    background: blue;
+}
+.drop-2 {
     background: green;
-    
+    padding: 50px ;
+    height: 60px !important;
+    width: 60px !important;
+}
+.drop-3 {
+    /*background: yellow;
+    padding: 20px;
+    margin: 10px;
+    /*width: 30px !important;*/
+    padding: 10px;
+    margin: 10px 0px 0px 0px;
+    border: solid 2px red;
+}
+.var {
+    color: green;
+}
+.in {
+    padding:0;
+    margin:0;
+    display: inline-block;
+    border: 0px;
+}
+.tree {
+    display: inline-flex !important;
+}
+.tree .value {
+    font-size:35px
+}
+
+
+.tree .combinatoria{
+    font-size:50px;
+}
+
+.division{
+    font-size:36px;
+}
+.indices {
+}
+.spa .top  {
+    min-height: 10px;
+}
+
+.subindice{
+    min-height: 10px !important;
+    min-width: 10px !important;
+}
+.indice-cominatoria{
+    margin-top: 13px;
+}
+.indice-division{
+    margin-top: 10px;
+}
+.potencia-exponente{
+    position: relative;
+    top: -15px;
+}
+
+
+.potencia-iexponente{
+    position: relative;
+    top: 15px;
+}
+
+.test{
+    background: red;
+}
+
+.ui-element{
+    margin: 15px !important;
+}
+
+#droppable-out{
+    float: left;
+    height: 100%;
+}
+
+#div-iner{
+    float: right;
+    width: 35%;
+    height: 100%;
+}
+
+#line-hr { 
+  background-color: black;
+  height: 3px;
+  width: 15px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
