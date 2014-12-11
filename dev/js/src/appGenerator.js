@@ -6,6 +6,7 @@ var ids = {};
 var banderanCombiG=false;
 var banderafactorial=false;
 var banderafuncionf=false;
+var banderafuncionfn=false;
 
 
 $(function() {
@@ -260,7 +261,41 @@ $(function() {
                 elementSpa.droppable(funcDroppable);
 
             }
-            
+            else if(idData == "func-2" || idData == "func-3" || idData == "func-4" || idData == "func-5"){
+                banderafuncionfn = true;
+                var num = idData.substring( idData.lastIndexOf('-') + 1);
+                objson["id"] = ++id;
+                objson["etiqueta"] = "";
+                objson["children"] = [];
+                
+                elementDrop.css("padding", "0");
+                elementDrop.css("border", "0px");
+                elementDrop.attr('data-id', ++id);
+                
+                for(var i = 0; i < num; i++){
+                    var text = "code:nth-child("+(i+1)+")";
+                    elementDrop.find(text).attr("data-id", ++id);
+                }
+                
+                /*if(num == 2){
+                    makeJsonFuncionf2(idData, elementDrop, false);
+                }
+                else if(num == 3){
+                    makeJsonFuncionf3(idData, elementDrop, false);
+                }
+                else if(num == 4){
+                    makeJsonFuncionf4(idData, elementDrop, false);
+                }
+                else{
+                    makeJsonFuncionf5(idData, elementDrop, false);
+                }*/
+                
+                makeJsonFuncionfn(idData, elementDrop, num, false);
+                
+                var elementSpa = elementDrop.find(".spa");
+                elementSpa.addClass("drop2");
+                elementSpa.droppable(funcDroppable);
+            }
             else if(idData == "division") {
                 objson["id"] = ++id;
                 objson["etiqueta"] = "";
@@ -283,8 +318,6 @@ $(function() {
                 elementSpa.droppable(funcDroppable);
 
             }
-            
-            
             else{
                 elementDrop.data("data-id", ++id);
                 elementDrop.find("code:nth-child(1)").attr("data-id", ++id);
@@ -377,7 +410,7 @@ var funcDroppable = {
             addvar(elementDrop.parent().data("id"), objson, stringvar);
                         
         }
-       else if(idData == "llaves" || idData == "parentesis" || idData == "corchetes"|| idData == "factorial"){
+        else if(idData == "llaves" || idData == "parentesis" || idData == "corchetes"|| idData == "factorial"){
             //elementDrop.css("padding", "0");
             elementDrop.css("border", "0px");
             
@@ -410,7 +443,8 @@ var funcDroppable = {
             elementSpa.droppable(funcDroppable);
             
             
-        }else if(idData == "sumatoria" || idData == "integral" || idData == "multiplicatoria"){
+        }
+       else if(idData == "sumatoria" || idData == "integral" || idData == "multiplicatoria"){
             //elementDrop.css("padding", "0");
             elementDrop.css("border", "0px");
             elementDrop.css("display", "flex !important");
@@ -504,7 +538,42 @@ var funcDroppable = {
             var elementSpa = elementDrop.find(".spa");
             elementSpa.addClass("drop2");
             elementSpa.droppable(funcDroppable);
-            }
+        }
+       else if(idData == "func-2" || idData == "func-3" || idData == "func-4" || idData == "func-5"){
+           banderafuncionfn = true;
+           var num = idData.substring( idData.lastIndexOf('-') + 1);
+                objson["id"] = ++id;
+                objson["etiqueta"] = "";
+                objson["children"] = [];
+                
+                elementDrop.css("padding", "0");
+                elementDrop.css("border", "0px");
+                elementDrop.attr('data-id', ++id);
+                
+                for(var i = 0; i < num; i++){
+                    var text = "code:nth-child("+(i+1)+")";
+                    elementDrop.find(text).attr("data-id", ++id);
+                }
+                
+                /*if(num == 2){
+                    makeJsonFuncionf2(idData, elementDrop, true);
+                }
+                else if(num == 3){
+                    makeJsonFuncionf3(idData, elementDrop, true);
+                }
+                else if(num == 4){
+                    makeJsonFuncionf4(idData, elementDrop, true);
+                }
+                else{
+                    makeJsonFuncionf5(idData, elementDrop, true);
+                }*/
+           
+                makeJsonFuncionfn(idData, elementDrop, num, true);
+                
+                var elementSpa = elementDrop.find(".spa");
+                elementSpa.addClass("drop2");
+                elementSpa.droppable(funcDroppable);
+       }
        
        else if(idData == "division") {
             elementDrop.css("border", "0px");
@@ -866,6 +935,600 @@ function makeJsonFuncionf(idData, element, nodo){
     }
     else
         objson.children.push(item);
+    
+}
+
+/*function makeJsonFuncionf2(idData, element, nodo){
+    var item = {};
+    var data = [];
+    
+    item["id"] = idData;
+    item["etiqueta"] =  "<mtext>(</mtext>";
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(1)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mtext>(</mtext><mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(2)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    
+    
+    if(nodo){
+        data.push(item);
+        var isNodo = addNode(element.parent().data("id"), objson, data);
+    }
+    else
+        objson.children.push(item);
+    
+}*/
+
+/*function makeJsonFuncionf3(idData, element, nodo){
+    var item = {};
+    var data = [];
+    
+    item["id"] = idData;
+    item["etiqueta"] =  "<mtext>(</mtext>";
+    
+    
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(1)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(2)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(3)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    
+    if(nodo){
+        data.push(item);
+        var isNodo = addNode(element.parent().data("id"), objson, data);
+    }
+    else
+        objson.children.push(item);
+    
+}*/
+
+/*function makeJsonFuncionf4(idData, element, nodo){
+    var item = {};
+    var data = [];
+    
+    item["id"] = idData;
+    item["etiqueta"] =  "<mtext>(</mtext>";
+    
+    
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(1)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(2)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(3)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(4)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+    
+    if(nodo){
+        data.push(item);
+        var isNodo = addNode(element.parent().data("id"), objson, data);
+    }
+    else
+        objson.children.push(item);
+    
+}*/
+
+/*function makeJsonFuncionf5(idData, element, nodo){
+    var item = {};
+    var data = [];
+    
+    item["id"] = idData;
+    item["etiqueta"] =  "<mtext>(</mtext>";
+    
+    
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(1)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+    
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(2)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(3)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(4)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+    
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "<mrow>";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    
+    item = {};
+    item["id"] = element.find("code:nth-child(5)").data("id");
+    item["etiqueta"] = "";
+    item["children"] = [];
+
+    if(nodo)
+        data.push(item);
+    else
+        objson.children.push(item);
+
+    
+    item = {};
+    item["id"] = "row";
+    item["etiqueta"] = "</mrow><mtext>)</mtext>";
+    item["children"] = [];
+
+    
+    if(nodo){
+        data.push(item);
+        var isNodo = addNode(element.parent().data("id"), objson, data);
+    }
+    else
+        objson.children.push(item);
+    
+}*/
+
+function makeJsonFuncionfn(idData, element, num, nodo){
+    var item = {};
+    var data = [];
+    
+    for(var i = 0; i < num; i++){
+        var text = "code:nth-child("+(i+1)+")";
+        
+        item = {};
+        item["id"] = "row";
+        item["etiqueta"] = "<mtext>(</mtext><mrow>";
+        item["children"] = [];
+        
+        if(nodo)
+            data.push(item);
+        else
+            objson.children.push(item);
+        
+        
+        
+        item = {};
+        item["id"] = element.find(text).data("id");
+        item["etiqueta"] = "";
+        item["children"] = [];
+        
+        if(nodo)
+            data.push(item);
+        else
+            objson.children.push(item);
+        
+        item = {};
+            item["id"] = "row";
+            item["etiqueta"] = "</mrow><mtext>)</mtext>";
+            item["children"] = [];
+        
+        if(i == num-1){
+            
+
+            if(nodo){
+                data.push(item);
+                var isNodo = addNode(element.parent().data("id"), objson, data);
+            }
+            else
+                objson.children.push(item);
+        }
+        else{
+        
+
+            if(nodo)
+                data.push(item);
+            else
+                objson.children.push(item);
+        }
+        
+        
+    }
     
 }
 
@@ -1231,6 +1894,7 @@ function addNode(id, currentNode, data) {
         }
     }
 }
+
 function addnewinput(object,type){
 
     var elementDrop = $("#base").clone();
@@ -1251,6 +1915,14 @@ function addnewinput(object,type){
     $(object).parent().append(elementDrop);
     $(object).parent().css("display", "block");
     elementDrop.children().html(object.value);
+
+    elementDrop.css("border", "0px");
+    var stringvar = "<mtext>" + object.value + "</mtext>";
+    var id=$(object).parent().data("id");
+    $(object).remove();
+    addvar( id, objson, stringvar);
+
+    /*
     if(type == "var"){
         elementDrop.css("border", "0px");
         var stringvar = "<mn>" + object.value + "</mn>";
@@ -1266,6 +1938,7 @@ function addnewinput(object,type){
         $(object).remove();
         addvar( id, objson, stringvar);
     }
+    */
     mathml = "";
     stringmathml(objson);
     UpdateMath("<math>" + mathml + "</math>");
@@ -1375,7 +2048,7 @@ function stringmathml(currentNode) {
     if (currentNode.etiqueta.indexOf("{") >= 0){
         mathml = mathml + "<mtext>}</mtext>";
     }
-    else if (currentNode.etiqueta.indexOf("(") >= 0 && !banderanCombiG && !banderafuncionf){
+    else if (currentNode.etiqueta.indexOf("(") >= 0 && !banderanCombiG && !banderafuncionf && !banderafuncionfn){
         if(banderafactorial)
             mathml = mathml + "<mtext>)!</mtext>";
         else
