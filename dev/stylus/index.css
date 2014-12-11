@@ -1,83 +1,3 @@
-@import 'utilidades.styl'
-body
-    background url('http://www.abstractartistgallery.org/wp-content/uploads/2013/02/Abstract-Art-Painting-Mirza-Zuplijanin.jpg') no-repeat center center fixed
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    
-.contenedor
-    padding:30px
-    margin-top 30px
-    
-.contenedor-variables
-    margin-top 40px
-.contenedor-variables
-    &-input
-        width: 40px !important;
-        padding: 0px;
-        margin: 8px;
-        text-align: center;
-    
-    &-input--increment
-        width: 40px !important;
-        padding: 0px;
-        margin: 8px;
-        text-align: center;
-    
-        background rgba(46, 121, 46, 0.43);
-.contenedor-panel-input
-    margin-top 30px
-    height  120px !important
-    
-.contenedor-panel-prev
-    margin-top 30px
-    min-height: 200px
-    
-.step.active
-    background: #5cb85c !important;
-    border: #ddd solid 3px !important;
-.respuesta-icon
-    padding 0 5px
-    cursor pointer
-.respuesta
-    margin-bottom 5px
-ul
-    list-style-type: none;
-    padding  0
-.panel-equation
-    width 100%
-    height 250px
-    background #ccc
-.tab-li
-    text-decoration: none;
-    background-color: rgba(238, 238, 238, 0.79);
-    border-radius 4px 4px 0 0
-    
-.tab-content
-    border-radius 0px 4px 4px 4px !important
-.nav-tabs>li.active
-    bottom -1px
-
-.view-variable
-    padding: 3px 5px;
-    background-color: #D84E4E;
-    border-radius: 7px;
-    -webkit-border-radius: 7px;
-    -moz-border-radius: 7px;
-    cursor pointer
-    color white
-.view-variable:hover
-    box-shadow: 0px 0px 5px red;
-    -webkit-box-shadow: 0px 0px 5px red;
-    -moz-box-shadow: 0px 0px 5px red;
-.panel-variable-item
-    margin 5px
-.contenedor-panel-prev-img:hover
-    background #ddd
-    box-shadow: 0px 0px 5px #bbb;
-    -webkit-box-shadow: 0px 0px 5px #bbb;
-    -moz-box-shadow: 0px 0px 5px #bbb;
 html {
     box-sizing: border-box;
 }
@@ -88,6 +8,8 @@ body {
     margin: 0;
 }
 #launchPad {
+    width: 400px;
+    
     border: 1px solid #eaeaea;
     color: black;
 }
@@ -101,7 +23,6 @@ body {
     border:1px solid #ccc;
     background-color: #eaeaea;
     display: inline-block;
-    margin: 2px;
 }
 
 .card2 {
@@ -226,6 +147,7 @@ body {
 
 #droppable-out{
     float: left;
+    width: 65%;
     height: 100%;
 }
 

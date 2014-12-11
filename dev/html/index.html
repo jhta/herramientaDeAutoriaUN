@@ -5,7 +5,8 @@
       <!--LIBRERIAS CSS-->
       <link rel="stylesheet" href="dist/libs/css/bootstrap.min.css" type="text/css" />
       <link rel="stylesheet" href="dist/libs/css/star-rating.min.css" type="text/css" />
-      
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0-beta.2/themes/smoothness/jquery-ui.css">
+  
       <!--hoja general CSS-->
       <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
       <!--LIBRERIAS JS-->
@@ -29,6 +30,7 @@
       <!--Controladores AngularJS -->
       <script type="text/javascript" src="dev/js/controllers/respuestaController.js"></script>
       <script type="text/javascript" src="dev/js/controllers/variableController.js"></script>
+      <script type="text/javascript" src="dev/js/src/appGenerator.js"></script>
             <script type="text/javascript" src="dist/js/metadatos.js"></script>
 
      
@@ -36,7 +38,7 @@
   <body ng-app>
       <!--Contenedor general-->
       
-      <section class="container contenedor" id="rootWizard">
+      <section class=" contenedor" id="rootWizard">
           <article class="row">
               
               <div class="col-xs-8  u-pad0 " id=  "tab-content">
@@ -50,41 +52,263 @@
               <div id="my-tab-content" class=" panel panel-default tab-content">
                   <div class="tab-pane active" id="formulacion">
                       <div class=" contenedor-panel tab-pane " id="tab1">
-                          <div class="panel-body">
-                              <!--<div class="form-group ">
-                                  <textarea id="text-formulacion" onchange="UpdateMath('<math>'+this.value+'</math>')" type="text" class="form-control contenedor-panel-input" placeholder="Escribe aqui tu pregunta"></textarea>
-                              </div>-->
+                          <div class="panel-body">       
+                            <div class="contenedor-panel-prev panel panel-default" ><div id="previsualizar" class="panel-body">
+            <math></math>
+        </div></div>
                               
-                              
-                            <div class="drop contenedor-panel-prev panel panel-default" title="hola"></div>
-                              
-                              <div class=" contenedor-panel-prev panel panel-default" id="launchPad">
-                                
-                                <div class="card" id="suma1">
-                                    <p>(<code class="spa"> </code>+<code class="spa"> </code>)</p>
-                                </div> 
-                                <div class="card" id="resta1">
-                                    <p>(<code class="spa"> </code>-<code class="spa"> </code>)</p>
-                                </div> 
-                                <div class="card" id="mult1">
-                                    <p>(<code class="spa"> </code>*<code class="spa"> </code>)</p>
-                                </div> 
-                                <div class="card" id="div1">
-                                    <p>(<code class="spa"> </code>/<code class="spa"> </code>)</p>
-                                </div> 
-                                <div class="card">
-                                    <p>(<code class="spa"> </code>%<code class="spa"> </code>)</p>
-                                </div> 
-                              </div>
                               
                               <div class="contenedor-panel-prev panel panel-default" id="previsualizador">
                                 
-                                <img id="division" height="40" width="40" class="contenedor-panel-prev-img"src="dist/images/division2.png">
-                                <img id="suma" height="40" width="40" class="contenedor-panel-prev-img" src="dist/images/suma.png">
-                                <img id="resta" height="40" width="40" class="contenedor-panel-prev-img" src="dist/images/resta.png">
-                                <img id="multiplicacion" height="40" class="contenedor-panel-prev-img" width="40" src="dist/images/multiplicacion.png">
-                                <img id="constante" height="40" class="contenedor-panel-prev-img" width="40" src="dist/images/constante.png">
-                                <img id="string" height="40" class="contenedor-panel-prev-img" width="40" src="dist/images/text.png">
+<div id="droppable-out">
+
+    <div id="launchPad">
+        <div class="card " id="base" data-id="var" data-content="x">
+            <span class="var">x</span>
+        </div>
+        <div class="card" data-id="var" data-content="y">
+            <span class="var">y</span>
+        </div>
+        <div class="card" data-id="var" data-content="z">
+            <span class="var">z</span>
+        </div>
+        <div class="card" data-id="var" data-content="w">
+            <span class="var">w</span>
+        </div>
+        <div class="card " data-id="cons" data-content="1">
+            <span class="var">1</span>
+        </div>
+        <div class="card" data-id="cons" data-content="2">
+            <span class="var">2</span>
+        </div>
+        <div class="card" data-id="cons" data-content="3">
+            <span class="var">3</span>
+        </div>
+        <div class="card" data-id="cons" data-content="4">
+            <span class="var">4</span>
+        </div>
+
+        <!--<div class="card" data-id="cons" data-content="&#928">
+            <span class="var">&#928;</span>
+        </div>-->
+        <div class="card" data-id="cons" data-content="&#945">
+            <span class="var">&#945;</span>
+        </div>
+        <div class="card" data-id="cons" data-content="&#946">
+            <span class="var">&#946;</span>
+        </div>
+        <div class="card" data-id="cons" data-content="&#952">
+            <span class="var">&#952;</span>
+        </div>
+        <div class="card" data-id="cons" data-content="&#947">
+            <span class="var">&#947;</span>
+        </div>
+        <div class="card" data-id="cons" data-content="&#937">
+            <span class="var">&#937;</span>
+        </div>
+        
+        <div class="card" data-id="cons" data-content="e">
+            <span class="var">e</span>
+        </div>
+        
+        <div class="card " data-id="cons" data-content="π"><!-- PI -->
+            <span class="var">&#x03C0;</span>
+        </div>
+        
+        <!--<div class="card" data-id="cons" data-content="=">
+            <span class="var">=</span>
+        </div>-->
+       
+        <div class="card" data-id="parentesis">
+            <p>(<code class="spa"> </code>)</p>
+        </div>
+        <div class="card" data-id="corchetes">
+            <p>[<code class="spa"> </code>]</p>
+        </div>
+        <div class="card" data-id="llaves">
+            <p>{<code class="spa"> </code>}</p>
+        </div>
+        
+        <div class="card" data-id="factorial">
+            <p>(<code class="spa"> </code>)!</p>
+        </div>
+        
+        <div class="card" data-id="suma">
+            <p>&nbsp;<code class="spa"> </code>+<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="resta">
+            <p>&nbsp;<code class="spa"> </code>-<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="mult">
+            <p>&nbsp;<code class="spa">  </code>*<code class="spa">  </code> &nbsp;</p>
+        </div>
+        
+        <div class="card tree" data-id="division">
+            <span class="division">(</span>
+            <div class="indices indice-division">
+                <div class="spa subindice"></div>
+                <!--<hr id="line-hr"></hr>-->
+                <div class="spa subindice"></div>
+            </div>&nbsp;
+            <span class="division">)</span>
+
+        </div>
+        
+        <div class="card" data-id="trig" data-content="cos">
+            <p>cos &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="sin">
+            <p>sin &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="tan">
+            <p>tan &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="csc">
+            <p>csc &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="sec">
+            <p>sec &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="cot">
+            <p>cot &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="arccos">
+            <p>arccos &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="arcsin">
+            <p>arcsin &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="arctan">
+            <p>arctan &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="arccsc">
+            <p>arccsc &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="arcsec">
+            <p>arcsec &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="arccot">
+            <p>arccot &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="cosh">
+            <p>cosh &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="sinh">
+            <p>sinh &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="tanh">
+            <p>tanh &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="csch">
+            <p>csch &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="sech">
+            <p>sech &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="trig" data-content="coth">
+            <p>coth &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+
+        <div class="card" data-id="expo">
+            <p>&nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-exponente"> </code>&nbsp;</p>
+        </div>
+         <div class="card" data-id="expo-base">
+            <p>&nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-iexponente"> </code>&nbsp;</p>
+        </div>
+        <!--<div class="card" >
+            <p>&nbsp;<code class="spa"> </code>(<code class="spa"> </code>)</p>
+        </div>-->
+        <div class="card" data-id="funcionf" >
+            <p>&#131;(<code class="spa"> </code>)=<code class="spa"> </code>&nbsp;</p>
+        </div>
+        <div class="card" data-id="igual">     
+            <p>&nbsp;<code class="spa"> </code>=<code class="spa"> </code>&nbsp;</p>
+        </div>    
+        <div class="card" data-id="raiz">
+            <p><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
+        </div>
+
+        <div class="card" data-id="raiz-n">
+            <p>&nbsp;<code class="spa potencia-exponente"> </code><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
+        </div>
+        
+        
+        <div class="card" data-id="trig" data-content="ln">
+            <p>ln &nbsp;<code class="spa"> </code>&nbsp;</p>
+        </div>
+        
+        
+        <div class="card" data-id="log" data-content="log">
+            <p>log &nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-iexponente">             </code>&nbsp;</p>
+        </div>
+        
+    
+        
+        <br>
+        <div class="card tree" data-id="combinatoria">
+            <span class="combinatoria">(</span>
+            <div class="indices indice-cominatoria">
+                <div class="spa subindice"></div>&nbsp;
+                <div class="spa subindice"></div>
+            </div>&nbsp;
+            <span class="combinatoria">)</span>
+
+        </div>
+
+        
+
+        <div class="card tree" data-id="sumatoria">
+            <p>
+                <div class="value">&#931;</div>
+                <div class="indices">
+                    <div class="spa subindice"></div>&nbsp;
+                    <div class="spa subindice"></div>
+                </div>&nbsp;<code class="spa"> &nbsp;</code>
+
+            </p>
+        </div>
+        <div class="card tree" data-id="integral"><!-- ∫ -->
+            <p>
+            <div class="value">&#8747;</div>
+            <div class="indices">
+                <div class="spa subindice">&nbsp;</div>&nbsp;
+                <div class="spa subindice"></div>
+            </div>&nbsp;<code class="spa"> &nbsp;</code>
+
+            </p>
+        </div>
+        <div class="card tree" data-id="multiplicatoria">
+            <p>
+            <div class="value">&#928;</div>
+            <div class="indices">
+                <div class="spa subindice">&nbsp;</div>&nbsp;
+                <div class="spa subindice"></div>
+            </div>&nbsp;<code class="spa"> &nbsp;</code>
+
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                               </div>
                         
                               <div class="pager wizard">
@@ -94,7 +318,9 @@
                                       </a>
                                   </li>
                               </div>
-  
+                            <div id="div-iner">
+                                <div class="panel-2 drop" title="hola"></div>
+                            </div>
                           </div>
                       </div>
                   </div>
@@ -194,8 +420,6 @@
                                 </div>
                                 
                               </form>
-                           
-                        
                               <div class="pager wizard">
                                   <li class="next">
                                       <a href="#" class="btn btn-success u-btn">
@@ -227,10 +451,7 @@
                               Agregar <span class="glyphicon glyphicon-pencil "></span>
                           </button> 
                       </div>    
-  
-  
                     </div>
-                    
                     
   
                     <!-- Modal -->
@@ -238,8 +459,6 @@
                       <div class="modal-dialog">
                         <div class="modal-content">
                         <form name="forma" ng-submit="agregarRespuesta()">
-  
-  
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <h4 class="modal-title" id="myModalLabel">Agrega respuestas!</h4>
@@ -257,11 +476,7 @@
                                 <input type="number" class="form-control contenedor-variables-input" value="0" max="5" min="0" placeholder="valor">
                             </div>-->
                             <input id="valor" class="rating" ng-model="nuevoValor"  name="valor" data-min="0" data-max="5" data-step="1">
-  
-  
-  
                           </div>
-  
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             <button type="submit" ng-disabled="forma.$invalid"class="btn btn-success">Agregar
@@ -272,13 +487,8 @@
                         </div>
                       </div>
                     </div>
-  
-  
-  
                   </div>
-  
               </div>
-              
               <div class="panel panel-default">
                     <div  class="panel-heading">
                           Expresiones
@@ -331,8 +541,6 @@
                             </div>
                             <button type="submit" class="btn btn-success">ag</button>
                           </form>
-  
-  
                           <div>
                               <form class="form-inline u-no_display" role="form" id="formEspecifica" ng-submit="newVariableEspecifica()">
                                 <!--input variable-->
@@ -347,9 +555,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-success">ag</button>
                               </form>
-  
                           </div>
-  
                           <div>
                               <form class="form-inline u-no_display" role="form" id="formCategorica">
                                 <!--input variable-->
@@ -362,15 +568,9 @@
                                 <div class="form-group">
                                   <input type="number"  class="contenedor-variables-input form-control" >
                                 </div>
-  
                               </form>
-  
                           </div>
-  
-  
                       </div>
-  
-  
                   </div>
                   <!--FIN: Panel de variables-->
                   <div class="panel panel-default">
@@ -413,42 +613,3 @@
   </html>
   
   
-  
-                    <!-- Modal update 
-                    <div class="modal fade" id="myModalA" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                        <form ng-submit="actualizarRespuesta($index)">
-  
-  
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Agrega respuestas!</h4>
-                          </div>
-                          <div class="modal-body">
-                            <h5>Respuesta:</h5>      
-                            <div class="form-group">
-                                <input type="text" ng-model="nuevaRespuestaA" class="form-control " size="3" placeholder="Respuesta">
-                            </div>
-                            <h5>Texto Explicativo:</h5>
-                            <textarea type="text" ng-model="nuevoTextoA" class="form-control "  placeholder="Agrega un texto adicional"></textarea>
-                            <h5>Valor: </h5>
-                            <!--<div class="form-group">
-                                <input type="number" class="form-control contenedor-variables-input" value="0" max="5" min="0" placeholder="valor">
-                            </div>
-                            <input id="valorA" class="rating" ng-model="nuevoValor"  data-min="0" data-max="5" data-step="1">
-  
-  
-  
-                          </div>
-  
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-success">Actualizar
-                                <span class="glyphicon glyphicon-ok "></span>
-                            </button>
-                          </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>  -->
