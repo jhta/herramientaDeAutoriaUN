@@ -18,7 +18,8 @@
            });
       </script>
       
-      <script type="text/javascript" src="dist/libs/js/jquery.min.js"></script>
+     <!-- <script type="text/javascript" src="dist/libs/js/jquery.min.js"></script> -->
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
       <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
       <script type="text/javascript" src="dist/libs/js/bootstrap.min.js"></script>
       <script type="text/javascript" src="dist/libs/js/bootstrap-wizard.min.js"></script>
@@ -31,9 +32,9 @@
       <script type="text/javascript" src="dev/js/controllers/respuestaController.js"></script>
       <script type="text/javascript" src="dev/js/controllers/variableController.js"></script>
       <script type="text/javascript" src="dev/js/src/appGenerator.js"></script>
-            <script type="text/javascript" src="dist/js/metadatos.js"></script>
-
-     
+      <!--<script type="text/javascript" src="dist/js/metadatos.js"></script> -->
+      <script type="text/javascript" src="dist/js/writetextbox"></script>
+      <script type="text/javascript" src="dist/js/insertequation"></script>
   </head>
   <body ng-app>
       <!--Contenedor general-->
@@ -42,6 +43,7 @@
           <article class="row">
               
               <div class="col-xs-8  u-pad0 " id=  "tab-content">
+
                   <!--Panel de problema-->
                   <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
                   <li class="active"><a href="#formulacion" class="tab-li" data-toggle="tab">Formulacíon</a></li>
@@ -50,6 +52,9 @@
   
               </ul>
               <div id="my-tab-content" class=" panel panel-default tab-content">
+              <div id="eq" style="font: 9.5pt serif; ; margin:10px; height: 300px ;border-style: solid; border-width: 1px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
+
+              <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
                   <div class="tab-pane active" id="formulacion">
                       <div class=" contenedor-panel tab-pane " id="tab1">
                           <div class="panel-body">       
@@ -625,43 +630,8 @@
           </article>
           
       </section>
+
   </body>
-  <script>
-$( document ).ready(function() {
-    $("#div-iner").on("click", ".spa", function () {
-        if($(this).children().length < 1) {
-            $(this).html('<input id="input-new" type="text" style="padding: 10px 10px 10px 10px">');
-            $("#input-new").focus();
-        }
-    });
-    $("#div-iner").on("blur", "#input-new", function () {
-        if (!$.trim(this.value).length) {
-            $(this).parent().html("");
-        }else{
-
-
-
-            if ($.trim(this.value).length>20) {
-                $(this).parent().html("");
-            }else{
-                addnewinput(this,"text");
-                /*
-                if(/^[0-9]+$/.test(this.value)){
-                    addnewinput(this,"cons");
-                }else if(/^[a-zA-Z]+$/.test(this.value)){
-                    addnewinput(this,"var");
-                }else{
-                    $(this).parent().html("");
-                }*/
-            }
-        }
-    });
-    $("#div-iner").on("click", "#input-new", function (event) {
-        event.stopImmediatePropagation();
-    });
-
-});
-</script>
 
   
   </html>

@@ -1,16 +1,17 @@
 $(document).ready(function(){
-   
+
     
     //Metadatos
      /* Eventos javascript que se ejecutan con ciertas acciones
     en el formulario de los metadatos*/
+
    var file_json;
    var eleccion;
    /* Esta función  obtiene un JSON el cual contiene el contenido de 
    la clasificación según la Nomenclatura Internacional de la Unesco
    y lo carga en el primer select
    */
-    $.getJSON( "dist/js/tipos.json", function( data ) {
+  /*  $.getJSON( "dist/js/tipos.json", function( data ) {
   file_json=data;
   $.each( data, function( key, val ) {
    $("#ccabecera").append($("<option>").attr("value", key).text(key));
@@ -23,6 +24,7 @@ $(document).ready(function(){
    con el fin de mostrar dichos datos en este select cespecificos correspondientes a 
    ccabecera
    */
+    /*
     $('#ccabecera').on('change', function() {
     
    if(this.value=="--"){
@@ -51,6 +53,7 @@ $(document).ready(function(){
    con el fin de mostrar dichos datos en este select subitems correspondientes a 
    cespecificos
    */
+    /*
  $('#cespecificos').on('change', function() {
     
  
@@ -87,6 +90,7 @@ $(document).ready(function(){
    en cuenta si se elegió "--" el cual devuelve elección al select que lo precede o
    en caso contrario al código y nombre que le pertenece.
    */
+    /*
 $('#subitems').on('change', function() {
     
    if($('#subitems').val()=="--"){
@@ -117,4 +121,5 @@ $('#subitems').on('change', function() {
 });
 
     //
+    */
 });

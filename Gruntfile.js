@@ -2,10 +2,10 @@ module.exports = function(grunt){
     grunt.initConfig({
         pkg:grunt.file.readJSON('package.json'),
         //verifico errores con JShint
-        jshint: {
-            miAppPreConcat: ['dev/js/src/**/app*.js'],
-            miAppPostConcat: ['dist/js/**/app.js']
-        },
+        /*jshint: {
+            miAppPreConcat: ['dev/js/src/**//*app*.js'],
+            miAppPostConcat: ['dist/js/**//*app.js']
+        },*/
         //concatenar mis archivos de javascrit en uno solo
         concat: {
             options: {
