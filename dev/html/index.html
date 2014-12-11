@@ -26,6 +26,7 @@
       <script type="text/javascript" src="dist/js/app.min.js"></script>
       <script type="text/javascript" src="dist/js/math.js"></script>
       <script type="text/javascript" src="dist/js/Mathjax.js"></script>
+      <script type="text/javascript" src="dist/js/insertequation.js"></script>
       <!--Controladores AngularJS -->
       <script type="text/javascript" src="dev/js/controllers/respuestaController.js"></script>
       <script type="text/javascript" src="dev/js/controllers/variableController.js"></script>
@@ -54,10 +55,9 @@
                               <!--<div class="form-group ">
                                   <textarea id="text-formulacion" onchange="UpdateMath('<math>'+this.value+'</math>')" type="text" class="form-control contenedor-panel-input" placeholder="Escribe aqui tu pregunta"></textarea>
                               </div>-->
-                              
-                              
-                            <div class="drop contenedor-panel-prev panel panel-default" title="hola"></div>
-                              
+                            <div id="eq" style="font: 9.5pt serif; ; margin:10px; height: 300px ;border-style: solid; border-width: 1px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
+
+                              <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
                               <div class=" contenedor-panel-prev panel panel-default" id="launchPad">
                                 
                                 <div class="card" id="suma1">
@@ -283,9 +283,7 @@
                     <div  class="panel-heading">
                           Expresiones
                       </div>
-                      <div id="previsualizar" class="panel-body">
-                       <math></math>  
-                      </div>
+
                   </div>
               </div>
               <!--FIN: Seccion Derecha-->
