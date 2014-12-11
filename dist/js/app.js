@@ -1,3 +1,5 @@
+console.log("holi");
+
 $(document).ready(function(){
     console.log("sisas");
     $('#rootwizard').bootstrapWizard();
