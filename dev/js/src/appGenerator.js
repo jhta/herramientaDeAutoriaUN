@@ -1483,7 +1483,7 @@ function makeJsonFuncionfn(idData, element, num, nodo){
         
         item = {};
         item["id"] = "row";
-        item["etiqueta"] = "<mtext>(</mtext><mrow>";
+        item["etiqueta"] = "<mrow>";
         item["children"] = [];
         
         if(nodo)
@@ -1505,7 +1505,7 @@ function makeJsonFuncionfn(idData, element, num, nodo){
         
         item = {};
             item["id"] = "row";
-            item["etiqueta"] = "</mrow><mtext>)</mtext>";
+            item["etiqueta"] = "</mrow>";
             item["children"] = [];
         
         if(i == num-1){
