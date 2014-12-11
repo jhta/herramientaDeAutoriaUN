@@ -68,7 +68,7 @@
 <div id="droppable-out">
 
     <div id="launchPad">
-        <div class="card " id="base" data-id="var" data-content="x">
+        <div class="card " data-id="var" data-content="x">
             <span class="var">x</span>
         </div>
         <div class="card" data-id="var" data-content="y">
@@ -294,20 +294,20 @@
         </div>
         
         <div class="card" data-id="func-2" >
-            <p>(<code class="spa"> </code>)(<code class="spa"> </code>)&nbsp;</p>
+            <p>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
     
         <div class="card" data-id="func-3" >
-            <p>(<code class="spa"> </code>)(<code class="spa"> </code>)(<code class="spa"> </code>)&nbsp;</p>
+            <p>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
     
     
         <div class="card" data-id="func-4" >
-            <p>(<code class="spa"> </code>)(<code class="spa"> </code>)(<code class="spa"> </code>)(<code class="spa"> </code>)&nbsp;</p>
+            <p>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
     
         <div class="card" data-id="func-5" >
-            <p>(<code class="spa"> </code>)(<code class="spa"> </code>)(<code class="spa"> </code>)(<code class="spa"> </code>)(<code class="spa"> </code>)&nbsp;</p>
+            <p>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
     </div>
 </div>
@@ -602,21 +602,25 @@
                       <div class="panel-body">
                         <ul>
                             <li ng-repeat="variable in variables.especificas" class="panel-variable-item">
-                              <div><strong class="view-variable" data-text="{{variable.nombre}}">{{variable.nombre}}</strong> = {{variable.valor}}</div>
+                              <div class="card " data-id="var" data-content="{{variable.nombre}}"><strong class="view-variable" data-text="{{variable.nombre}}">{{variable.nombre}}</strong> = {{variable.valor}}</div>
                             </li>
                             
                             <li ng-repeat="variable in variables.uniformes" class="panel-variable-item">
                               
+                                <div class="card " data-id="var" data-content="{{variable.nombre}}">
                                 <strong class="view-variable elem" data-text="{{variable.nombre}}">{{variable.nombre}}</strong>
+                                 
                                 &isin; &#91; {{variable.min}} , {{variable.max}}  &#93; inc {{variable.inc}}
-                             
+                              </div>
                             </li>
                             
                             <li ng-repeat="cate in variables.categoricas" class="panel-variable-item">
-                              <strong class="view-variable" data-text="{{cate.nombre}}">{{cate.nombre}}</strong>=
+                              <div class="card " data-id="var" data-content="{{variable.nombre}}">
+                                <strong class="view-variable" data-text="{{cate.nombre}}">{{cate.nombre}}</strong>=
                               &#91;
                                 <b ng-repeat="op in cate.opciones">{{op}},</b>  
                               &#93;
+                                  </div>
                             </li>
                           </ul>
                       </div>
