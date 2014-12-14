@@ -1,6 +1,6 @@
 
 $( document ).ready(function() {
-    alert("holi");
+
     $("#div-iner").on("click", ".spa", function () {
     if($(this).children().length < 1) {
     $(this).html('<input id="input-new" type="text" style="padding: 10px 10px 10px 10px">');

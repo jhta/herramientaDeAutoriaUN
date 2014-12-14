@@ -1,17 +1,34 @@
 $(document).ready(function(){
+    var first = true;
+    var id = 0;
+    var mathml = "";
+    var objson = {};
+    var ids = {};
+    var banderanCombiG=false;
+    var banderafactorial=false;
+    var banderafuncionf=false;
+    var banderafuncionfn=false;
+
     var equations = [];
     var eqactually = "";
+    var objsons = [];
     var id=0;
     /* Escribe Código Mathml en el div con id="text-formulacion"
     el cual permite hacer una division */
     $("#inserteq").click(function(){
         document.getElementById('eq').focus();
         var preid="equation-"+id;
-        pasteHtmlAtCaret('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" id='+preid+'><math></math></div>');
+        pasteHtmlAtCaret('  <div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
         document.getElementById(preid).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
        id++;
         equations.push(preid);
+        objsons.push(objson);
+        objson = {};
+        $('.drop').html("");
+        $(".drop").droppable("enable");
+        first = true;
+
        eqactually = preid;
     });
 
@@ -75,4 +92,24 @@ $(document).ready(function(){
             document.selection.createRange().pasteHTML(html);
         }
     }
+    (function () {
+        console.log(mathml);
+        var QUEUE = MathJax.Hub.queue;
+        var math = null;
+
+        window.UpdateMath = function (MathML) {
+            alert("Vamos a actualizar ps en "+eqactually);
+            QUEUE.Push(function () {
+                math = MathJax.Hub.getAllJax(eqactually)[0];
+            });
+           // MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqactually]);
+            QUEUE.Push(["Text", math, MathML]);
+        }
+    })();
+
+
+
+    $("#eq").on("click", ".pre-equation", function () {
+        alert("Me dieron clic perrita "+$(this).attr('id'));
+    });
 });

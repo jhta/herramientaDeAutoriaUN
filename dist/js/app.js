@@ -1,12 +1,4 @@
-var first = true;
-var id = 0;
-var mathml = "";
-var objson = {};
-var ids = {};
-var banderanCombiG=false;
-var banderafactorial=false;
-var banderafuncionf=false;
-var banderafuncionfn=false;
+
 
 
 $(function() {
@@ -1483,7 +1475,7 @@ function makeJsonFuncionfn(idData, element, num, nodo){
         
         item = {};
         item["id"] = "row";
-        item["etiqueta"] = "<mtext>(</mtext><mrow>";
+        item["etiqueta"] = "<mrow>";
         item["children"] = [];
         
         if(nodo)
@@ -1505,7 +1497,7 @@ function makeJsonFuncionfn(idData, element, num, nodo){
         
         item = {};
             item["id"] = "row";
-            item["etiqueta"] = "</mrow><mtext>)</mtext>";
+            item["etiqueta"] = "</mrow>";
             item["children"] = [];
         
         if(i == num-1){
@@ -2065,17 +2057,7 @@ function stringmathml(currentNode) {
 
 
 
-(function () {
-    console.log(mathml);
-    var QUEUE = MathJax.Hub.queue;
-    var math = null;
-    QUEUE.Push(function () {
-        math = MathJax.Hub.getAllJax("previsualizar")[0];
-    });
-    window.UpdateMath = function (MathML) {
-        QUEUE.Push(["Text", math, MathML]);
-    }
-})();
+
 
 
 

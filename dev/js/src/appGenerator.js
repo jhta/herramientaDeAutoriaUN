@@ -1,12 +1,4 @@
-var first = true;
-var id = 0;
-var mathml = "";
-var objson = {};
-var ids = {};
-var banderanCombiG=false;
-var banderafactorial=false;
-var banderafuncionf=false;
-var banderafuncionfn=false;
+
 
 
 $(function() {
@@ -2065,15 +2057,5 @@ function stringmathml(currentNode) {
 
 
 
-(function () {
-    console.log(mathml);
-    var QUEUE = MathJax.Hub.queue;
-    var math = null;
-    QUEUE.Push(function () {
-        math = MathJax.Hub.getAllJax("previsualizar")[0];
-    });
-    window.UpdateMath = function (MathML) {
-        QUEUE.Push(["Text", math, MathML]);
-    }
-})();
+
 

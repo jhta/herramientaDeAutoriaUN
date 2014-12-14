@@ -52,9 +52,10 @@
   
               </ul>
               <div id="my-tab-content" class=" panel panel-default tab-content">
-              <div id="eq" style="font: 9.5pt serif; ; margin:10px; height: 300px ;border-style: solid; border-width: 1px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
+              <div class="equation-previsualizador" id="eq" style="font: 9.5pt serif; ; margin:10px; height: 300px ;border-style: solid; border-width: 1px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
 
-              <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
+
+              <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuaciónn</button>
                   <div class="tab-pane active" id="formulacion">
                       <div class=" contenedor-panel tab-pane " id="tab1">
                           <div class="panel-body">       
@@ -602,7 +603,7 @@
                       <div class="panel-body">
                         <ul>
                             <li ng-repeat="variable in variables.especificas" class="panel-variable-item">
-                              <div class="card " data-id="var" data-content="{{variable.nombre}}"><strong class="view-variable" data-text="{{variable.nombre}}">{{variable.nombre}}</strong> = {{variable.valor}}</div>
+                              <div ><strong class="view-variable card" data-id="var" data-content="{{variable.nombre}}" data-text="{{variable.nombre}}">{{variable.nombre}}</strong> = {{variable.valor}}</div>
                             </li>
                             
                             <li ng-repeat="variable in variables.uniformes" class="panel-variable-item">
