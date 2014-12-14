@@ -1,5 +1,13 @@
 
-
+var first = true;
+var id = 0;
+var mathml = "";
+var objson = {};
+var ids = {};
+var banderanCombiG=false;
+var banderafactorial=false;
+var banderafuncionf=false;
+var banderafuncionfn=false;
 
 $(function() {
     $(".card").draggable({
