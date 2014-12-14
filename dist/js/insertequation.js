@@ -2,16 +2,17 @@ $(document).ready(function(){
     var first = true;
     var id = 0;
     var mathml = "";
-    var objson = {};
+
     var ids = {};
     var banderanCombiG=false;
     var banderafactorial=false;
     var banderafuncionf=false;
     var banderafuncionfn=false;
 
+
     var equations = [];
     var eqactually = "";
-    var objsons = [];
+    var objsons = {};
     var id=0;
     /* Escribe Código Mathml en el div con id="text-formulacion"
     el cual permite hacer una division */
@@ -23,12 +24,15 @@ $(document).ready(function(){
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
        id++;
         equations.push(preid);
-        objsons.push(objson);
+        //objsons.push(objson);
+        objsons[preid+""] = {};
+        if(!(eqactually == "")){
+            objsons[eqactually+""] = objson;
+        }
         objson = {};
         $('.drop').html("");
         $(".drop").droppable("enable");
         first = true;
-
        eqactually = preid;
     });
 
@@ -111,5 +115,16 @@ $(document).ready(function(){
 
     $("#eq").on("click", ".pre-equation", function () {
         alert("Me dieron clic perrita "+$(this).attr('id'));
+        var idpre = $(this).attr('id');
+        objsons[eqactually+""] = objson;
+        eqactually =  idpre;
+        /*var jsonpre = {};
+        for(var i=0;i<equations.length;i++){
+            if(equations[i]==idpre){
+                jsonpre=objsons[i];
+                alert(JSON.stringify(jsonpre));
+            }
+        }*/
+        alert(JSON.stringify(objsons[eqactually+""]));
     });
 });
