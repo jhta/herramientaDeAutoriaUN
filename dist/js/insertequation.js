@@ -123,8 +123,10 @@ $(document).ready(function(){
         eqactually =  idpre;
         alert(JSON.stringify(objsons[eqactually+""]));
         alert(html[eqactually+""]);
-        $('.drop').html(html[eqactually+""]);
-        $(".drop").droppable("enable");
+        $('.panel-2').html("");
+        $('.panel-2').html(html[eqactually+""]);
+
+
 
         $(".drop code, .drop div").each(function (index) {
              if($(this).hasClass( "drop2" )){
