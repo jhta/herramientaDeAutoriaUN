@@ -11,6 +11,7 @@ $(document).ready(function(){
 
 
     var equations = [];
+    var html = {};
     var eqactually = "";
     var objsons = {};
     var id=0;
@@ -28,6 +29,7 @@ $(document).ready(function(){
         objsons[preid+""] = {};
         if(!(eqactually == "")){
             objsons[eqactually+""] = objson;
+            html[eqactually+""] = $('.drop').html();
         }
         objson = {};
         $('.drop').html("");
@@ -117,6 +119,7 @@ $(document).ready(function(){
         alert("Me dieron clic perrita "+$(this).attr('id'));
         var idpre = $(this).attr('id');
         objsons[eqactually+""] = objson;
+        html[eqactually+""] = $('.drop').html();
         eqactually =  idpre;
         /*var jsonpre = {};
         for(var i=0;i<equations.length;i++){
@@ -126,5 +129,6 @@ $(document).ready(function(){
             }
         }*/
         alert(JSON.stringify(objsons[eqactually+""]));
+        alert(html[eqactually+""]);
     });
 });
