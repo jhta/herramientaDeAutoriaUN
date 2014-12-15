@@ -8,6 +8,25 @@ var banderafactorial=false;
 var banderafuncionf=false;
 var banderafuncionfn=false;
 
+//-------------------------------------------------------------
+
+$(function(){
+    $('form.form-ag').on('submit', function(e){
+        e.preventDefault();
+        $(".view-variable")
+        .addClass('card')
+        .draggable({
+            appendTo: "body",
+            cursor: "move", //como se ve el cursor cuando lo muevo
+            helper: 'clone', //que pasa cuando lo muevo, se clona
+            revert: "invalid" //no se puede devolver
+
+        });
+        
+});
+
+//-------------------------------------------------------------
+
 $(function() {
     $(".card").draggable({
         appendTo: "body",
@@ -2104,7 +2123,31 @@ $(document).ready(function(){
         console.log("var categorica");
         $("#formCategorica").fadeIn();
     });
-  });  
+    
+
+});
+
+/*$('.card').on('draggable', function(){
+    console.log('OE');
+});*/
+
+/*function doDrag(){
+    $(".card").click(function(){
+        console.log("ACA");
+    });
+    
+    $(".card").draggable({
+        appendTo: "body",
+        cursor: "move",
+        helper: "clone",
+        revert: "invalid",
+        drag: function(event,ui){
+            //$("body").toggleClass("test");
+            //$('.spa').toggleClass("ui-element");
+        }
+    });
+}*/
+              
 // $(".card").draggable({
 //     appendTo: "body",
 //     cursor: "move",//como se ve el cursor cuando lo muevo
