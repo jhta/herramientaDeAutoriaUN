@@ -73,7 +73,7 @@ module.exports = function(grunt){
         watch:{
             scripts:{
                 files:['dev/js/src/**/app*.js','dev/stylus/**/*.styl','dev/jade/*.jade','dev/html/*.html','dev/js/controllers/**/*.js'], //estos son los archivos bajo observacion
-        	    tasks:['jshint','concat','uglify','stylus','htmlmin'/*,'jade'*/] //estas son las tareas que sigue
+        	    tasks:['concat','uglify','stylus','htmlmin'/*,'jade'*/] //estas son las tareas que sigue
             } ,
             options: {
                 livereload: true
