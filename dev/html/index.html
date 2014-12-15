@@ -568,7 +568,7 @@
                                 <div class="form-group">
                                   <input type="number"  ng-model="newValorE" class="contenedor-variables-input form-control" >
                                 </div>
-                                <button type="submit" class="btn btn-success">ag</button>
+                                <button type="submit" class="btn btn-success btn-ag">ag</button>
                               </form>
                           </div>
                           <div>
@@ -595,21 +595,21 @@
                       <div class="panel-body">
                         <ul>
                             <li ng-repeat="variable in variables.especificas" class="panel-variable-item">
-                              <div ><strong class="view-variable card" data-id="var" data-content="{{variable.nombre}}" data-text="{{variable.nombre}}">{{variable.nombre}}</strong> = {{variable.valor}}</div>
+                              <div ><strong class="card view-variable" data-id="var" data-content="{{variable.nombre}}" data-text="{{variable.nombre}}">{{variable.nombre}}</strong> = {{variable.valor}}</div>
                             </li>
                             
                             <li ng-repeat="variable in variables.uniformes" class="panel-variable-item">
                               
-                                <div class="card " data-id="var" data-content="{{variable.nombre}}">
-                                <strong class="view-variable elem" data-text="{{variable.nombre}}">{{variable.nombre}}</strong>
+                                <div data-id="var" data-content="{{variable.nombre}}">
+                                <strong class="card view-variable elem" data-text="{{variable.nombre}}">{{variable.nombre}}</strong>
                                  
                                 &isin; &#91; {{variable.min}} , {{variable.max}}  &#93; inc {{variable.inc}}
                               </div>
                             </li>
                             
                             <li ng-repeat="cate in variables.categoricas" class="panel-variable-item">
-                              <div class="card " data-id="var" data-content="{{variable.nombre}}">
-                                <strong class="view-variable" data-text="{{cate.nombre}}">{{cate.nombre}}</strong>=
+                              <div data-id="var" data-content="{{variable.nombre}}">
+                                <strong class="card view-variable" data-text="{{cate.nombre}}">{{cate.nombre}}</strong>=
                               &#91;
                                 <b ng-repeat="op in cate.opciones">{{op}},</b>  
                               &#93;
