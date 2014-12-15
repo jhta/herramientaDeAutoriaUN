@@ -52,16 +52,14 @@
   
               </ul>
               <div id="my-tab-content" class=" panel panel-default tab-content">
-              <div class="equation-previsualizador" id="eq" style="font: 9.5pt serif; ; margin:10px; height: 300px ;border-style: solid; border-width: 1px; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
+              <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:10px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
 
 
               <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuaciónn</button>
                   <div class="tab-pane active" id="formulacion">
                       <div class=" contenedor-panel tab-pane " id="tab1">
                           <div class="panel-body">       
-                            <div class="contenedor-panel-prev panel panel-default" ><div id="previsualizar" class="panel-body">
-            <math></math>
-        </div></div>
+                            
                               
                               
                               <div class="contenedor-panel-prev panel panel-default" id="previsualizador">
@@ -69,165 +67,166 @@
 <div id="droppable-out">
 
     <div id="launchPad">
-        <div class="card " data-id="var" data-content="x">
+        <!-- VARIABLES Y CONSTANTES -->
+        <div class="card constant" data-id="var" data-content="x">
             <span class="var">x</span>
         </div>
-        <div class="card" data-id="var" data-content="y">
+        <div class="card constant" data-id="var" data-content="y">
             <span class="var">y</span>
         </div>
-        <div class="card" data-id="var" data-content="z">
+        <div class="card constant" data-id="var" data-content="z">
             <span class="var">z</span>
         </div>
-        <div class="card" data-id="var" data-content="w">
+        <div class="card constant" data-id="var" data-content="w">
             <span class="var">w</span>
         </div>
-        <div class="card " data-id="cons" data-content="1">
+        <div class="card  constant" data-id="cons" data-content="1">
             <span class="var">1</span>
         </div>
-        <div class="card" data-id="cons" data-content="2">
+        <div class="card constant" data-id="cons" data-content="2">
             <span class="var">2</span>
         </div>
-        <div class="card" data-id="cons" data-content="3">
+        <div class="card constant" data-id="cons" data-content="3">
             <span class="var">3</span>
         </div>
-        <div class="card" data-id="cons" data-content="4">
+        <div class="card constant" data-id="cons" data-content="4">
             <span class="var">4</span>
         </div>
 
         <!--<div class="card" data-id="cons" data-content="&#928">
             <span class="var">&#928;</span>
         </div>-->
-        <div class="card" data-id="cons" data-content="&#945">
+        <div class="card constant" data-id="cons" data-content="&#945">
             <span class="var">&#945;</span>
         </div>
-        <div class="card" data-id="cons" data-content="&#946">
+        <div class="card constant" data-id="cons" data-content="&#946">
             <span class="var">&#946;</span>
         </div>
-        <div class="card" data-id="cons" data-content="&#952">
+        <div class="card constant" data-id="cons" data-content="&#952">
             <span class="var">&#952;</span>
         </div>
-        <div class="card" data-id="cons" data-content="&#947">
+        <div class="card constant" data-id="cons" data-content="&#947">
             <span class="var">&#947;</span>
         </div>
-        <div class="card" data-id="cons" data-content="&#937">
+        <div class="card constant" data-id="cons" data-content="&#937">
             <span class="var">&#937;</span>
         </div>
         
-        <div class="card" data-id="cons" data-content="e">
+        <div class="card constant" data-id="cons" data-content="e">
             <span class="var">e</span>
         </div>
         
-        <div class="card " data-id="cons" data-content="π"><!-- PI -->
+        <div class="card  constant" data-id="cons" data-content="π"><!-- PI -->
             <span class="var">&#x03C0;</span>
         </div>
         
         <!--<div class="card" data-id="cons" data-content="=">
             <span class="var">=</span>
         </div>-->
-       
-        <div class="card" data-id="parentesis">
+       <!-- SIMPLES -->
+        <div class="card operations" data-id="parentesis">
             <p>(<code class="spa"> </code>)</p>
         </div>
-        <div class="card" data-id="corchetes">
+        <div class="card operations" data-id="corchetes">
             <p>[<code class="spa"> </code>]</p>
         </div>
-        <div class="card" data-id="llaves">
+        <div class="card operations" data-id="llaves">
             <p>{<code class="spa"> </code>}</p>
         </div>
         
-        <div class="card" data-id="factorial">
+        <div class="card operations" data-id="factorial">
             <p>(<code class="spa"> </code>)!</p>
         </div>
         
-        <div class="card" data-id="suma">
+        <div class="card operations basic" data-id="suma">
             <p>&nbsp;<code class="spa"> </code>+<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="resta">
+        <div class="card operations basic " data-id="resta">
             <p>&nbsp;<code class="spa"> </code>-<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="mult">
+        <div class="card operations basic" data-id="mult">
             <p>&nbsp;<code class="spa">  </code>*<code class="spa">  </code> &nbsp;</p>
         </div>
         
         <div class="card tree" data-id="division">
             <span class="division">(</span>
             <div class="indices indice-division">
-                <div class="spa subindice"></div>
+                <div class="spa subindice subindice-superior"></div>
                 <!--<hr id="line-hr"></hr>-->
                 <div class="spa subindice"></div>
             </div>&nbsp;
             <span class="division">)</span>
 
         </div>
-        
-        <div class="card" data-id="trig" data-content="cos">
+        <!-- TRIGONOMETRICAS -->
+        <div class="card operations trigonometric" data-id="trig" data-content="cos">
             <p>cos &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="sin">
+        <div class="card operations trigonometric" data-id="trig" data-content="sin">
             <p>sin &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="tan">
+        <div class="card operations trigonometric" data-id="trig" data-content="tan">
             <p>tan &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="csc">
+        <div class="card operations trigonometric" data-id="trig" data-content="csc">
             <p>csc &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="sec">
+        <div class="card operations trigonometric" data-id="trig" data-content="sec">
             <p>sec &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="cot">
+        <div class="card operations trigonometric" data-id="trig" data-content="cot">
             <p>cot &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="arccos">
+        <div class="card operations trigonometric" data-id="trig" data-content="arccos">
             <p>arccos &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="arcsin">
+        <div class="card operations trigonometric" data-id="trig" data-content="arcsin">
             <p>arcsin &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="arctan">
+        <div class="card operations trigonometric" data-id="trig" data-content="arctan">
             <p>arctan &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="arccsc">
+        <div class="card operations trigonometric" data-id="trig" data-content="arccsc">
             <p>arccsc &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="arcsec">
+        <div class="card operations trigonometric" data-id="trig" data-content="arcsec">
             <p>arcsec &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="arccot">
+        <div class="card operations trigonometric" data-id="trig" data-content="arccot">
             <p>arccot &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="cosh">
+        <div class="card operations trigonometric" data-id="trig" data-content="cosh">
             <p>cosh &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="sinh">
+        <div class="card operations trigonometric" data-id="trig" data-content="sinh">
             <p>sinh &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="tanh">
+        <div class="card operations trigonometric" data-id="trig" data-content="tanh">
             <p>tanh &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="csch">
+        <div class="card operations trigonometric" data-id="trig" data-content="csch">
             <p>csch &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="sech">
+        <div class="card operations trigonometric" data-id="trig" data-content="sech">
             <p>sech &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="trig" data-content="coth">
+        <div class="card operations trigonometric" data-id="trig" data-content="coth">
             <p>coth &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
 
-        <div class="card" data-id="expo">
+        <div class="card  subindices" data-id="expo">
             <p>&nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-exponente"> </code>&nbsp;</p>
         </div>
-         <div class="card" data-id="expo-base">
+         <div class="card  subindices" data-id="expo-base">
             <p>&nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-iexponente"> </code>&nbsp;</p>
         </div>
         <!--<div class="card" >
             <p>&nbsp;<code class="spa"> </code>(<code class="spa"> </code>)</p>
         </div>-->
-        <div class="card" data-id="funcionf" >
+        <div class="card operations basic" style="width: 80px;" data-id="funcionf" >
             <p>&#131;(<code class="spa"> </code>)=<code class="spa"> </code>&nbsp;</p>
         </div>
-        <div class="card" data-id="igual">     
+        <div class="card operations basic" data-id="igual">     
             <p>&nbsp;<code class="spa"> </code>=<code class="spa"> </code>&nbsp;</p>
         </div>    
         <div class="card" data-id="raiz">
@@ -239,17 +238,17 @@
         </div>
         
         
-        <div class="card" data-id="trig" data-content="ln">
+        <div class="card basic operations" data-id="trig" data-content="ln">
             <p>ln &nbsp;<code class="spa"> </code>&nbsp;</p>
         </div>
         
         
-        <div class="card" data-id="log" data-content="log">
+        <div class="card   subindices" data-id="log" data-content="log">
             <p>log &nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-iexponente">             </code>&nbsp;</p>
         </div>
         
     
-        
+        <!-- OPERACION GRANDE -->
         <br>
         <div class="card tree" data-id="combinatoria">
             <span class="combinatoria">(</span>
@@ -312,22 +311,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -524,7 +507,16 @@
               <!--FIN: Seccion Derecha-->
                <!--Seccion izquierda-->
               <div class="col-xs-4 " ng-controller="variableController">
-  
+                  <div class="contenedor-variables panel panel-default" >
+                      <div class="panel-heading">
+                          <h3 class="panel-title">Visualizador</h3>
+                      </div>
+                      <div class="panel-body">
+                      <div id="previsualizar" >
+                        <math></math>
+                      </div>
+                      
+                  </div></div>
                   <!--Panel de variabless-->
                   <div class="contenedor-variables panel panel-default"  >
                       <div class="panel-heading">
