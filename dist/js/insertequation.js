@@ -121,16 +121,28 @@ $(document).ready(function(){
         objsons[eqactually+""] = objson;
         html[eqactually+""] = $('.drop').html();
         eqactually =  idpre;
-        /*var jsonpre = {};
-        for(var i=0;i<equations.length;i++){
-            if(equations[i]==idpre){
-                jsonpre=objsons[i];
-                alert(JSON.stringify(jsonpre));
-            }
-        }*/
         alert(JSON.stringify(objsons[eqactually+""]));
         alert(html[eqactually+""]);
         $('.drop').html(html[eqactually+""]);
         $(".drop").droppable("enable");
+
+        $(".drop code, .drop div").each(function (index) {
+             if($(this).hasClass( "drop2" )){
+                 $(this).droppable(funcDroppable);
+
+             }else if($(this).hasClass( "card2" )){
+                 $(this).draggable({
+                     appendTo: "body",
+                     cursor: "move",
+                     revert: "invalid",
+                     greedy: true
+                 });
+             }
+
+        })
+
+
+
     });
+
 });
