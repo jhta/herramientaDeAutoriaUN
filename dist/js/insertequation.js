@@ -130,5 +130,7 @@ $(document).ready(function(){
         }*/
         alert(JSON.stringify(objsons[eqactually+""]));
         alert(html[eqactually+""]);
+        $('.drop').html(html[eqactually+""]);
+        $(".drop").droppable("enable");
     });
 });
