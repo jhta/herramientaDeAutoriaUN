@@ -24,7 +24,31 @@ $(document).ready(function(){
         console.log("var categorica");
         $("#formCategorica").fadeIn();
     });
-  });  
+    
+
+});
+
+/*$('.card').on('draggable', function(){
+    console.log('OE');
+});*/
+
+/*function doDrag(){
+    $(".card").click(function(){
+        console.log("ACA");
+    });
+    
+    $(".card").draggable({
+        appendTo: "body",
+        cursor: "move",
+        helper: "clone",
+        revert: "invalid",
+        drag: function(event,ui){
+            //$("body").toggleClass("test");
+            //$('.spa').toggleClass("ui-element");
+        }
+    });
+}*/
+              
 // $(".card").draggable({
 //     appendTo: "body",
 //     cursor: "move",//como se ve el cursor cuando lo muevo
