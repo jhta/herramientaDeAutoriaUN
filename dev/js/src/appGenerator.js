@@ -1,4 +1,3 @@
-
 var first = true;
 var id = 0;
 var mathml = "";
@@ -68,7 +67,10 @@ $(function() {
             
             elementDrop.addClass("card2");
             elementDrop.removeClass("card");
-            
+            elementDrop.removeClass("constant");
+            elementDrop.removeClass("operations");
+            elementDrop.removeClass("basic");
+            elementDrop.removeClass("trigonometric");
             elementDrop.draggable({
                 appendTo: "body",
                 cursor: "move",
@@ -376,6 +378,10 @@ var funcDroppable = {
         
         elementDrop.addClass("card2");
         elementDrop.removeClass("card");
+        elementDrop.removeClass("constant");
+        elementDrop.removeClass("operations");
+        elementDrop.removeClass("basic");
+        elementDrop.removeClass("trigonometric");
 
         elementDrop.draggable({
                 appendTo: "body",
@@ -1901,7 +1907,10 @@ function addnewinput(object,type){
     var idData = elementDrop.data("id");
     elementDrop.addClass("card2");
     elementDrop.removeClass("card");
-
+    elementDrop.removeClass("constant");
+    elementDrop.removeClass("operations");
+    elementDrop.removeClass("basic");
+        elementDrop.removeClass("trigonometric");
     elementDrop.draggable({
         appendTo: "body",
         cursor: "move",

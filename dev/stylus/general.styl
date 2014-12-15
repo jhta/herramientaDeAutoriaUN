@@ -6,9 +6,11 @@ body
     -o-background-size: cover;
     background-size: cover;
     
+p
+    margin: 0px !important
 .contenedor
     padding:30px
-    margin-top 30px
+    margin-top 15px
     
 .contenedor-variables
     margin-top 40px
@@ -32,7 +34,6 @@ body
     
 .contenedor-panel-prev
     margin-top 30px
-    min-height: 200px
     
 .step.active
     background: #5cb85c !important;
@@ -88,8 +89,11 @@ body {
     margin: 0;
 }
 #launchPad {
-    border: 1px solid #eaeaea;
+    border: 2px solid #eaeaea;
     color: black;
+    border-radius: 10px
+    -webkit-border-radius: 10px
+    -moz-border-radius: 10px
 }
 #dropZone {
     float:right;
@@ -207,13 +211,15 @@ body {
 }
 .potencia-exponente{
     position: relative;
-    top: -15px;
+    top: -10px;
+    font-size: 8px
 }
 
 
 .potencia-iexponente{
     position: relative;
-    top: 15px;
+    top: 10px;
+    font-size:8px
 }
 
 .test{
@@ -242,3 +248,29 @@ body {
   margin-top: 6px;
   margin-bottom: 6px;
 }
+
+.constant
+    height: 35px
+    width: 35px
+    padding-left: 10px
+    padding-top: 5px
+    padding-bottom: 5px
+.operations
+    height: 35px
+    width: 40px
+    padding-left: 10px
+    padding-top: 5px
+    padding-bottom: 5px
+.operations.basic
+    width: 55px
+.operations.trigonometric
+    width: 77px
+.subindices 
+    height: 40px
+    padding-top: 4px
+    
+.subindice-superior
+    margin-top: 5px
+    margin-bottom: 8px
+    border-bottom: 1px solid black
+    
