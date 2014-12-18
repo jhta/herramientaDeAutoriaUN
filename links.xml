@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<lista>
+ <link>
+  <titulo>Google</titulo>
+  <href>http://www.google.es</href>
+ </link>
+ <link>
+  <titulo>Metafísica de Costumbres</titulo>
+  <href>http://metafisicadecostumbres.blogspot.com</href>
+ </link>
+ <link>
+  <titulo>Metafísica Informática</titulo>
+  <href>http://metafisicainformatica.blogspot.com</href>
+ </link>
+</lista>

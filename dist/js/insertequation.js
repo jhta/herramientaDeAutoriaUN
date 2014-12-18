@@ -104,7 +104,7 @@ $(document).ready(function(){
         var math = null;
 
         window.UpdateMath = function (MathML) {
-            alert("Vamos a actualizar ps en "+eqactually);
+            //alert("Vamos a actualizar ps en "+eqactually);
             QUEUE.Push(function () {
                 math = MathJax.Hub.getAllJax(eqactually)[0];
             });
@@ -146,5 +146,49 @@ $(document).ready(function(){
 
 
     });
+    
+    
+    
+
+    
+    $("#loadeq").click(function(){
+        $("#inputfiles").click();
+        
+    });
+    
+    
+    
+    $("#inputfiles").change(function(evt){
+        var files = evt.target.files; // FileList object
+        
+        if(files.length > 0){
+            console.log("ACA");
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.open("GET", "links.xml", false); //prueba con archivo en local
+            xmlhttp.send();
+            xmlDoc = xmlhttp.responseXML;
+            
+        }
+                    
+
+        /*// files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+          output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                      f.size, ' bytes, last modified: ',
+                      f.lastModifiedDate.toLocaleDateString(), '</li>');
+            console.log(f);
+        }
+        
+        console.log(output.join(''));*/
+    });
+    
+    
+    
 
 });
