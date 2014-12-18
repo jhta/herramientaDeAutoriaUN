@@ -16,17 +16,18 @@ $(document).ready(function(){
     var objsons = {};
     var id=0;
     /* Escribe Código Mathml en el div con id="text-formulacion"
-    el cual permite hacer una division */
+     el cual permite hacer una division */
     $("#inserteq").click(function(){
         document.getElementById('eq').focus();
         var preid="equation-"+id;
         pasteHtmlAtCaret('  <div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
         document.getElementById(preid).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
-       id++;
+        id++;
         equations.push(preid);
         //objsons.push(objson);
         objsons[preid+""] = {};
+        html[preid+""] = "";
         if(!(eqactually == "")){
             objsons[eqactually+""] = objson;
             html[eqactually+""] = $('.drop').html();
@@ -35,7 +36,7 @@ $(document).ready(function(){
         $('.drop').html("");
         $(".drop").droppable("enable");
         first = true;
-       eqactually = preid;
+        eqactually = preid;
     });
 
 
@@ -108,7 +109,7 @@ $(document).ready(function(){
             QUEUE.Push(function () {
                 math = MathJax.Hub.getAllJax(eqactually)[0];
             });
-           // MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqactually]);
+            // MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqactually]);
             QUEUE.Push(["Text", math, MathML]);
         }
     })();
@@ -116,30 +117,32 @@ $(document).ready(function(){
 
 
     $("#eq").on("click", ".pre-equation", function () {
-        alert("Me dieron clic perrita "+$(this).attr('id'));
+        alert("Me dieron clic perrita "+$(this).attr('id')+" actual es "+eqactually);
         var idpre = $(this).attr('id');
         objsons[eqactually+""] = objson;
         html[eqactually+""] = $('.drop').html();
         eqactually =  idpre;
+        alert("Ahora actual es "+eqactually);
         alert(JSON.stringify(objsons[eqactually+""]));
         alert(html[eqactually+""]);
         $('.panel-2').html("");
         $('.panel-2').html(html[eqactually+""]);
-
+        $(".panel-2").droppable("enable");
+        objson = objsons[eqactually+""];
 
 
         $(".drop code, .drop div").each(function (index) {
-             if($(this).hasClass( "drop2" )){
-                 $(this).droppable(funcDroppable);
+            if($(this).hasClass( "drop2" )){
+                $(this).droppable(funcDroppable);
 
-             }else if($(this).hasClass( "card2" )){
-                 $(this).draggable({
-                     appendTo: "body",
-                     cursor: "move",
-                     revert: "invalid",
-                     greedy: true
-                 });
-             }
+            }else if($(this).hasClass( "card2" )){
+                $(this).draggable({
+                    appendTo: "body",
+                    cursor: "move",
+                    revert: "invalid",
+                    greedy: true
+                });
+            }
 
         })
 
@@ -147,4 +150,87 @@ $(document).ready(function(){
 
     });
 
+    $("#exportarxml").click(function(){
+
+        var array = [];
+        var ids = [];
+        var bools = [];
+
+        //Esto se hace, porque no se tiene la certeza de que la última ecuacion
+        // que se ha creado ya esten guardados sus datos en los json globables
+        objsons[eqactually+""] = objson;
+        html[eqactually+""] = $('.drop').html();
+        var i=0;
+        var objecto = $("#eq").html();
+        $("#eq").children().each (function() {
+
+            ids.push($(this).attr('id'));
+            $(this).html("<123456789>");
+        })
+        var texto = $("#eq").text();
+
+        while(texto.length>0){
+            var n = texto.indexOf("<123456789>");
+            if(n==-1){
+                str = texto.replace(/\s+/g, '');
+                if(str.length>0) {
+                    array.push(texto);
+                    bools.push(false);
+                }
+                texto="";
+            }else{
+
+                var res = texto.substring(0, n);
+                str = res.replace(/\s+/g, '');
+                if(str.length>0) {
+                    array.push(res);
+                    bools.push(false);
+                }
+                array.push(ids[i]);
+                bools.push(true);
+                i++;
+                if( texto.substring(n+10, texto.length).length>1) {
+                    texto = texto.substring(n + 11, texto.length);
+                }else{
+                    texto="";
+                }
+            }
+
+        }
+        console.log(JSON.stringify(array));
+        console.log(JSON.stringify(bools));
+
+        $("#eq").html(objecto);
+        $("#eq").children().each (function() {
+            //alert($(this).html());
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(this).attr('id')]);
+        })
+
+        var xw = new XMLWriter('UTF-8');
+        xw.formatting = 'indented';//add indentation and newlines
+        xw.indentChar = ' ';//indent with spaces
+        xw.indentation = 2;//add 2 spaces per level
+
+        xw.writeStartDocument( );
+        xw.writeStartElement('pregunta');
+        xw.writeStartElement('formulacion');
+        for(var i=0;i<array.length;i++){
+            if(bools[i]){
+                xw.writeElementString('expresion', array[i]);
+            }else{
+                xw.writeElementString('texto', array[i]);
+            }
+        }
+
+        xw.writeEndElement();
+        xw.writeStartElement('objetos');
+        xw.writeElementString('json', JSON.stringify( objsons));
+        xw.writeElementString('html', JSON.stringify(html));
+        xw.writeEndElement();
+        xw.writeEndElement();
+
+        xw.writeEndDocument();
+        alert(xw.flush());
+        console.log(xw.flush());
+    });
 });
