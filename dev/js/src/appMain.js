@@ -1,5 +1,8 @@
 $(document).ready(function(){
     console.log("sisas");
+    
+    
+    
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();
     $("#valorA").rating();
@@ -25,8 +28,24 @@ $(document).ready(function(){
         $("#formCategorica").fadeIn();
     });
     
+    
+        $('form.form-ag').on('submit', function(e){
+        e.preventDefault();
+        console.log("OOE JJ");
+        $(".view-variable")
+        .addClass('card')
+        .draggable({
+            appendTo: "body",
+            cursor: "move", //como se ve el cursor cuando lo muevo
+            helper: 'clone', //que pasa cuando lo muevo, se clona
+            revert: "invalid" //no se puede devolver
+
+        });
+        
+});
 
 });
+
 
 /*$('.card').on('draggable', function(){
     console.log('OE');

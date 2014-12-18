@@ -10,20 +10,7 @@ var banderafuncionfn=false;
 
 //-------------------------------------------------------------
 
-$(function(){
-    $('form.form-ag').on('submit', function(e){
-        e.preventDefault();
-        $(".view-variable")
-        .addClass('card')
-        .draggable({
-            appendTo: "body",
-            cursor: "move", //como se ve el cursor cuando lo muevo
-            helper: 'clone', //que pasa cuando lo muevo, se clona
-            revert: "invalid" //no se puede devolver
 
-        });
-        
-});
 
 //-------------------------------------------------------------
 
@@ -2099,6 +2086,9 @@ function stringmathml(currentNode) {
 
 $(document).ready(function(){
     console.log("sisas");
+    
+    
+    
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();
     $("#valorA").rating();
@@ -2126,6 +2116,7 @@ $(document).ready(function(){
     
 
 });
+
 
 /*$('.card').on('draggable', function(){
     console.log('OE');

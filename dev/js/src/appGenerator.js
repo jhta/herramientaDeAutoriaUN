@@ -10,20 +10,7 @@ var banderafuncionfn=false;
 
 //-------------------------------------------------------------
 
-$(function(){
-    $('form.form-ag').on('submit', function(e){
-        e.preventDefault();
-        $(".view-variable")
-        .addClass('card')
-        .draggable({
-            appendTo: "body",
-            cursor: "move", //como se ve el cursor cuando lo muevo
-            helper: 'clone', //que pasa cuando lo muevo, se clona
-            revert: "invalid" //no se puede devolver
 
-        });
-        
-});
 
 //-------------------------------------------------------------
 
