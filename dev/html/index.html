@@ -55,7 +55,7 @@
 
       <!-- Contenedor -->
       <section class=" contenedor" id="rootWizard">
-          <!-- Acordeon --> 
+         
           <article class="row">
               <!--Contenido de la Izquierda - Pestañas-->
               <div class="col-xs-8  u-pad0" id="tab-content">
@@ -65,7 +65,7 @@
                   <li><a href="#respuestas" class="tab-li" data-toggle="tab">Respuestas</a></li>
                   <li><a href="#metadatos" class="tab-li" data-toggle="tab">Metadatos</a></li>
                 </ul>
-                <div id="my-tab-content" class=" panel panel-default tab-content">
+                <div id="my-tab-content" style="height: 100%; overflow: auto;" class=" panel panel-default tab-content">
                   <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:10px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
 
                   
@@ -73,118 +73,197 @@
                   <!-- Botones para cargar -->
                   <div class=" contenedor-panel tab-pane " id="formulacion">
                     <div class="panel-body">
-                      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                          <div class="panel-heading" role="tab" id="headingOne">
-                            
+                      <!-- Folders -->
+                      <div class="col-xs-6">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              
+                                <span class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  <span class="glyphicon glyphicon-folder-open"></span>
+                                  Geometria
+                                  </a>
+                                </span>
+                                <div class="pull-right">
+                                  <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <a href="#">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                      </a>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <a href="#">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                      </a>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <a href="#">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                              <div class="panel-body">
+                                <!--Lista de operaciones-->
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                       <div class="input-group">
+                                          <span class="input-group-btn">
+                                              <button class="btn btn-default" type="button">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                              </button>
+                                          </span>
+                                          <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
+
+                                      </div><!-- /input-group -->
+                                    </li>
+                                    <li class="list-group-item">
+                                      <span>X1</span>
+                                      <div class="pull-right">
+                                        <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                          
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                      <span>X2</span>
+                                      <div class="pull-right">
+                                        <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul> 
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
                               <span class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Geometria
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  <span class="glyphicon glyphicon-folder-open"></span>
+                                  Fisica
                                 </a>
                               </span>
                               <div class="pull-right">
-                                <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                    </a>
+                                  <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <a href="#">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                      </a>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <a href="#">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                      </a>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <a href="#">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                      </a>
+                                    </div>
                                   </div>
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                </div>
                               </div>
-                            
-                          </div>
-                          <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
-                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck 
                             </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" role="tab" id="headingTwo">
-                            <span class="panel-title">
-                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Collapsible Group Item #2
-                              </a>
-                            </span>
-                            <div class="pull-right">
-                                <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                </div>
-                            </div>
-                          </div>
-                          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="panel-body">
-                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" role="tab" id="headingThree">
-                            <span class="panel-title ">
-                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Trigonometria
-                              </a>
-                            </span>
-                            <div class="pull-right"> 
-                                <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                  <div class="btn-group" role="group" aria-label="...">
-                                    <a href="#">
-                                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </a>
-                                  </div>
-                                </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                              <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                       <div class="input-group">
+                                          <span class="input-group-btn">
+                                              <button class="btn btn-default" type="button">
+                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                              </button>
+                                          </span>
+                                          <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
+
+                                      </div><!-- /input-group -->
+                                    </li>
+                                    <li class="list-group-item">
+                                      <span>Ancho</span>
+                                      <div class="pull-right">
+                                        <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                          
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                      <span>Largo</span>
+                                      <div class="pull-right">
+                                        <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                          <div class="btn-group" role="group" aria-label="...">
+                                            <a href="#">
+                                              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+
+                                  </ul>
                               </div>
-                          </div>
-                          <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                            <div class="panel-body">
-                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                             </div>
                           </div>
+                          
+                          <div class="input-group" style="margin-top:5px;">
+                            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-plus"></span></span>
+                            <input type="text"  class="form-control" placeholder="Nueva Carpeta" aria-describedby="basic-addon1">
+                          </div>
                         </div>
-                      </div>
           
                       <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
                     
                       <button style="margin-top: 10px" id="loadeq" type="button" class="btn btn-default btn-success"type="button" >Cargar Ecuación</button>
                       <input type="file" id="inputfiles" name="files[]" />
                       
+                      </div>
                       
-                      <div id="div-iner">
+                      
+                      <div class="col-xs-6">
+                        <div id="div-iner">
                           <div class="panel-2 drop" title="hola"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
