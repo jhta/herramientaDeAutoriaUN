@@ -64,7 +64,8 @@ module.exports = function(grunt){
                     collapseWhitespace: true 
                 },
                 files: {
-                    'index.html':'dev/html/index.html' //destino: origen
+                    'index.html':'dev/html/index.html', //destino: origen
+                    'login.html':'dev/html/login.html' //destino: origen
                 }
             }
         },
