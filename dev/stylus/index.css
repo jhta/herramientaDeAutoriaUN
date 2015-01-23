@@ -50,8 +50,8 @@ body {
 .panel-2 {
     float: right;
     right: 0;
-    width: 400px;
-    min-height: 700px;
+    width: 100%;
+    min-height: 300px;
     background: rgba(233, 186, 186, 0.43);
     font-size:20px;
 }

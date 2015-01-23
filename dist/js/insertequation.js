@@ -146,13 +146,8 @@ $(document).ready(function(){
 
         })
 
-
-
     });
     
-    
-    
-
     
     $("#loadeq").click(function(){
         $("#inputfiles").click();
@@ -162,8 +157,7 @@ $(document).ready(function(){
     
     
     $("#inputfiles").change(function(evt){
-        var files = evt.target.files; // FileList object
-        
+        var files = evt.target.files; // FileList object  
         if(files.length > 0){
             console.log("ACA");
             if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
