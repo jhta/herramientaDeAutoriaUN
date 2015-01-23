@@ -635,60 +635,149 @@
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                           <li rolec="presentation"><a role="menuitem" id="varEspecifica" tabindex="-1" href="#">Especifica</a></li>
-                          <li role="presentation"><a role="menuitem" id="varUniforme" tabindex="-1" href="#">Uniforme</a></li>
+                          <li role="presentation"><a role="menuitem" id="varDiscreta" tabindex="-1" href="#">Discreta</a></li>
                           <li role="presentation"><a role="menuitem" id="varCategorica" tabindex="-1" href="#">Categorica</a></li>
+                          <li role="presentation"><a role="menuitem" id="varNormal" tabindex="-1" href="#">Normal</a></li>
+                          <li role="presentation"><a role="menuitem" id="varUniforme" tabindex="-1" href="#">Uniforme</a></li>
+                          <li role="presentation"><a role="menuitem" id="varExponencial" tabindex="-1" href="#">Exponencial</a></li>
+                          <!--<li role="presentation"><a role="menuitem" id="varChi" tabindex="-1" href="#">Chi-Cuadrado</a></li>-->
                         </ul>
                       </div>
-                      <form class="form-ag form-inline u-no_display" role="form" ng-submit="newVariableUniforme()" id="formUniforme">
-                        <!--input variable-->
-                        <div class="form-group">
-                          <input type="text"  ng-model="newNombreU" class="form-control contenedor-variables-input" size="3" placeholder="var">
-                        </div>
-                        <!--input valor-->
-                        <span> &isin; &#91;</span>
-                        <!--boton cear-->
-                        <div class="form-group">
-                          <input type="number" ng-model="newMinU"  class="contenedor-variables-input form-control" >
-                        </div>
-                        <span> , </span>
-                        <div class="form-group">
-                          <input type="number"  ng-model="newMaxU" class="contenedor-variables-input form-control" >
-                        </div>
-                        <span>&#93; </span>
-                        <div class="form-group">
-                          <input type="number" ng-model="newIncU"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
-                        </div>
-                        <button type="submit" class="btn btn-success">ag</button>
-                      </form>
+
                       <div>
-                          <form class="form-inline u-no_display" role="form" id="formEspecifica" ng-submit="newVariableEspecifica()">
-                            <!--input variable-->
-                            <div class="form-group">
-                              <input type="text" class="form-control contenedor-variables-input" size="3" ng-model="newNombreE" placeholder="var">
-                            </div>
-                            <!--input valor-->
-                            <span> = </span>
-                            <!--boton cear-->
-                            <div class="form-group">
-                              <input type="number"  ng-model="newValorE" class="contenedor-variables-input form-control" >
-                            </div>
-                            <button type="submit" class="btn btn-success btn-ag">ag</button>
-                          </form>
+                        <form class="form-ag form-inline u-no_display" role="form" id="formEspecifica">
+                          <!--input variable-->
+                          <div class="form-group">
+                            <input id="nameEsp" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                          </div>
+                          <!--input valor-->
+                          <span> = </span>
+                          <!--boton cear-->
+                          <div class="form-group">
+                            <input id="valorEsp" type="number" class="contenedor-variables-input form-control" required>
+                          </div>
+                          
+                          <button id="ag-varEspcifica" type="submit" class="btn btn-success">ag</button>
+                          <br>
+                          <span id="outFormEspecifica"></span>
+                          <br>
+                          <button id="endVar" type="submit" class="btn btn-success">Terminar</button>
+                        </form>
                       </div>
+
                       <div>
-                          <form class="form-inline u-no_display" role="form" id="formCategorica">
+                        <form class="form-ag form-inline u-no_display" role="form" id="formDiscreta">
                             <!--input variable-->
-                            <div class="form-group">
-                              <input type="text" class="form-control contenedor-variables-input" size="3" placeholder="var">
-                            </div>
-                            <!--input valor-->
-                            <span> &isin; &#91;</span>
-                            <!--boton cear-->
-                            <div class="form-group">
-                              <input type="number"  class="contenedor-variables-input form-control" >
-                            </div>
-                          </form>
+                          <div class="form-group">
+                            <input id="nameDis" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                          </div>
+                          <!--input valor-->
+                          <span> = </span>
+                          <!--boton cear-->
+                          <div class="form-group">
+                            <input id="valorDis" type="number" class="contenedor-variables-input form-control" required>
+                          </div>
+
+                          <button id="ag-varDiscreta" type="submit" class="btn btn-success btn-ag">ag</button>
+                          <span id="outFormDiscreta"></span>
+
+                        </form>
                       </div>
+
+                      <div>
+                        <form class="form-ag form-inline u-no_display" role="form" id="formCategorica">
+                            <!--input variable-->
+                          <div class="form-group">
+                            <input id="nameCat" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                          </div>
+                          <!--input valor-->
+                          <span> = </span>
+                          <!--boton cear-->
+                          <div class="form-group">
+                            <input id="valorCat" type="text" class="contenedor-variables-input form-control" required>
+                          </div>
+
+                          <button id="ag-varCategorica" type="submit" class="btn btn-success btn-ag">ag</button>
+                          <br>
+                          <span id="outFormCategorica"></span>
+                          <br>
+                          <button id="endVar" type="submit" class="btn btn-success">Terminar</button>
+                        </form>
+                      </div>
+                      
+                      <div>
+                        <form class="form-ag form-inline u-no_display" role="form" id="formNormal">
+                            <!--input variable-->
+                          <div class="form-group">
+                            <input id="nameNor" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                          </div>
+                          <!--input valor-->
+                          <span> , µ = </span>
+                          <div class="form-group">
+                            <input id="normalNor" type="number" class="form-control contenedor-variables-input" required>
+                          </div>
+
+                          <span> , σ = </span>
+                          <div class="form-group">
+                            <input id="desviacionNor" type="number" class="form-control contenedor-variables-input" required>
+                          </div>
+
+                          <button id="ag-varNormal" type="submit" class="btn btn-success btn-ag">ag</button>
+                          <br>
+                          <span id="outFormNormal"></span>
+                          <br>
+                          <button id="endVar" type="submit" class="btn btn-success">Terminar</button>
+
+                        </form>
+                      </div>
+
+                      <div>
+                        <form class="form-ag form-inline u-no_display" role="form" id="formUniforme">
+                            <!--input variable-->
+                          <div class="form-group">
+                            <input id="nameUni" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                          </div>
+                          <!--input valor-->
+                          <span> , a = </span>
+                          <div class="form-group">
+                            <input id="valueaUni" type="number" class="form-control contenedor-variables-input" required>
+                          </div>
+
+                          <span> , b = </span>
+                          <div class="form-group">
+                            <input id="valuebUni" type="number" class="form-control contenedor-variables-input" required>
+                          </div>
+
+                          <button id="ag-varUniforme" type="submit" class="btn btn-success btn-ag">ag</button>
+                          <br>
+                          <span id="outFormUniforme"></span>
+                          <br>
+                          <button id="endVar" type="submit" class="btn btn-success">Terminar</button>
+
+                        </form>
+                      </div>
+
+                      <div>
+                        <form class="form-ag form-inline u-no_display" role="form" id="formExponencial">
+                            <!--input variable-->
+                          <div class="form-group">
+                            <input id="nameUni" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                          </div>
+                          <!--input valor-->
+                          <span> , λ = </span>
+                          <div class="form-group">
+                            <input id="valueUni" type="number" class="form-control contenedor-variables-input" required>
+                          </div>
+
+                          <button id="ag-varExponencial" type="submit" class="btn btn-success btn-ag">ag</button>
+                          <br>
+                          <span id="outFormExponencial"></span>
+                          <br>
+                          <button id="endVar" type="submit" class="btn btn-success">Terminar</button>
+
+                        </form>
+                      </div>
+
                     </div>
                 </div>
                 <!--FIN: Panel de variables-->
