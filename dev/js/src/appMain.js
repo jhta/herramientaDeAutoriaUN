@@ -112,11 +112,12 @@ $(document).ready(function(){
 
         jsonValues['λ'] = exp;
         
-        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp ']');
+        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp +']');
 
     });
 
     $("#endVar").click(function(){
+        
         console.log("..a");
         varn.value = jsonValues;
         varn.numb = arrayValues
