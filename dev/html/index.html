@@ -625,9 +625,9 @@
               <!--FIN: Seccion Derecha-->
               <!--Seccion izquierda-->
 
-              <div class="col-xs-4 " ng-controller="variableController">
+              <div class="col-xs-4 " >
                 <!--Panel de variabless-->
-                <div class="contenedor-variables panel panel-default"  >
+                <div class="contenedor-variables panel panel-default"  ng-controller="variableController">
                     <div class="panel-heading">
                         <h3 class="panel-title">Variables {{test}}</h3>
                     </div>
@@ -699,9 +699,10 @@
                 <!--FIN: Panel de variables-->
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                        <h3 class="panel-title">Expresiones</h3>    
+                        <h3 class="panel-title">Expresiones</h3>   
                     </div>
                     <div class="panel-body">
+                     
                       <div class="contenedor-panel-prev panel panel-default" id="previsualizador">
                         <div id="droppable-out">
                           <div id="launchPad">
