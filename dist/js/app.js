@@ -142,8 +142,40 @@ function makeTree(elementDrop, uu){
     tree.id = idElement;
     
     if(idData == "var"){
-        //poner metadatos;
-        tree.tag = '<mn>' + elementDrop.data("content") + '</mn>';
+        var typeVar = elementDrop.data('type'),
+            contentVar = elementDrop.data("content"),
+            metaVar = elementDrop.data("metadatos");
+
+        tree.tag = '<mn>' + contentVar + '</mn>';
+
+        //metadatos;
+        tree.meta['type'] = typeVar;
+        tree.meta['id'] = contentVar;
+
+        if(typeVar == 'espcifica'){
+            tree.meta['value'] = metaVar;
+        }
+        else if(typeVar == 'discreta' || 'categorica'){
+            var mm = metaVar.split(',');
+
+            for (var ii in mm) {
+                tree.meta['value'+ii] = mm[ii];
+            };
+        }
+        else if(typeVar == 'normal'){
+            var mm = metaVar.split(',');
+            tree.meta['media'] = mm[1];
+            tree.meta['desviacion'] = mm[3];
+        }
+        else if(typeVar == 'uniforme'){
+            var mm = metaVar.split(',');
+            tree.meta['inicio'] = mm[1];
+            tree.meta['fin'] = mm[3];
+        }
+        else{
+            var mm = metaVar.split(',');
+            tree.meta['lamda'] = mm[1];
+        }        
     }
     else if(idData == "cons"){
         //poner metadatos;
@@ -398,7 +430,7 @@ function Tree(){
     this.opentag = '';
     this.closetag = '';
     this.children = [];
-    this.meta = [];
+    this.meta = {};
     
 };
 
@@ -595,7 +627,7 @@ $(document).ready(function(){
         varn.name = name;
         varn.type = 'espcifica';
         $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
     });
 
     $("#ag-varDiscreta").click(function(){
@@ -606,7 +638,7 @@ $(document).ready(function(){
         varn.type = 'discreta';
 
         $('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
 
     });
 
@@ -617,7 +649,7 @@ $(document).ready(function(){
         varn.type = 'categorica';
 
         $('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
 
     });
 
@@ -632,7 +664,7 @@ $(document).ready(function(){
         jsonValues['desviacion'] = desv;
         
         $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
 
     });
 
@@ -647,7 +679,7 @@ $(document).ready(function(){
         jsonValues['fin'] = b;
 
         $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
     });
 
     $("#ag-varExponencial").click(function(){
@@ -660,19 +692,69 @@ $(document).ready(function(){
         jsonValues['lamda'] = exp;
         
         $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
 
     });
 
     $("#endVar").click(function(){
+        var htmlVar = '<div class="card view-variable" data-id="var" data-content="' + varn.name + '"';
         varn.value = jsonValues;
         varn.numb = arrayValues
         console.log(varn.value);
         
-        $("#panel-variables").append('<div class="card"><span class="var">'+varn.name+'</span></div>');
+
+
+        if(varn.type == 'espcifica'){
+            htmlVar = htmlVar + ' data-type="espcifica" data-metadatos="' + arrayValues[0] + '">';
+        }
+        else if(varn.type == 'discreta'){
+            var result = '';
+            for (var ii in arrayValues) {
+                result = result + arrayValues[ii] +",";
+            };
+            htmlVar = htmlVar + ' data-type="discreta" data-metadatos="' + result + '">';
+
+        }
+        else if(varn.type == 'categorica'){
+            var result = '';
+            for (var ii in arrayValues) {
+                result = result + arrayValues[ii] +",";
+            };
+            htmlVar = htmlVar + ' data-type="categorica" data-metadatos="' + result + '">';
+        }
+        else if(varn.type == 'normal'){
+            var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'];
+            htmlVar = htmlVar + ' data-type="normal" data-metadatos="' + result + '">';
+        }
+        else if(varn.type == 'uniforme'){
+            var result = "inicio," + jsonValues['inicio'] + ",fin," + jsonValues['fin'];
+            htmlVar = htmlVar + ' data-type="uniforme" data-metadatos="' + result + '">';
+        }
+        else{
+            var result = "lamda," + jsonValues['lamda'];
+            htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + '">';
+        }
+
+
+        $("#panel-variables").append(htmlVar + '<span class="var">' + varn.name + '</span></div>');
         conjuntoVariables.splice(conjuntoVariables.length, 0,  varn );
+
+        $(this).addClass('hide');
     });
+
+    $("#endVar").on('click', function(e){
+        $(".view-variable").draggable({
+            appendTo: "body",
+            cursor: "move",
+            helper: "clone",
+            revert: "invalid",
+        });
+    })
 });
+
+
+
+
 
 function Variable(){
     this.name = '';

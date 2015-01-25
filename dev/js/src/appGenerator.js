@@ -142,8 +142,40 @@ function makeTree(elementDrop, uu){
     tree.id = idElement;
     
     if(idData == "var"){
-        //poner metadatos;
-        tree.tag = '<mn>' + elementDrop.data("content") + '</mn>';
+        var typeVar = elementDrop.data('type'),
+            contentVar = elementDrop.data("content"),
+            metaVar = elementDrop.data("metadatos");
+
+        tree.tag = '<mn>' + contentVar + '</mn>';
+
+        //metadatos;
+        tree.meta['type'] = typeVar;
+        tree.meta['id'] = contentVar;
+
+        if(typeVar == 'espcifica'){
+            tree.meta['value'] = metaVar;
+        }
+        else if(typeVar == 'discreta' || 'categorica'){
+            var mm = metaVar.split(',');
+
+            for (var ii in mm) {
+                tree.meta['value'+ii] = mm[ii];
+            };
+        }
+        else if(typeVar == 'normal'){
+            var mm = metaVar.split(',');
+            tree.meta['media'] = mm[1];
+            tree.meta['desviacion'] = mm[3];
+        }
+        else if(typeVar == 'uniforme'){
+            var mm = metaVar.split(',');
+            tree.meta['inicio'] = mm[1];
+            tree.meta['fin'] = mm[3];
+        }
+        else{
+            var mm = metaVar.split(',');
+            tree.meta['lamda'] = mm[1];
+        }        
     }
     else if(idData == "cons"){
         //poner metadatos;
@@ -398,7 +430,7 @@ function Tree(){
     this.opentag = '';
     this.closetag = '';
     this.children = [];
-    this.meta = [];
+    this.meta = {};
     
 };
 

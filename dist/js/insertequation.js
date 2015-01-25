@@ -136,7 +136,7 @@ $(document).ready(function(){
                 $(this).draggable({
                     appendTo: "body",
                     cursor: "move",
-                    revert: "invalid",
+                    revert: "invalid"
                 });
             }
         });
