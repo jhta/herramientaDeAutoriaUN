@@ -56,7 +56,7 @@ $(document).ready(function(){
         arrayValues = [$('#valorEsp').val()];
         
         varn.name = name;
-        $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
+        //$('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
 
     });
 
@@ -65,7 +65,7 @@ $(document).ready(function(){
         arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
         varn.name = name;
 
-        $('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
+        //$('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
 
     });
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
         arrayValues.splice(arrayValues.length, 0,  [$('#valorCat').val()] );
         varn.name = name;
 
-        $('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
+        //$('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
 
     });
 
@@ -87,7 +87,7 @@ $(document).ready(function(){
         jsonValues['normal'] = norm;
         jsonValues['desviacion'] = desv;
         
-        $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
+        //$('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
 
 
     });
@@ -101,7 +101,7 @@ $(document).ready(function(){
         jsonValues['a'] = a;
         jsonValues['b'] = b;
         
-        $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
+        //$('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
     });
 
     $("#ag-varExponencial").click(function(){
@@ -120,7 +120,7 @@ $(document).ready(function(){
         varn.value = jsonValues;
         varn.numb = arrayValues
         console.log(varn.value);
-        var init= 
+        
         $("#panel-variables").append('<div class="card"><span class="var">'+varn.name+'</span></div>');
         conjuntoVariables.splice(conjuntoVariables.length, 0,  varn );
     });
