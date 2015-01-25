@@ -58,6 +58,7 @@ $(document).ready(function(){
         varn.name = name;
         varn.type = 'espcifica';
         $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
+        $("#endVar").show();
 
     });
 
@@ -68,6 +69,7 @@ $(document).ready(function(){
         varn.type = 'discreta';
 
         $('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
+        $("#endVar").show();
 
     });
 
@@ -78,6 +80,7 @@ $(document).ready(function(){
         varn.type = 'categorica';
 
         $('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
+        $("#endVar").show();
 
     });
 
@@ -92,6 +95,7 @@ $(document).ready(function(){
         jsonValues['desviacion'] = desv;
         
         $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
+        $("#endVar").show();
 
 
     });
@@ -107,6 +111,7 @@ $(document).ready(function(){
         jsonValues['fin'] = b;
         
         $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
+        $("#endVar").show();
     });
 
     $("#ag-varExponencial").click(function(){
@@ -118,7 +123,7 @@ $(document).ready(function(){
 
         jsonValues['lamda'] = exp;
         
-        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp +']');
+        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ']');
         $("#endVar").show();
 
     });

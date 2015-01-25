@@ -153,10 +153,15 @@ body {
 
 #div-iner{
     float: right;
-    width: 35%;
+    width: 100%
     height: 100%;
 }
 
+#div-iner2{
+    float: right;
+    width: 100%
+    height: 100%;
+}
 #line-hr { 
   background-color: black;
   height: 3px;
