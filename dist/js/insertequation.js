@@ -1,42 +1,35 @@
 $(document).ready(function(){
-    var first = true;
-    var id = 0;
-    var mathml = "";
+    var idEquation = -1,
+    mathml = "",
+    eqactually = "",
+    equations = {},
+    html = {},
+    treeActivos = [];
 
-    var ids = {};
-    var banderanCombiG=false;
-    var banderafactorial=false;
-    var banderafuncionf=false;
-    var banderafuncionfn=false;
-
-
-    var equations = [];
-    var html = {};
-    var eqactually = "";
-    var objsons = {};
-    var id=0;
-    /* Escribe Código Mathml en el div con id="text-formulacion"
-     el cual permite hacer una division */
     $("#inserteq").click(function(){
         document.getElementById('eq').focus();
-        var preid="equation-"+id;
-        pasteHtmlAtCaret('  <div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+        var preid ="equation-"+ (++idEquation);
+
+        pasteHtmlAtCaret('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
         document.getElementById(preid).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
-        id++;
-        equations.push(preid);
-        //objsons.push(objson);
-        objsons[preid+""] = {};
-        html[preid+""] = "";
+
+        //------- guardar datos actuales
         if(!(eqactually == "")){
-            objsons[eqactually+""] = objson;
-            html[eqactually+""] = $('.drop').html();
+            treeActivos.splice(equations[eqactually], 1, treeActual);
+            html[eqactually] = $('.drop').html();
         }
-        objson = {};
+        //--------------
+
+
+        equations[preid] = idEquation
+        html[preid] = "";
+        rebootTree(); // reinicia el html, crea un treeactual nuevo
+
+
         $('.drop').html("");
-        $(".drop").droppable("enable");
-        first = true;
         eqactually = preid;
+
     });
 
 
@@ -99,6 +92,7 @@ $(document).ready(function(){
             document.selection.createRange().pasteHTML(html);
         }
     }
+
     (function () {
         console.log(mathml);
         var QUEUE = MathJax.Hub.queue;
@@ -117,21 +111,38 @@ $(document).ready(function(){
 
 
     $("#eq").on("click", ".pre-equation", function () {
-        alert("Me dieron clic perrita "+$(this).attr('id')+" actual es "+eqactually);
         var idpre = $(this).attr('id');
-        objsons[eqactually+""] = objson;
-        html[eqactually+""] = $('.drop').html();
-        eqactually =  idpre;
-        alert("Ahora actual es "+eqactually);
-        alert(JSON.stringify(objsons[eqactually+""]));
-        alert(html[eqactually+""]);
+        var idsplit = idpre.split('-')[1];
+        
+        //------- guardar datos actuales
+        treeActivos.splice(equations[eqactually], 1, treeActual);
+        html[eqactually] = $('.drop').html();
+        //--------------
+
+        $('#previsualizar').text(html[eqactually]);
+
+        eqactually = idpre;
         $('.panel-2').html("");
-        $('.panel-2').html(html[eqactually+""]);
-        $(".panel-2").droppable("enable");
-        objson = objsons[eqactually+""];
+        $('.panel-2').html(html[eqactually]);
+        //$(".panel-2").droppable("enable"); // si esta vacio toca habilitarlo
+
+        treeActual = treeActivos[idsplit];
+
+        $('.drop code, .drop div').each(function(index){
+            if($(this).hasClass("ultimo-e")){
+                $(this).droppable(funcDroppable);
+
+            }else if($(this).hasClass("card2")){
+                $(this).draggable({
+                    appendTo: "body",
+                    cursor: "move",
+                    revert: "invalid",
+                });
+            }
+        });
 
 
-        $(".drop code, .drop div").each(function (index) {
+        /*$(".drop code, .drop div").each(function (index) {
             if($(this).hasClass( "drop2" )){
                 $(this).droppable(funcDroppable);
 
@@ -144,8 +155,7 @@ $(document).ready(function(){
                 });
             }
 
-        })
-
+        });*/
     });
     
     
@@ -191,18 +201,18 @@ $(document).ready(function(){
     $("#exportarxml").click(function(){
 
         var array = [];
-        var ids = [];
+        var idEquations = [];
         var bools = [];
 
         //Esto se hace, porque no se tiene la certeza de que la última ecuacion
         // que se ha creado ya esten guardados sus datos en los json globables
-        objsons[eqactually+""] = objson;
+        objsons[eqactually+""] = treeActual;
         html[eqactually+""] = $('.drop').html();
         var i=0;
         var objecto = $("#eq").html();
         $("#eq").children().each (function() {
 
-            ids.push($(this).attr('id'));
+            idEquations.push($(this).attr('id'));
             $(this).html("<123456789>");
         })
         var texto = $("#eq").text();
@@ -224,7 +234,7 @@ $(document).ready(function(){
                     array.push(res);
                     bools.push(false);
                 }
-                array.push(ids[i]);
+                array.push(idEquations[i]);
                 bools.push(true);
                 i++;
                 if( texto.substring(n+10, texto.length).length>1) {
