@@ -1,10 +1,8 @@
-var id = 0;
-var objson = {};
+var idCode = 0;
 var first = true;
 var endFunction = false;
 
-var treeFather = new Tree();
-treeFather.id = 0;
+var treeActual = new Tree();
 
 $(function() {
     $(".card").draggable({
@@ -31,28 +29,25 @@ var funcDroppableOut = {
         var elementDrop = $(ui.draggable);
 
         if(elementDrop.hasClass("first")){
-            $(".drop").droppable(funcDroppableDrop);
-            treeFather = new Tree();
-            treeFather.id = 0;
-            objson = {};
-            first = true;
-            id = 0;
+            rebootTree();
             
             UpdateMath("<math>" + "" + "</math>");
         }
         else{
-            var idFather = elementDrop.parent().data("father");
-            var position = elementDrop.parent().data("pos");
+            var elemtParent = elementDrop.parent();
+            elemtParent.addClass('ultimo-e');
+            var idFather = elemtParent.data("father");
+            var position = elemtParent.data("pos");
             var elementFather = $('div').find('[data-id='+ idFather+']');
-            console.log(elementFather);
+            //console.log(elementFather);
             
             var elementSpa = elementFather.find('.spa');
             elementSpa.addClass('drop2');
             elementSpa.droppable(funcDroppable); 
 
-            treeFather.removeNode(idFather, position);
+            treeActual.removeNode(idFather, position);
             
-            var jsn = treeFather.makeString();
+            var jsn = treeActual.makeString();
             UpdateMath("<math>" + jsn + "</math>");
         }
 
@@ -70,14 +65,14 @@ var funcDroppableDrop = {
         makeTree(elementDrop, $(this));
         
         $(this).append(elementDrop);
-        var jsn = treeFather.makeString();
+        var jsn = treeActual.makeString();
         UpdateMath("<math>" + jsn + "</math>");
 
         console.log('mathml:');
         console.log(jsn);
         console.log('tree:');
-        console.log(treeFather);
-        
+        console.log(treeActual);
+
         if(first){
             first = false;
             elementDrop.addClass("first");
@@ -100,14 +95,13 @@ var funcDroppable = {
         makeTree(elementDrop, $(this));
        
        $(this).append(elementDrop);
-        var jsn = treeFather.makeString();
+        var jsn = treeActual.makeString();
         UpdateMath("<math>" + jsn + "</math>");
         
        console.log('mathml:');
        console.log(jsn);
        console.log('tree:');
-       console.log(treeFather);
-
+       console.log(treeActual);
     }
 };
 
@@ -121,10 +115,12 @@ var funcDroppableFalse = {
 function makeTree(elementDrop, uu){
     uu.droppable(funcDroppableFalse); //cambia la apariencia.
     var idData = elementDrop.data("id"),
-        idElement = ++id,
+        idElement = ++idCode,
         tree = new Tree(),
         position,
         idFather;
+
+    uu.removeClass('ultimo-e');
     
     if(uu.data('id')){
         idFather = uu.data('father');
@@ -155,9 +151,10 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "llaves" || idData == "parentesis" || idData == "corchetes" || idData == "factorial"){
         var child = elementDrop.find('code:nth-child(1)');
-        child.attr('data-id', ++id);
+        child.attr('data-id', ++idCode);
         child.attr('data-pos', 0);
         child.attr('data-father', idElement);
+        child.addClass('ultimo-e');
         
         if (idData == 'llaves'){
             tree.opentag = '<mrow><mtext>{</mtext>';
@@ -180,9 +177,10 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "trig"){
         var child = elementDrop.find('code:nth-child(1)');
-        child.attr('data-id', ++id);
+        child.attr('data-id', ++idCode);
         child.attr('data-pos', 0);
         child.attr('data-father', idElement);
+        child.addClass('ultimo-e');
 
         tree.opentag = '<mrow><mi>' + elementDrop.data('content') + '</mi><mtext>(</mtext>';
         tree.closetag = '<mtext>)</mtext></mrow>';
@@ -190,9 +188,10 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "raiz"){
         var child = elementDrop.find('code:nth-child(1)');
-        child.attr('data-id', ++id);
+        child.attr('data-id', ++idCode);
         child.attr('data-pos', 0);
         child.attr('data-father', idElement);
+        child.addClass('ultimo-e');
 
         tree.opentag = '<mrow><msqrt><mtext>(</mtext>';
         tree.closetag = '</msqrt><mtext>)</mtext></mrow>';
@@ -200,14 +199,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "raiz-n"){
         var child1 = elementDrop.find("code:nth-child(1)");
-        child1.attr('data-id', ++id);
+        child1.attr('data-id', ++idCode);
         child1.attr('data-pos', 1);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
         
         var child2 = elementDrop.find("code:nth-child(3)");
-        child2.attr('data-id', ++id);
+        child2.attr('data-id', ++idCode);
         child2.attr('data-pos', 0);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
         
         tree.opentag = '<mrow><mroot>';
         tree.closetag = '</mroot></mrow>';
@@ -215,14 +216,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "expo" || idData == "expo-base"){
         var child1 = elementDrop.find("code:nth-child(1)");
-        child1.attr('data-id', ++id);
+        child1.attr('data-id', ++idCode);
         child1.attr('data-pos', 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
         
         var child2 = elementDrop.find("code:nth-child(2)");
-        child2.attr('data-id', ++id);
+        child2.attr('data-id', ++idCode);
         child2.attr('data-pos', 1);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
         
         if(idData == 'expo'){
             tree.opentag = '<mrow><msup>';
@@ -235,14 +238,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "log"){
         var child1 = elementDrop.find("code:nth-child(1)");
-        child1.attr("data-id", ++id);
+        child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
         
         var child2 = elementDrop.find("code:nth-child(2)");
-        child2.attr("data-id", ++id);
+        child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 1);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
 
         tree.opentag = '<mrow><mi>' + elementDrop.data('content') + '</mi><msub>';
         tree.closetag = '</msub></mrow>';
@@ -250,14 +255,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "suma" || idData == "resta" || idData == "mult" || idData == "igual"){
         var child1 = elementDrop.find("code:nth-child(1)");
-        child1.attr("data-id", ++id);
+        child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
         
         var child2 = elementDrop.find("code:nth-child(2)");
-        child2.attr("data-id", ++id);
+        child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 2);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
 
         tree.opentag = '<mrow><mtext>(</mtext>';
         tree.closetag = '<mtext>)</mtext></mrow>';
@@ -265,14 +272,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "funcionf"){
         var child1 = elementDrop.find("code:nth-child(1)");
-        child1.attr("data-id", ++id);
+        child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
         
         var child2 = elementDrop.find("code:nth-child(2)");
-        child2.attr("data-id", ++id);
+        child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 2);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
 
         tree.opentag = '<mrow><mtext>f(</mtext>';
         tree.closetag = '</mrow>';
@@ -280,14 +289,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "combinatoria"){
         var child1 = elementDrop.find("div:nth-child(2)").find("div:nth-child(1)");
-        child1.attr("data-id", ++id);
+        child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
 
         var child2 = elementDrop.find("div:nth-child(2)").find("div:nth-child(2)");
-        child2.attr("data-id", ++id);
+        child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 1);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
 
         tree.opentag = "<mrow><mtext>(</mtext><mfrac linethickness='0em'>";
         tree.closetag = '</mfrac><mtext>)</mtext></mrow>';
@@ -295,14 +306,16 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "division"){
         var child1 = elementDrop.find("div:nth-child(2)").find("div:nth-child(1)");
-        child1.attr("data-id", ++id);
+        child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
 
         var child2 = elementDrop.find("div:nth-child(2)").find("div:nth-child(3)");
-        child2.attr("data-id", ++id);
+        child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 1);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
 
         tree.opentag = "<mrow><mtext>(</mtext><mfrac linethickness='1px'>";
         tree.closetag = '</mfrac><mtext>)</mtext></mrow>';
@@ -310,19 +323,22 @@ function makeTree(elementDrop, uu){
     }
     else if(idData == "sumatoria" || idData == "integral" || idData == "multiplicatoria"){
         var child1 = elementDrop.find("div:nth-child(3)").find("div:nth-child(2)");
-        child1.attr("data-id", ++id);
+        child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
+        child1.addClass('ultimo-e');
 
         var child2 = elementDrop.find("div:nth-child(3)").find("div:nth-child(1)");
-        child2.attr("data-id", ++id);
+        child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 1);
         child2.attr('data-father', idElement);
+        child2.addClass('ultimo-e');
 
         var child3 = elementDrop.find("code");
-        child3.attr("data-id", ++id);
+        child3.attr("data-id", ++idCode);
         child3.attr("data-pos", 3);
         child3.attr('data-father', idElement);
+        child3.addClass('ultimo-e');
 
         var simbolo;
         if(idData == "sumatoria")
@@ -344,9 +360,10 @@ function makeTree(elementDrop, uu){
             var text = "code:nth-child("+(i+1)+")";
             var child = elementDrop.find(text);
             
-            child.attr("data-id", ++id);
+            child.attr("data-id", ++idCode);
             child.attr("data-pos", 0);
             child.attr('data-father', idElement);
+            child.addClass('ultimo-e');
 
             vec[i] = '<mrow><mi>□</mi></mrow>';
         }
@@ -357,7 +374,7 @@ function makeTree(elementDrop, uu){
     }
 
     
-    treeFather.addNode(idFather, tree, position);
+    treeActual.addNode(idFather, tree, position);
     
     var elementSpa = elementDrop.find('.spa');
     elementSpa.addClass('drop2');
@@ -439,8 +456,8 @@ function makeStringRec(tree){
 
 Tree.prototype.addNode = function(idFather, data, pos){
     endFunction = false;
-    if(treeFather.children.length == 0){
-        treeFather.children = [data];
+    if(this.children.length == 0){
+        this.children = [data];
     }else{
         addNodeRec(this, idFather, function(node, err){
             if(err)
@@ -507,4 +524,13 @@ function removeNodeRec(tree, idFather, callback){
                     callback(null, 'no se encontraron hijos');
         }
     }
+}
+
+function rebootTree(){
+    first = true;
+    $(".drop").droppable(funcDroppableDrop);
+    idCode = 0
+    treeActual = new Tree();
+    treeActual.id = 0;
+
 }
