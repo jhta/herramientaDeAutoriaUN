@@ -38,7 +38,8 @@
       <script type="text/javascript" src="dist/js/writetextbox.js"></script>
       <script type="text/javascript" src="dist/js/insertequation.js"></script>
       <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
-      
+      <script type="text/javascript" src="dist/js/respuestas.js"></script>
+      <script type="text/javascript" src="dist/js/restfulleditor.js"></script>
 
   </head>
   <body ng-app>
@@ -258,6 +259,7 @@
                       </div>
                       <div class="row">
                         <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:15px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>  
+                        
                         <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
                         <button style="margin-top: 10px" id="loadeq" type="button" class="btn btn-default btn-success"type="button" >Cargar Ecuación</button>
                         <input type="file" id="inputfiles" name="files[]" />  
@@ -571,11 +573,11 @@
                       
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
+                                <button class="btn btn-default" id="crearRespuesta" type="button">
                                   <span class="glyphicon glyphicon-plus "></span>
                                 </button>
                             </span>
-                            <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
+                            <input type="text" id="inputNuevaRespuesta" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
                         </div><!-- /input-group -->
                         <!-- <button class="btn btn-success u-btn" data-toggle="modal" data-target="#myModal">
                             Agregar <span class="glyphicon glyphicon-pencil "></span>
