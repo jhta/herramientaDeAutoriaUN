@@ -36,11 +36,7 @@ $(document).ready(function(){
                         "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
                         "</a>" +
                         "</div>" +
-                        "<div class='btn-group' role='group' aria-label='...'>" +
-                        "<a href='#'>" +
-                        "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
-                        "</a>" +
-                        "</div>" +
+
                         "</div>" +
                         "</div>" +
                         "</div>" +
@@ -70,6 +66,7 @@ $(document).ready(function(){
                             "<span data-title='"+ val.titulo +"'>" + val.titulo + "</span>" +
                             "<div class='pull-right'>" +
                             " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+
                             "<div class='btn-group' role='group' aria-label='...'>" +
                             "<a href='#' class='editQuestion' data-id='"+ val._id+"'>" +
                             "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
@@ -80,6 +77,13 @@ $(document).ready(function(){
                             "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
                             "</a>" +
                             "</div>" +
+
+                            "<div class='btn-group' role='group' aria-label='...'>" +
+                            "<a href='#' class='LoadQuestion' data-id="+ val._id+">" +
+                            "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
+                            "</a>" +
+                            "</div>" +
+
                             "</div>" +
                             " </div>" +
                             " </li>");
@@ -119,11 +123,7 @@ $(document).ready(function(){
                         "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
                         "</a>" +
                         "</div>" +
-                        "<div class='btn-group' role='group' aria-label='...'>" +
-                        "<a href='#'>" +
-                        "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
-                        "</a>" +
-                        "</div>" +
+
                         "</div>" +
                         "</div>" +
                         "</div>" +
@@ -218,6 +218,11 @@ $(document).ready(function(){
                     "<div class='btn-group' role='group' aria-label='...'>" +
                     "<a href='#' class='deleteQuestion' data-id="+ val._id+">" +
                     "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
+                    "</a>" +
+                    "</div>" +
+                    "<div class='btn-group' role='group' aria-label='...'>" +
+                    "<a href='#' class='LoadQuestion' data-id="+ val._id+">" +
+                    "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
                     "</a>" +
                     "</div>" +
                     "</div>" +
