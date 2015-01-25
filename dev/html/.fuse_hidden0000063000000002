@@ -37,9 +37,6 @@
       <!--<script type="text/javascript" src="dist/js/metadatos.js"></script> -->
       <script type="text/javascript" src="dist/js/writetextbox.js"></script>
       <script type="text/javascript" src="dist/js/insertequation.js"></script>
-      <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
-      
-
   </head>
   <body ng-app>
       <!--Contenedor general-->
@@ -51,7 +48,7 @@
             <a class="navbar-brand" href="#">Ticademia</a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
-            <p class="navbar-text navbar-right">Logueado como <a href="#" id="nameUser" class="navbar-link">Jeison Higuita</a> | <a href="#" class="navbar-link">Salir</a></p>
+            <p class="navbar-text navbar-right">Logueado como <a href="#" class="navbar-link">Jeison Higuita</a></p>
           </div>
         </div>
       </nav>
@@ -257,14 +254,14 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:15px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>  
-                        <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
+                        <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:10px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>  
+                        <button style="margin-top: 10px" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
                         <button style="margin-top: 10px" id="loadeq" type="button" class="btn btn-default btn-success"type="button" >Cargar Ecuación</button>
                         <input type="file" id="inputfiles" name="files[]" />  
                       </div>
                       
                       <div class="row">
-                        <div class="col-xs-12 ">
+                        <div class="col-xs-8 col-xs-offset-2">
                           <div id="div-iner">
                             <div class="panel-2 drop" title="_draggable"></div>
                           </div>

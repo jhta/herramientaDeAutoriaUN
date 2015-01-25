@@ -59,7 +59,6 @@ $(document).ready(function(){
         varn.type = 'espcifica';
         $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
         $("#endVar").show();
-
     });
 
     $("#ag-varDiscreta").click(function(){
@@ -97,7 +96,6 @@ $(document).ready(function(){
         $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
         $("#endVar").show();
 
-
     });
 
     $("#ag-varUniforme").click(function(){
@@ -109,7 +107,7 @@ $(document).ready(function(){
 
         jsonValues['inicio'] = a;
         jsonValues['fin'] = b;
-        
+
         $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
         $("#endVar").show();
     });
@@ -129,16 +127,13 @@ $(document).ready(function(){
     });
 
     $("#endVar").click(function(){
-
-        console.log("..a");
         varn.value = jsonValues;
         varn.numb = arrayValues
-
+        console.log(varn.value);
+        
+        $("#panel-variables").append('<div class="card"><span class="var">'+varn.name+'</span></div>');
         conjuntoVariables.splice(conjuntoVariables.length, 0,  varn );
-
     });
-
-
 });
 
 function Variable(){
