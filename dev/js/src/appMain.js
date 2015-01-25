@@ -117,15 +117,13 @@ $(document).ready(function(){
     });
 
     $("#endVar").click(function(){
-        console.log("..a");
         varn.value = jsonValues;
         varn.numb = arrayValues
-
+        console.log(varn.value);
+        var init= 
+        $("#panel-variables").append('<div class="card"><span class="var">'+varn.name+'</span></div>');
         conjuntoVariables.splice(conjuntoVariables.length, 0,  varn );
-
     });
-
-
 });
 
 function Variable(){
