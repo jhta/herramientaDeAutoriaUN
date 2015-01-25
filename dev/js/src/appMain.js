@@ -62,6 +62,7 @@ $(document).ready(function(){
     });
 
     $("#ag-varDiscreta").click(function(){
+        console.log("NEAa");
         var name = $('#nameDis').val();
         arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
         varn.name = name;
@@ -147,7 +148,7 @@ function Variable(){
 function varToXML(){
     var result = '<variables>'
     if(conjuntoVariables.length > 0){
-        for(int index in conjuntoVariables){
+        for(var index in conjuntoVariables){
             var x = conjuntoVariables[index];
             var v;
             if(x.type == 'espcifica'){
@@ -156,15 +157,15 @@ function varToXML(){
             }
             else if(x.type == 'discreta'){
                 v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
-                for(int ii in x.numb){
+                for(var ii in x.numb){
                     v = v + '<valor>' + x.numb[ii] + '</valor>';    
                 }
                 v = v + '</variable>';
                 
             }
             else if(x.type == 'categorica'){
-                v = '<variable tipo=' + x.type ' id=' + x.name + '>';
-                for(int ii in x.numb){
+                v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
+                for(var ii in x.numb){
                     v = v + '<valor>' + x.numb[ii] + '</valor>';    
                 }
                 v = v + '</variable>';
