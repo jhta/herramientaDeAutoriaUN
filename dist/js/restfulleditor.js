@@ -7,7 +7,6 @@ $(document).ready(function(){
         client.add('question');
         client.question.add('all');
 
-
         /*
         Cargar las carpetas y las preguntas que posee cada carpeta
          */
