@@ -191,6 +191,8 @@ function varToXML(){
         result = result + '</variables>';
     }
 }
+
+
 function setEndOfContenteditable(contentEditableElement)
 {
     var range,selection;
