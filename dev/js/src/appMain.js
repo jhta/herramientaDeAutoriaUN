@@ -56,6 +56,7 @@ $(document).ready(function(){
         arrayValues = [$('#valorEsp').val()];
         
         varn.name = name;
+        varn.type = 'espcifica';
         $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
 
     });
@@ -64,6 +65,7 @@ $(document).ready(function(){
         var name = $('#nameDis').val();
         arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
         varn.name = name;
+        varn.type = 'discreta';
 
         $('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
 
@@ -73,6 +75,7 @@ $(document).ready(function(){
         var name = $('#nameCat').val();
         arrayValues.splice(arrayValues.length, 0,  [$('#valorCat').val()] );
         varn.name = name;
+        varn.type = 'categorica';
 
         $('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
 
@@ -83,8 +86,9 @@ $(document).ready(function(){
         var norm = $('#normalNor').val();
         var desv = $('#desviacionNor').val();
         varn.name = name;
+        varn.type = 'normal';
 
-        jsonValues['normal'] = norm;
+        jsonValues['media'] = norm;
         jsonValues['desviacion'] = desv;
         
         $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
@@ -97,9 +101,10 @@ $(document).ready(function(){
         var a = $('#valueaUni').val();
         var b = $('#valuebUni').val();
         varn.name = name;
+        varn.type = 'uniforme';
 
-        jsonValues['a'] = a;
-        jsonValues['b'] = b;
+        jsonValues['inicio'] = a;
+        jsonValues['fin'] = b;
         
         $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
     });
@@ -109,15 +114,17 @@ $(document).ready(function(){
         var name = $('#nameUni').val();
         var exp = $('#valueUni').val();
         varn.name = name;
+        varn.type = 'exponencial';
 
-        jsonValues['λ'] = exp;
+        jsonValues['lamda'] = exp;
         
         $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp +']');
+        $("#endVar").show();
 
     });
 
     $("#endVar").click(function(){
-        
+
         console.log("..a");
         varn.value = jsonValues;
         varn.numb = arrayValues
@@ -131,6 +138,55 @@ $(document).ready(function(){
 
 function Variable(){
     this.name = '';
+    this.type = '';
+    this.cifras = '';
     this.value = {};
     this.numb = [];
+}
+
+function varToXML(){
+    var result = '<variables>'
+    if(conjuntoVariables.length > 0){
+        for(int index in conjuntoVariables){
+            var x = conjuntoVariables[index];
+            var v;
+            if(x.type == 'espcifica'){
+                v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
+                v = v + '<valor>' + x.numb[0] + '</valor></variable>';
+            }
+            else if(x.type == 'discreta'){
+                v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
+                for(int ii in x.numb){
+                    v = v + '<valor>' + x.numb[ii] + '</valor>';    
+                }
+                v = v + '</variable>';
+                
+            }
+            else if(x.type == 'categorica'){
+                v = '<variable tipo=' + x.type ' id=' + x.name + '>';
+                for(int ii in x.numb){
+                    v = v + '<valor>' + x.numb[ii] + '</valor>';    
+                }
+                v = v + '</variable>';
+            }
+            else if(x.type == 'normal'){
+                v = '<variable tipo=' + x.type + ' cifras_decimales=' + x.cifras + ' id=' + x.name + '>';
+                v = v + '<media>' + x.value['media'] + '</media>';
+                v = v + '<desviacion>' + x.value['desviacion'] + '</desviacion></variable>';
+            }
+            else if(x.type == 'uniforme'){
+                v = '<variable tipo=' + x.type + ' cifras_decimales=' + x.cifras + ' id=' + x.name + '>';
+                v = v + '<inicio>' + x.value['inicio'] + '</fin>';
+                v = v + '<fin>' + x.value['fin'] + '</fin></variable>';
+            }
+            else if(x.type == 'exponencial'){
+                v = '<variable tipo=' + x.type + ' cifras_decimales=' + x.cifras + ' id=' + x.name + '>';
+                v = v + '<lamda>' + x.value['lamda'] + '</lamda></variable>';
+            }
+
+            result = result + v;
+
+        }
+        result = result + '</variables>';
+    }
 }

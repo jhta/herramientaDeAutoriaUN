@@ -77,6 +77,7 @@ var funcDroppableDrop = {
         console.log(jsn);
         console.log('tree:');
         console.log(treeFather);
+        
         if(first){
             first = false;
             elementDrop.addClass("first");
@@ -106,6 +107,7 @@ var funcDroppable = {
        console.log(jsn);
        console.log('tree:');
        console.log(treeFather);
+
     }
 };
 
