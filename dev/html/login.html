@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
+
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Login</title>
 	<link rel="stylesheet" href="dist/libs/css/bootstrap.min.css" type="text/css" />
@@ -11,7 +12,10 @@
       <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
       <script type="text/javascript" src="dist/libs/js/bootstrap.min.js"></script>
       <script type="text/javascript" src="dist/libs/js/bootstrap-wizard.min.js"></script>
-	<link rel="stylesheet" href="">
+    <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
+    <script type="text/javascript" src="dist/js/restfull.js"></script>
+
+    <link rel="stylesheet" href="">
 </head>
 <body>
 	<div class="container">
@@ -30,7 +34,7 @@
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="login">
-                      <form class="form-horizontal" action='' method="POST">
+
                         <fieldset>
                           <div id="legend">
                             <legend class="">Login</legend>
@@ -55,11 +59,10 @@
                           <div class="control-group">
                             <!-- Button -->
                             <div class="controls">
-                              <button style="margin-top: 20px;" class="btn btn-success">Login</button>
+                              <button id="inputLogin" style="margin-top: 20px;" class="btn btn-success">Login</button>
                             </div>
                           </div>
                         </fieldset>
-                      </form>                
                     </div>
                     <div class="tab-pane fade" id="create">
                       <form id="tab">
