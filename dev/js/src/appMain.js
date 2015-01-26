@@ -193,9 +193,6 @@ $(document).ready(function(){
 });
 
 
-
-
-
 function Variable(){
     this.name = '';
     this.type = '';
@@ -250,6 +247,8 @@ function varToXML(){
         result = result + '</variables>';
     }
 }
+
+
 function setEndOfContenteditable(contentEditableElement)
 {
     var range,selection;
