@@ -1,11 +1,9 @@
 var idCode = 0;
 var first = true,
-    firstRespuesta = true,
+    endFunction = false,
     inRespuesta = false;
-var endFunction = false;
 
 var treeActual = new Tree();
-var treeActualRespuestas = new Tree();
 
 
 $(function() {
@@ -37,10 +35,6 @@ var funcDroppableOut = {
             
             UpdateMath("<math>" + "" + "</math>");
         }
-        else if(elementDrop.hasClass('firstRespuesta')){
-            rebootTree2();
-        }
-
         else{
             var elemtParent = elementDrop.parent();
             elemtParent.addClass('ultimo-e');
@@ -54,8 +48,9 @@ var funcDroppableOut = {
             elementSpa.droppable(funcDroppable);
 
             treeActual.removeNode(idFather, position);
-
             var jsn = treeActual.makeString();
+
+            
             UpdateMath("<math>" + jsn + "</math>");
         }
 
@@ -74,6 +69,7 @@ var funcDroppableDrop = {
         
         $(this).append(elementDrop);
         var jsn = treeActual.makeString();
+
         UpdateMath("<math>" + jsn + "</math>");
 
         console.log('mathml:');
@@ -81,13 +77,9 @@ var funcDroppableDrop = {
         console.log('tree:');
         console.log(treeActual);
 
-        if((!inRespuesta) && first){
+        if(first){
             first = false;
             elementDrop.addClass("first");
-        }
-        else if(firstRespuesta){
-            firstRespuesta = false;
-            elementDrop.addClass("firstRespuesta");
         }
     }
 }
@@ -420,8 +412,8 @@ function makeTree(elementDrop, uu){
         tree.setChildren(vec);
     }
 
-
     treeActual.addNode(idFather, tree, position);
+    
     
     var elementSpa = elementDrop.find('.spa');
     elementSpa.addClass('drop2');
@@ -581,13 +573,21 @@ function rebootTree(){
 
 }
 
-function rebootTree2(){
-    firstRespuesta = true;
-    console.log($("#content-drop-respuestas"));
-    $("#content-drop-respuestas").droppable(funcDroppableDrop);
-    treeActualRespuestas = new Tree();
-    treeActualRespuestas.id = 0;
-}
+
+(function () {
+        var QUEUE = MathJax.Hub.queue;
+        var math = null;
+        window.UpdateMath = function (MathML) {
+            QUEUE.Push(function () {
+                if(inRespuesta)
+                    math = MathJax.Hub.getAllJax(eqactuallyres)[0];
+                else
+                    math = MathJax.Hub.getAllJax(eqactually)[0];
+
+            });
+            QUEUE.Push(["Text", math, MathML]);
+        }
+    })();
 
 var varn,
     arrayValues = [];

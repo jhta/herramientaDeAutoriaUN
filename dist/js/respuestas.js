@@ -1,15 +1,13 @@
+var eqactuallyres = "";
 $(document).ready(function(){
     /*
      * *******************************************************************************
      * Crud general de respuestas y errores genuinos: crear, editar, eliminar, ver
      */
-
-
     //Variables globales que permiten el almacenamiento en memoria de las respuestas que va creando el cliente
     var respuestas = {};
     var idRespuesta=0;
     var respactual;
-    var eqactuallyres = "";
     var eqActuallyIdRespuestaCorrecta = "";
 
     //Crear una nueva respuesta
@@ -76,9 +74,9 @@ $(document).ready(function(){
 
         eqActuallyIdRespuestaCorrecta = "";
         $('#content-drop-respuestas').html("");
-        rebootTree2(); // reinicia el html, crea un treeactual nuevo
+        rebootTree(); // reinicia el html, crea un treeactual nuevo
         respactual.html="";
-        respactual.tree = treeActualRespuestas ;
+        respactual.tree = treeActual ;
         respuestas[respactual.id+""] = respactual;
         console.log(respuestas);
         eqactuallyres = respactual.id;
@@ -86,6 +84,7 @@ $(document).ready(function(){
 
     //Agregar error genuino a una respuesta
     $("#accordion2").on("click",".addErrorGenuino",function(){
+        inRespuesta = true;
         respactual = respuestas[$(this).data("id")+""];
         var error = new Error();
         error.id=respactual.id+ "-" + respactual.error_genuino.length;
@@ -123,7 +122,7 @@ $(document).ready(function(){
 
         eqActuallyIdRespuestaCorrecta = respactual.id;
         $('#content-drop-respuestas').html("");
-        rebootTree2(); // reinicia el html, crea un treeactual nuevo
+        rebootTree(); // reinicia el html, crea un treeactual nuevo
         eqactuallyres = error.id;
     });
 
@@ -173,19 +172,9 @@ $(document).ready(function(){
      * Manipulación de las ecuaciones que se generan para las respuestas correctas y errores genuinos
      */
 
-    (function () {
-        var QUEUE = MathJax.Hub.queue;
-        var math = null;
-        window.UpdateMath = function (MathML) {
-            QUEUE.Push(function () {
-                math = MathJax.Hub.getAllJax(eqactuallyres)[0];
-            });
-            QUEUE.Push(["Text", math, MathML]);
-        }
-    })();
+   
 
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
-        inRespuesta = true;
          var id = $(this).data('id');
         var tipo = $(this).data('tipo');
 
@@ -203,7 +192,7 @@ $(document).ready(function(){
                 if (typeof value != 'undefined')
                     if ((value.id).localeCompare(id) == 0) {
                         $('#content-drop-respuestas').html(value.html);
-                        treeActualRespuestas = value.tree;
+                        treeActual = value.tree;
                     }
             });
         }else{
@@ -212,7 +201,7 @@ $(document).ready(function(){
             console.log(id);
             eqActuallyIdRespuestaCorrecta = "";
             $('#content-drop-respuestas').html(respuestas[id+""].html);
-            treeActualRespuestas = respuestas[id+""].tree;
+            treeActual = respuestas[id+""].tree;
         }
         eqactuallyres = id;
 
@@ -245,14 +234,14 @@ $(document).ready(function(){
                 $.each( res.error_genuino, function( index, value ) {
                     if (typeof value != 'undefined') {
                         if ((value.id).localeCompare(eqactuallyres) == 0) {
-                            res.error_genuino[index].tree = treeActualRespuestas;
+                            res.error_genuino[index].tree = treeActual;
                             res.error_genuino[index].html = $('#content-drop-respuestas').html();
                         };
                     }
                 });
             }else{
                 var res = respuestas[eqactuallyres+""];
-                res.tree = treeActualRespuestas;
+                res.tree = treeActual;
                 res.html = $('#content-drop-respuestas').html();
             }
         }

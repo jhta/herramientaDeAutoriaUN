@@ -1,12 +1,13 @@
+var eqactually = "";
 $(document).ready(function(){
     var idEquation = -1,
     mathml = "",
-    eqactually = "",
     equations = {},
     html = {},
     treeActivos = [];
 
     $("#inserteq").click(function(){
+        inRespuesta = false;
         document.getElementById('eq').focus();
         var preid ="equation-"+ (++idEquation);
 
@@ -93,25 +94,8 @@ $(document).ready(function(){
         }
     }
 
-    (function () {
-        console.log(mathml);
-        var QUEUE = MathJax.Hub.queue;
-        var math = null;
-
-        window.UpdateMath = function (MathML) {
-            //alert("Vamos a actualizar ps en "+eqactually);
-            QUEUE.Push(function () {
-                math = MathJax.Hub.getAllJax(eqactually)[0];
-            });
-            // MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqactually]);
-            QUEUE.Push(["Text", math, MathML]);
-        }
-    })();
-
-
-
     $("#eq").on("click", ".pre-equation", function () {
-
+        inRespuesta = false;
         var idpre = $(this).attr('id');
         var idsplit = idpre.split('-')[1];
         
@@ -120,12 +104,14 @@ $(document).ready(function(){
         html[eqactually] = $('.drop').html();
         //--------------
 
-        $('#previsualizar').text(html[eqactually]);
+        //$('#previsualizar').text(html[eqactually]);
 
         eqactually = idpre;
         $('.panel-2').html("");
         $('.panel-2').html(html[eqactually]);
-        //$(".panel-2").droppable("enable"); // si esta vacio toca habilitarlo
+        if(html[eqactually] == ""){
+            $(".panel-2").droppable(funcDroppableDrop);
+        }
 
         treeActual = treeActivos[idsplit];
 
@@ -137,32 +123,16 @@ $(document).ready(function(){
                 $(this).draggable({
                     appendTo: "body",
                     cursor: "move",
-                    revert: "invalid"
+                    revert: "invalid",
                 });
             }
         });
-
-
-        /*$(".drop code, .drop div").each(function (index) {
-            if($(this).hasClass( "drop2" )){
-                $(this).droppable(funcDroppable);
-
-            }else if($(this).hasClass( "card2" )){
-                $(this).draggable({
-                    appendTo: "body",
-                    cursor: "move",
-                    revert: "invalid",
-                    greedy: true
-                });
-            }
-
-        });*/
     });
     
     
     $("#loadeq").click(function(){
         $("#inputfiles").click();
-
+        
     });
     
     
