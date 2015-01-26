@@ -39,6 +39,7 @@
       <script type="text/javascript" src="dist/js/insertequation.js"></script>
       <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
       <script type="text/javascript" src="dist/js/respuestas.js"></script>
+
       <!--<script type="text/javascript" src="dist/js/restfulleditor.js"></script>-->
 
   </head>
@@ -588,7 +589,7 @@
                         <div class="row">
                           <div class="col-xs-12 ">
                             <div id="div-iner2">
-                              <div class="panel-2 drop" title="hola"></div>
+                              <div id="content-drop-respuestas" class="panel-2 drop" title="hola"></div>
                             </div>
                           </div>
                         </div>
@@ -737,6 +738,9 @@
                           <div class="form-group">
                             <input id="desviacionNor" type="number" class="form-control contenedor-variables-input" required>
                           </div>
+                          <div class="form-group">
+                              <input id="incNor" type="number"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
+                          </div>
 
                           <button id="ag-varNormal" type="submit" class="btn btn-success btn-ag">ag</button>
                           <br>
@@ -763,6 +767,10 @@
                           <div class="form-group">
                             <input id="valuebUni" type="number" class="form-control contenedor-variables-input" required>
                           </div>
+                          <div class="form-group">
+                              <input id="incUni" type="number"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
+                          </div>
+
 
                           <button id="ag-varUniforme" type="submit" class="btn btn-success btn-ag">ag</button>
                           <br>
@@ -777,12 +785,15 @@
                         <form class="form-ag form-inline u-no_display" role="form" id="formExponencial">
                             <!--input variable-->
                           <div class="form-group">
-                            <input id="nameUni" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                            <input id="nameExp" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
                           </div>
                           <!--input valor-->
                           <span> , λ = </span>
                           <div class="form-group">
-                            <input id="valueUni" type="number" class="form-control contenedor-variables-input" required>
+                            <input id="valueExp" type="number" class="form-control contenedor-variables-input" required>
+                          </div>
+                          <div class="form-group">
+                              <input id="incExp" type="number"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
                           </div>
 
                           <button id="ag-varExponencial" type="submit" class="btn btn-success btn-ag">ag</button>
