@@ -51,9 +51,9 @@ $(document).ready(function(){
             " <li class='list-group-item'>"+
             "<span class='glyphicon glyphicon-ok'></span>"+
             " <span>Respuesta correcta:</span>"+
-            "<div class='pull-right'>"+
-            "<div id='content-"+respactual.id+"'></div>"+
-            "<div class='btn-toolbar' role='toolbar' aria-label='...'>"+
+            "<div class='pull-right col-xs-6' style='display: table;'>"+
+            "<div id='content-"+respactual.id+"' class='col-xs-8' style='display: table-cell'></div>"+
+            "<div class='btn-toolbar col-xs-2 pull-right' role='toolbar' aria-label='...'  style='display: table-cell' >"+
             "<div class='btn-group' role='group' aria-label='...'>"+
             "<a href='#' data-id='"+respactual.id+"' class='pre-equation-respuesta' data-tipo='correcta'>"+
             "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
@@ -97,9 +97,9 @@ $(document).ready(function(){
         $("#"+$(this).data("id")).find(".list-group").append(" <li class='list-group-item' id='"+error.id+"' data-respuestaid='"+respactual.id+"'>"+
             "<span class='glyphicon glyphicon-remove'></span>"+
             " <span>Error genuino:</span>"+
-            "<div id='content-"+error.id+"'></div>"+
-            "<div class='pull-right'>"+
-            "<div class='btn-toolbar' role='toolbar' aria-label='...'>"+
+            "<div class='pull-right col-xs-6' style='display:table;'>"+
+            "<div id='content-"+error.id+"' style='display: table-cell' class='col-xs-8'></div>"+
+            "<div class='btn-toolbar col-xs-2 col-xs-offset-1 pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
             "<div class='btn-group' role='group' aria-label='...'>"+
             "<a href='#' data-id='"+error.id+"' class='pre-equation-respuesta' data-tipo='error' data-respuestaid='"+respactual.id+"'>"+
             "<span class='glyphicon glyphicon-wrench'   aria-hidden='true'></span>"+
@@ -114,7 +114,7 @@ $(document).ready(function(){
             "</div>"+
             "</li>");
 
-        $("#content-"+error.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;"  data-id="'+respactual.id+'" id="mathjax-'+error.id+'"><math></math></div>');
+        $("#content-"+error.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;"  data-id="'+respactual.id+'" id="mathjax-'+error.id+'"><math></math></div>');
         document.getElementById("mathjax-"+error.id).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>6</mn></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,"mathjax-"+error.id]);
 
