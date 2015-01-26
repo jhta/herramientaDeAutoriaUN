@@ -7,6 +7,7 @@ $(document).ready(function(){
     treeActivos = [];
 
     $("#inserteq").click(function(){
+        inRespuesta = false;
         document.getElementById('eq').focus();
         var preid ="equation-"+ (++idEquation);
 
@@ -111,6 +112,7 @@ $(document).ready(function(){
 
 
     $("#eq").on("click", ".pre-equation", function () {
+        inRespuesta = false;
         var idpre = $(this).attr('id');
         var idsplit = idpre.split('-')[1];
         
@@ -136,7 +138,7 @@ $(document).ready(function(){
                 $(this).draggable({
                     appendTo: "body",
                     cursor: "move",
-                    revert: "invalid",
+                    revert: "invalid"
                 });
             }
         });

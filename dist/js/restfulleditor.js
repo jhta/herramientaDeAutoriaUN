@@ -10,7 +10,6 @@ $(document).ready(function(){
         /*
         Cargar las carpetas y las preguntas que posee cada carpeta
          */
-
         client.folder.read(sessionStorage.getItem('id')).done(function (data) {
             console.log(data);
             jQuery.each( data.User.folders, function( i, val ) {

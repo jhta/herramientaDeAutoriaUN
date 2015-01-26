@@ -1,8 +1,12 @@
 var idCode = 0;
-var first = true;
+var first = true,
+    firstRespuesta = true,
+    inRespuesta = false;
 var endFunction = false;
 
 var treeActual = new Tree();
+var treeActualRespuestas = new Tree();
+
 
 $(function() {
     $(".card").draggable({
@@ -33,6 +37,10 @@ var funcDroppableOut = {
             
             UpdateMath("<math>" + "" + "</math>");
         }
+        else if(elementDrop.hasClass('firstRespuesta')){
+            rebootTree2();
+        }
+
         else{
             var elemtParent = elementDrop.parent();
             elemtParent.addClass('ultimo-e');
@@ -43,10 +51,10 @@ var funcDroppableOut = {
             
             var elementSpa = elementFather.find('.spa');
             elementSpa.addClass('drop2');
-            elementSpa.droppable(funcDroppable); 
+            elementSpa.droppable(funcDroppable);
 
             treeActual.removeNode(idFather, position);
-            
+
             var jsn = treeActual.makeString();
             UpdateMath("<math>" + jsn + "</math>");
         }
@@ -73,9 +81,13 @@ var funcDroppableDrop = {
         console.log('tree:');
         console.log(treeActual);
 
-        if(first){
+        if((!inRespuesta) && first){
             first = false;
             elementDrop.addClass("first");
+        }
+        else if(firstRespuesta){
+            firstRespuesta = false;
+            elementDrop.addClass("firstRespuesta");
         }
     }
 }
@@ -373,7 +385,7 @@ function makeTree(elementDrop, uu){
         tree.setChildren(vec);
     }
 
-    
+
     treeActual.addNode(idFather, tree, position);
     
     var elementSpa = elementDrop.find('.spa');
@@ -533,4 +545,12 @@ function rebootTree(){
     treeActual = new Tree();
     treeActual.id = 0;
 
+}
+
+function rebootTree2(){
+    firstRespuesta = true;
+    console.log($("#content-drop-respuestas"));
+    $("#content-drop-respuestas").droppable(funcDroppableDrop);
+    treeActualRespuestas = new Tree();
+    treeActualRespuestas.id = 0;
 }
