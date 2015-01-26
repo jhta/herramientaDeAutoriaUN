@@ -58,7 +58,7 @@ $(document).ready(function(){
         varn.name = name;
         varn.type = 'espcifica';
         $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
     });
 
     $("#ag-varDiscreta").click(function(){
@@ -69,7 +69,7 @@ $(document).ready(function(){
         varn.type = 'discreta';
 
         $('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
 
     });
 
@@ -80,7 +80,7 @@ $(document).ready(function(){
         varn.type = 'categorica';
 
         $('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").show();
+        $("#endVar").removeClass('hide');
 
     });
 
@@ -88,14 +88,17 @@ $(document).ready(function(){
         var name = $('#nameNor').val();
         var norm = $('#normalNor').val();
         var desv = $('#desviacionNor').val();
+        var inc = $('#incNor').val();
+
         varn.name = name;
         varn.type = 'normal';
+        varn.inc = inc;
 
         jsonValues['media'] = norm;
         jsonValues['desviacion'] = desv;
         
-        $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
-        $("#endVar").show();
+        $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ', inc=' + inc + ']');
+        $("#endVar").removeClass('hide');
 
     });
 
@@ -103,44 +106,97 @@ $(document).ready(function(){
         var name = $('#nameUni').val();
         var a = $('#valueaUni').val();
         var b = $('#valuebUni').val();
+        var inc = $('#incUni').val();
+
         varn.name = name;
         varn.type = 'uniforme';
+        varn.inc = inc;
 
         jsonValues['inicio'] = a;
         jsonValues['fin'] = b;
 
-        $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
-        $("#endVar").show();
+        $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ', inc=' + inc + ']');
+        $("#endVar").removeClass('hide');
     });
 
     $("#ag-varExponencial").click(function(){
         console.log("..");
-        var name = $('#nameUni').val();
-        var exp = $('#valueUni').val();
+        var name = $('#nameExp').val();
+        var exp = $('#valueExp').val();
+        var inc = $('#incExp').val();
+
         varn.name = name;
         varn.type = 'exponencial';
+        varn.inc = inc;
 
         jsonValues['lamda'] = exp;
         
-        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ']');
-        $("#endVar").show();
+        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ', inc=' + inc + ']');
+        $("#endVar").removeClass('hide');
 
     });
 
     $("#endVar").click(function(){
+        var htmlVar = '<div class="card view-variable" data-id="var" data-content="' + varn.name + '"';
         varn.value = jsonValues;
         varn.numb = arrayValues
         console.log(varn.value);
         
-        $("#panel-variables").append('<div class="card"><span class="var">'+varn.name+'</span></div>');
+
+
+        if(varn.type == 'espcifica'){
+            htmlVar = htmlVar + ' data-type="espcifica" data-metadatos="' + arrayValues[0] + '">';
+        }
+        else if(varn.type == 'discreta'){
+            var result = '';
+            for (var ii in arrayValues) {
+                result = result + arrayValues[ii] +",";
+            };
+            htmlVar = htmlVar + ' data-type="discreta" data-metadatos="' + result + '">';
+
+        }
+        else if(varn.type == 'categorica'){
+            var result = '';
+            for (var ii in arrayValues) {
+                result = result + arrayValues[ii] +",";
+            };
+            htmlVar = htmlVar + ' data-type="categorica" data-metadatos="' + result + '">';
+        }
+        else if(varn.type == 'normal'){
+            var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'] + ",inc," + varn.inc;
+            htmlVar = htmlVar + ' data-type="normal" data-metadatos="' + result + '">';
+        }
+        else if(varn.type == 'uniforme'){
+            var result = "inicio," + jsonValues['inicio'] + ",fin," + jsonValues['fin'] + ",inc," + varn.inc;
+            htmlVar = htmlVar + ' data-type="uniforme" data-metadatos="' + result + '">';
+        }
+        else{
+            var result = "lamda," + jsonValues['lamda'];
+            htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + ",inc," + varn.inc + '">';
+        }
+
+
+        $("#panel-variables").append(htmlVar + '<span class="var">' + varn.name + '</span></div>');
         conjuntoVariables.splice(conjuntoVariables.length, 0,  varn );
+
+        $(this).addClass('hide');
     });
+
+    $("#endVar").on('click', function(e){
+        $(".view-variable").draggable({
+            appendTo: "body",
+            cursor: "move",
+            helper: "clone",
+            revert: "invalid"
+        });
+    })
 });
+
 
 function Variable(){
     this.name = '';
     this.type = '';
-    this.cifras = '';
+    this.inc = '';
     this.value = {};
     this.numb = [];
 }
@@ -191,6 +247,8 @@ function varToXML(){
         result = result + '</variables>';
     }
 }
+
+
 function setEndOfContenteditable(contentEditableElement)
 {
     var range,selection;
