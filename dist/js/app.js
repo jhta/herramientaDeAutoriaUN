@@ -1,8 +1,12 @@
 var idCode = 0;
-var first = true;
+var first = true,
+    firstRespuesta = true,
+    inRespuesta = false;
 var endFunction = false;
 
 var treeActual = new Tree();
+var treeActualRespuestas = new Tree();
+
 
 $(function() {
     $(".card").draggable({
@@ -19,7 +23,7 @@ $(function() {
 
 $(function() {
     $("#droppable-out").droppable(funcDroppableOut);
-    $('.drop').droppable(funcDroppableDrop);
+    //$('.drop').droppable(funcDroppableDrop);
 });
 
 var funcDroppableOut = {
@@ -33,6 +37,10 @@ var funcDroppableOut = {
             
             UpdateMath("<math>" + "" + "</math>");
         }
+        else if(elementDrop.hasClass('firstRespuesta')){
+            rebootTree2();
+        }
+
         else{
             var elemtParent = elementDrop.parent();
             elemtParent.addClass('ultimo-e');
@@ -43,10 +51,10 @@ var funcDroppableOut = {
             
             var elementSpa = elementFather.find('.spa');
             elementSpa.addClass('drop2');
-            elementSpa.droppable(funcDroppable); 
+            elementSpa.droppable(funcDroppable);
 
             treeActual.removeNode(idFather, position);
-            
+
             var jsn = treeActual.makeString();
             UpdateMath("<math>" + jsn + "</math>");
         }
@@ -73,9 +81,13 @@ var funcDroppableDrop = {
         console.log('tree:');
         console.log(treeActual);
 
-        if(first){
+        if((!inRespuesta) && first){
             first = false;
             elementDrop.addClass("first");
+        }
+        else if(firstRespuesta){
+            firstRespuesta = false;
+            elementDrop.addClass("firstRespuesta");
         }
     }
 }
@@ -166,15 +178,18 @@ function makeTree(elementDrop, uu){
             var mm = metaVar.split(',');
             tree.meta['media'] = mm[1];
             tree.meta['desviacion'] = mm[3];
+            tree.meta['inc'] = mm[5];
         }
         else if(typeVar == 'uniforme'){
             var mm = metaVar.split(',');
             tree.meta['inicio'] = mm[1];
             tree.meta['fin'] = mm[3];
+            tree.meta['inc'] = mm[5];
         }
         else{
             var mm = metaVar.split(',');
             tree.meta['lamda'] = mm[1];
+            tree.meta['inc'] = mm[3];
         }        
     }
     else if(idData == "cons"){
@@ -405,7 +420,7 @@ function makeTree(elementDrop, uu){
         tree.setChildren(vec);
     }
 
-    
+
     treeActual.addNode(idFather, tree, position);
     
     var elementSpa = elementDrop.find('.spa');
@@ -561,10 +576,17 @@ function removeNodeRec(tree, idFather, callback){
 function rebootTree(){
     first = true;
     $(".drop").droppable(funcDroppableDrop);
-    idCode = 0
     treeActual = new Tree();
     treeActual.id = 0;
 
+}
+
+function rebootTree2(){
+    firstRespuesta = true;
+    console.log($("#content-drop-respuestas"));
+    $("#content-drop-respuestas").droppable(funcDroppableDrop);
+    treeActualRespuestas = new Tree();
+    treeActualRespuestas.id = 0;
 }
 
 var varn,
@@ -657,13 +679,16 @@ $(document).ready(function(){
         var name = $('#nameNor').val();
         var norm = $('#normalNor').val();
         var desv = $('#desviacionNor').val();
+        var inc = $('#incNor').val();
+
         varn.name = name;
         varn.type = 'normal';
+        varn.inc = inc;
 
         jsonValues['media'] = norm;
         jsonValues['desviacion'] = desv;
         
-        $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ']');
+        $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ', inc=' + inc + ']');
         $("#endVar").removeClass('hide');
 
     });
@@ -672,26 +697,32 @@ $(document).ready(function(){
         var name = $('#nameUni').val();
         var a = $('#valueaUni').val();
         var b = $('#valuebUni').val();
+        var inc = $('#incUni').val();
+
         varn.name = name;
         varn.type = 'uniforme';
+        varn.inc = inc;
 
         jsonValues['inicio'] = a;
         jsonValues['fin'] = b;
 
-        $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ']');
+        $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ', inc=' + inc + ']');
         $("#endVar").removeClass('hide');
     });
 
     $("#ag-varExponencial").click(function(){
         console.log("..");
-        var name = $('#nameUni').val();
-        var exp = $('#valueUni').val();
+        var name = $('#nameExp').val();
+        var exp = $('#valueExp').val();
+        var inc = $('#incExp').val();
+
         varn.name = name;
         varn.type = 'exponencial';
+        varn.inc = inc;
 
         jsonValues['lamda'] = exp;
         
-        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ']');
+        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ', inc=' + inc + ']');
         $("#endVar").removeClass('hide');
 
     });
@@ -723,16 +754,16 @@ $(document).ready(function(){
             htmlVar = htmlVar + ' data-type="categorica" data-metadatos="' + result + '">';
         }
         else if(varn.type == 'normal'){
-            var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'];
+            var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'] + ",inc," + varn.inc;
             htmlVar = htmlVar + ' data-type="normal" data-metadatos="' + result + '">';
         }
         else if(varn.type == 'uniforme'){
-            var result = "inicio," + jsonValues['inicio'] + ",fin," + jsonValues['fin'];
+            var result = "inicio," + jsonValues['inicio'] + ",fin," + jsonValues['fin'] + ",inc," + varn.inc;
             htmlVar = htmlVar + ' data-type="uniforme" data-metadatos="' + result + '">';
         }
         else{
             var result = "lamda," + jsonValues['lamda'];
-            htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + '">';
+            htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + ",inc," + varn.inc + '">';
         }
 
 
@@ -747,7 +778,7 @@ $(document).ready(function(){
             appendTo: "body",
             cursor: "move",
             helper: "clone",
-            revert: "invalid",
+            revert: "invalid"
         });
     })
 });
@@ -756,7 +787,7 @@ $(document).ready(function(){
 function Variable(){
     this.name = '';
     this.type = '';
-    this.cifras = '';
+    this.inc = '';
     this.value = {};
     this.numb = [];
 }

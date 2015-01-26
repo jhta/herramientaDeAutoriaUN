@@ -80,6 +80,7 @@ $(document).ready(function(){
         respactual.html="";
         respactual.tree = treeActualRespuestas ;
         respuestas[respactual.id+""] = respactual;
+        console.log(respuestas);
         eqactuallyres = respactual.id;
     });
 
@@ -275,7 +276,7 @@ $(document).ready(function(){
 
     function Error(){
         this.id = '';
-        this.name='Error genuino';
+        this.nombre='Error genuino';
         this.cifras_decimales = '';
         this.formula = '';
         this.calificacion = '';
@@ -283,9 +284,46 @@ $(document).ready(function(){
         this.tree = '';
         this.retroalimentacion='';
     }
+    $("#loadeq").click(function(){
+        var resp = JSON.stringify(respuestas);
 
-    //Se ejecuta cuando se crea una nueva pregunta
-    function addNewRespuestaTree(){
-
-    }
+        var xw = new XMLWriter('UTF-8');
+        xw.formatting = 'indented';//add indentation and newlines
+        xw.indentChar = ' ';//indent with spaces
+        xw.indentation = 2;//add 2 spaces per level
+        xw.writeStartDocument();
+        xw.writeStartElement('respuestas');
+        console.log("Vamos a ver las respuestas");
+        console.log(respuestas);
+            for(var element in respuestas)
+            {
+                var res = respuestas[element];
+                console.log(res);
+                console.log(respuestas[element]);
+            xw.writeStartElement('respuesta');
+            xw.writeAttributeString( "nombre", res.nombre );
+            xw.writeAttributeString( "id", res.id);
+            xw.writeAttributeString( "cifras_decimales", "0.2" );
+            xw.writeAttributeString( "formula", "" );
+            var errores = res.error_genuino;
+            for(var e=0;e<errores.length;e++){
+                var egen= errores[e];
+                xw.writeStartElement('error_genuino');
+                xw.writeAttributeString( "id", egen.id );
+                xw.writeAttributeString( "formula", egen.nombre );
+                xw.writeAttributeString( "cifras_decimales", "0.2" );
+                xw.writeAttributeString( "calificacion", "0" );
+                xw.writeAttributeString( "retroalimentacion", "Error" );
+                xw.writeEndElement();
+            }
+            xw.writeEndElement();
+        }
+        xw.writeEndElement();
+        xw.writeStartElement('objetos_respuestas');
+        xw.writeString(resp);
+        xw.writeEndElement();
+        xw.writeEndDocument();
+        alert(xw.flush());
+        console.log(xw.flush());
+    });
 });
