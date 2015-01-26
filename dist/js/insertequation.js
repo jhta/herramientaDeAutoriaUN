@@ -119,12 +119,12 @@ $(document).ready(function(){
         html[eqactually] = $('.drop').html();
         //--------------
 
-        $('#previsualizar').text(html[eqactually]);
-
         eqactually = idpre;
         $('.panel-2').html("");
         $('.panel-2').html(html[eqactually]);
-        //$(".panel-2").droppable("enable"); // si esta vacio toca habilitarlo
+        if(html[eqactually] == ""){
+            $(".panel-2").droppable(funcDroppableDrop);
+        }
 
         treeActual = treeActivos[idsplit];
 
@@ -141,21 +141,6 @@ $(document).ready(function(){
             }
         });
 
-
-        /*$(".drop code, .drop div").each(function (index) {
-            if($(this).hasClass( "drop2" )){
-                $(this).droppable(funcDroppable);
-
-            }else if($(this).hasClass( "card2" )){
-                $(this).draggable({
-                    appendTo: "body",
-                    cursor: "move",
-                    revert: "invalid",
-                    greedy: true
-                });
-            }
-
-        });*/
     });
     
     

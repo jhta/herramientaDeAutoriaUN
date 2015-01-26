@@ -19,7 +19,7 @@ $(function() {
 
 $(function() {
     $("#droppable-out").droppable(funcDroppableOut);
-    $('.drop').droppable(funcDroppableDrop);
+    //$('.drop').droppable(funcDroppableDrop);
 });
 
 var funcDroppableOut = {
@@ -166,15 +166,18 @@ function makeTree(elementDrop, uu){
             var mm = metaVar.split(',');
             tree.meta['media'] = mm[1];
             tree.meta['desviacion'] = mm[3];
+            tree.meta['inc'] = mm[5];
         }
         else if(typeVar == 'uniforme'){
             var mm = metaVar.split(',');
             tree.meta['inicio'] = mm[1];
             tree.meta['fin'] = mm[3];
+            tree.meta['inc'] = mm[5];
         }
         else{
             var mm = metaVar.split(',');
             tree.meta['lamda'] = mm[1];
+            tree.meta['inc'] = mm[3];
         }        
     }
     else if(idData == "cons"){
@@ -561,7 +564,6 @@ function removeNodeRec(tree, idFather, callback){
 function rebootTree(){
     first = true;
     $(".drop").droppable(funcDroppableDrop);
-    idCode = 0
     treeActual = new Tree();
     treeActual.id = 0;
 
