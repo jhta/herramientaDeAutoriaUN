@@ -793,7 +793,7 @@ function Variable(){
 }
 
 function varToXML(){
-    var result = '<variables>'
+    var result = '';
     if(conjuntoVariables.length > 0){
         for(var index in conjuntoVariables){
             var x = conjuntoVariables[index];
@@ -835,7 +835,7 @@ function varToXML(){
             result = result + v;
 
         }
-        result = result + '</variables>';
+        return result;
     }
 }
 

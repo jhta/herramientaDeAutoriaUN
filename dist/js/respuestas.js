@@ -269,7 +269,7 @@ $(document).ready(function(){
         this.tree = '';
         this.retroalimentacion='';
     }
-    $("#loadeq").click(function(){
+    function respuestasToXml(){
         var resp = JSON.stringify(respuestas);
 
         var xw = new XMLWriter('UTF-8');
@@ -278,8 +278,7 @@ $(document).ready(function(){
         xw.indentation = 2;//add 2 spaces per level
         xw.writeStartDocument();
         xw.writeStartElement('respuestas');
-        console.log("Vamos a ver las respuestas");
-        console.log(respuestas);
+
             for(var element in respuestas)
             {
                 var res = respuestas[element];
@@ -308,7 +307,165 @@ $(document).ready(function(){
         xw.writeString(resp);
         xw.writeEndElement();
         xw.writeEndDocument();
-        alert(xw.flush());
+        return xw.flush();
+    };
+
+    $("#loadeq").click(function(){
+        var resp = JSON.stringify(respuestas);
+
+        var xw = new XMLWriter('UTF-8');
+        xw.formatting = 'indented';//add indentation and newlines
+        xw.indentChar = ' ';//indent with spaces
+        xw.indentation = 2;//add 2 spaces per level
+        xw.writeStartDocument();
+        xw.writeStartElement('variables');
+
+        var variables = varToXML();
+        xw.writeString(variables);
+        xw.writeEndElement();
+
+
+
+
+        /****************************************
+         * XML de las ecuaciones
+         */
+
+        var array = [];
+        var idEquations = [];
+        var bools = [];
+
+        //Esto se hace, porque no se tiene la certeza de que la última ecuacion
+        // que se ha creado ya esten guardados sus datos en los json globables
+        treeActivos[equations[eqactually]] = treeActual;
+        html[eqactually+""] = $('.drop').html();
+        var i=0;
+        var objecto = $("#eq").html();
+        $("#eq").children().each (function() {
+
+            idEquations.push($(this).attr('id'));
+            $(this).html("<123456789>");
+        })
+        var texto = $("#eq").text();
+
+        while(texto.length>0){
+            var n = texto.indexOf("<123456789>");
+            if(n==-1){
+                str = texto.replace(/\s+/g, '');
+                if(str.length>0) {
+                    array.push(texto);
+                    bools.push(false);
+                }
+                texto="";
+            }else{
+
+                var res = texto.substring(0, n);
+                str = res.replace(/\s+/g, '');
+                if(str.length>0) {
+                    array.push(res);
+                    bools.push(false);
+                }
+                array.push(idEquations[i]);
+                bools.push(true);
+                i++;
+                if( texto.substring(n+10, texto.length).length>1) {
+                    texto = texto.substring(n + 11, texto.length);
+                }else{
+                    texto="";
+                }
+            }
+
+        }
+
+        $("#eq").html(objecto);
+        $("#eq").children().each (function() {
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(this).attr('id')]);
+        })
+
+        xw.writeStartElement('pregunta');
+        xw.writeStartElement('formulacion');
+        for(var i=0;i<array.length;i++){
+            if(bools[i]){
+                xw.writeElementString('expresion', array[i]);
+            }else{
+                xw.writeElementString('texto', array[i]);
+            }
+        }
+
+        xw.writeEndElement();
+        xw.writeStartElement('objetos');
+        xw.writeElementString('json', JSON.stringify( treeActivos));
+        xw.writeElementString('html', JSON.stringify(html));
+        xw.writeEndElement();
+        xw.writeEndElement();
+
+        /***************************************************
+         * XML de las respuestas
+         */
+
+
+        xw.writeStartElement('respuestas');
+
+        for(var element in respuestas)
+        {
+            var res = respuestas[element];
+            console.log(res);
+            console.log(respuestas[element]);
+            xw.writeStartElement('respuesta');
+            xw.writeAttributeString( "nombre", res.nombre );
+            xw.writeAttributeString( "id", res.id);
+            xw.writeAttributeString( "cifras_decimales", "0.2" );
+            xw.writeAttributeString( "formula", "" );
+            var errores = res.error_genuino;
+            for(var e=0;e<errores.length;e++){
+                var egen= errores[e];
+                xw.writeStartElement('error_genuino');
+                xw.writeAttributeString( "id", egen.id );
+                xw.writeAttributeString( "formula", egen.nombre );
+                xw.writeAttributeString( "cifras_decimales", "0.2" );
+                xw.writeAttributeString( "calificacion", "0" );
+                xw.writeAttributeString( "retroalimentacion", "Error" );
+                xw.writeEndElement();
+            }
+            xw.writeEndElement();
+        }
+        xw.writeEndElement();
+        xw.writeStartElement('objetos_respuestas');
+        xw.writeString(resp);
+        xw.writeEndElement();
+        var resp = JSON.stringify(respuestas);
+
+
+        xw.writeStartElement('respuestas');
+
+        for(var element in respuestas)
+        {
+            var res = respuestas[element];
+            console.log(res);
+            console.log(respuestas[element]);
+            xw.writeStartElement('respuesta');
+            xw.writeAttributeString( "nombre", res.nombre );
+            xw.writeAttributeString( "id", res.id);
+            xw.writeAttributeString( "cifras_decimales", "0.2" );
+            xw.writeAttributeString( "formula", "" );
+            var errores = res.error_genuino;
+            for(var e=0;e<errores.length;e++){
+                var egen= errores[e];
+                xw.writeStartElement('error_genuino');
+                xw.writeAttributeString( "id", egen.id );
+                xw.writeAttributeString( "formula", egen.nombre );
+                xw.writeAttributeString( "cifras_decimales", "0.2" );
+                xw.writeAttributeString( "calificacion", "0" );
+                xw.writeAttributeString( "retroalimentacion", "Error" );
+                xw.writeEndElement();
+            }
+            xw.writeEndElement();
+        }
+        xw.writeEndElement();
+        xw.writeStartElement('objetos_respuestas');
+        xw.writeString(resp);
+        xw.writeEndElement();
+        xw.writeEndDocument();
         console.log(xw.flush());
     });
 });
