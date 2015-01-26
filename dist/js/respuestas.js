@@ -182,9 +182,7 @@ $(document).ready(function(){
 
         $('#content-drop-respuestas').html("");
         if (tipo.localeCompare("error") == 0) {
-            console.log("Error genuino");
-            console.log(respuestas);
-            console.log(id);
+
             var respuestaid = $(this).data('respuestaid');
             eqActuallyIdRespuestaCorrecta =  respuestaid;
             var res = respuestas[respuestaid+""];
@@ -196,9 +194,7 @@ $(document).ready(function(){
                     }
             });
         }else{
-            console.log("Respuesta correcta");
-            console.log(respuestas);
-            console.log(id);
+
             eqActuallyIdRespuestaCorrecta = "";
             $('#content-drop-respuestas').html(respuestas[id+""].html);
             treeActual = respuestas[id+""].tree;
