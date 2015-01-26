@@ -1,7 +1,7 @@
+var eqactually = "";
 $(document).ready(function(){
     var idEquation = -1,
     mathml = "",
-    eqactually = "",
     equations = {},
     html = {},
     treeActivos = [];
@@ -94,23 +94,6 @@ $(document).ready(function(){
         }
     }
 
-    (function () {
-        console.log(mathml);
-        var QUEUE = MathJax.Hub.queue;
-        var math = null;
-
-        window.UpdateMath = function (MathML) {
-            //alert("Vamos a actualizar ps en "+eqactually);
-            QUEUE.Push(function () {
-                math = MathJax.Hub.getAllJax(eqactually)[0];
-            });
-            // MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqactually]);
-            QUEUE.Push(["Text", math, MathML]);
-        }
-    })();
-
-
-
     $("#eq").on("click", ".pre-equation", function () {
         inRespuesta = false;
         var idpre = $(this).attr('id');
@@ -120,6 +103,8 @@ $(document).ready(function(){
         treeActivos.splice(equations[eqactually], 1, treeActual);
         html[eqactually] = $('.drop').html();
         //--------------
+
+        //$('#previsualizar').text(html[eqactually]);
 
         eqactually = idpre;
         $('.panel-2').html("");
@@ -138,11 +123,10 @@ $(document).ready(function(){
                 $(this).draggable({
                     appendTo: "body",
                     cursor: "move",
-                    revert: "invalid"
+                    revert: "invalid",
                 });
             }
         });
-
     });
     
     
