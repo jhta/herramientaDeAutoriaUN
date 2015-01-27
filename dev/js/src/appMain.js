@@ -20,6 +20,13 @@ $(document).ready(function(){
         $("#formUniforme").fadeOut("fast");
         $("#formExponencial").fadeOut("fast");
         //$("#formChi").fadeOut("fast");
+
+        $('#outFormEspecifica').text();
+        $('#outFormDiscreta').text();
+        $('#outFormCategorica').text();
+        $('#outFormNormal').text();
+        $('#outFormUniforme').text();
+        $('#outFormExponencial').text();
     }
     $("#varEspecifica").click(function(){
         limpiar();
@@ -136,11 +143,10 @@ $(document).ready(function(){
 
     });
 
-    $("#endVar").click(function(){
+    $("#endVar").on('click', function(e){
         var htmlVar = '<div class="card view-variable" data-id="var" data-content="' + varn.name + '"';
         varn.value = jsonValues;
         varn.numb = arrayValues
-        console.log(varn.value);
         
 
 
@@ -179,16 +185,18 @@ $(document).ready(function(){
         $("#panel-variables").append(htmlVar + '<span class="var">' + varn.name + '</span></div>');
         conjuntoVariables.splice(conjuntoVariables.length, 0,  varn );
 
-        $(this).addClass('hide');
-    });
 
-    $("#endVar").on('click', function(e){
+
+
         $(".view-variable").draggable({
             appendTo: "body",
             cursor: "move",
             helper: "clone",
             revert: "invalid"
         });
+
+        $(this).addClass('hide');
+        limpiar();
     })
 });
 
@@ -208,11 +216,11 @@ function varToXML(){
             var x = conjuntoVariables[index];
             var v;
             if(x.type == 'espcifica'){
-                v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
+                v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 v = v + '<valor>' + x.numb[0] + '</valor></variable>';
             }
             else if(x.type == 'discreta'){
-                v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
+                v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 for(var ii in x.numb){
                     v = v + '<valor>' + x.numb[ii] + '</valor>';    
                 }
@@ -220,24 +228,24 @@ function varToXML(){
                 
             }
             else if(x.type == 'categorica'){
-                v = '<variable tipo=' + x.type + ' id=' + x.name + '>';
+                v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 for(var ii in x.numb){
                     v = v + '<valor>' + x.numb[ii] + '</valor>';    
                 }
                 v = v + '</variable>';
             }
             else if(x.type == 'normal'){
-                v = '<variable tipo=' + x.type + ' cifras_decimales=' + x.cifras + ' id=' + x.name + '>';
+                v = '<variable tipo="' + x.type + '" cifras_decimales="' + x.cifras + '" id="' + x.name + '">';
                 v = v + '<media>' + x.value['media'] + '</media>';
                 v = v + '<desviacion>' + x.value['desviacion'] + '</desviacion></variable>';
             }
             else if(x.type == 'uniforme'){
-                v = '<variable tipo=' + x.type + ' cifras_decimales=' + x.cifras + ' id=' + x.name + '>';
+                v = '<variable tipo="' + x.type + '" cifras_decimales="' + x.cifras + '" id="' + x.name + '">';
                 v = v + '<inicio>' + x.value['inicio'] + '</fin>';
                 v = v + '<fin>' + x.value['fin'] + '</fin></variable>';
             }
             else if(x.type == 'exponencial'){
-                v = '<variable tipo=' + x.type + ' cifras_decimales=' + x.cifras + ' id=' + x.name + '>';
+                v = '<variable tipo="' + x.type + '" cifras_decimales="' + x.cifras + '" id="' + x.name + '">';
                 v = v + '<lamda>' + x.value['lamda'] + '</lamda></variable>';
             }
 
