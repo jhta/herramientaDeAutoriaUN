@@ -16,7 +16,9 @@ $(document).ready(function(){
 
 
         client.user.create({email:user,pass:pass},'login').done(function(data) {
+
             console.log(data.id);
+            console.log(data);
             sessionStorage.setItem('id', data.id);
             sessionStorage.setItem('name', data.name);
             $(location).attr('href','index.html');
