@@ -97,7 +97,9 @@ $(document).ready(function(){
         });
 
         $("#logout").click(function(){
-            alert("Nos vamos a desloguear");
+            sessionStorage.removeItem('id');
+            sessionStorage.removeItem('name');
+            $(location).attr('href','login.html');
         });
 
         /*
