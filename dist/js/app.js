@@ -156,7 +156,7 @@ function makeTree(elementDrop, uu){
         tree.meta['type'] = typeVar;
         tree.meta['id'] = contentVar;
 
-        if(typeVar == 'espcifica'){
+        if(typeVar == 'especifica'){
             tree.meta['value'] = metaVar;
         }
         else if(typeVar == 'discreta' || 'categorica'){
