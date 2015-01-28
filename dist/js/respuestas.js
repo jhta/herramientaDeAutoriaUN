@@ -1,24 +1,30 @@
 var eqactuallyres = "";
+//Variables globales que permiten el almacenamiento en memoria de las respuestas que va creando el cliente
+var respuestas = {};
+var idRespuesta=0;
+var respactual;
+var eqActuallyIdRespuestaCorrecta = "";
+
 
 //Carga todas las respuestas que posea la pregunta dinámicamente
 function respuestaXmlToHtml(xml){
-    console.log(xml);
+    //Reiniciando variables
+    respuestas= {};
+    eqActuallyIdRespuestaCorrecta = "";
+    eqactuallyres = "";
+    console.log(JSON.parse(xml));
+    var xmlrespuesta = JSON.parse(xml);
     $("#accordion2").html("");
-    var xmlrespuesta = xml.respuesta;
-    if(xmlrespuesta.length>1) {
-        for (var res in xmlrespuesta) {
-            console.log(res);
-            console.log(xml.respuesta[res].id);
-            var idRespuesta = xml.respuesta[res].id;
-            var nombre = xml.respuesta[res].nombre;
-            printHtmlrespuesta(idRespuesta,nombre);
-
-        }
-    }else{
-        printHtmlrespuesta(xmlrespuesta.id,xmlrespuesta.nombre);
+    var cont = 0;
+    for (var res in xmlrespuesta) {
+        var obres = xmlrespuesta[res];
+        respuestas[obres.id+""] = obres;
+        cont++;
+        printHtmlrespuesta(obres.id, obres.nombre,obres.tree);
     }
+    idRespuesta = cont;
 }
-function printHtmlrespuesta(idRespuesta, nombre){
+function printHtmlrespuesta(idRespuesta, nombre,tree){
     $("#accordion2").append("<div class='panel panel-default'>" +
         "<div class='panel-heading' role='tab' >" +
         "<span class='panel-title'>" +
@@ -68,7 +74,9 @@ function printHtmlrespuesta(idRespuesta, nombre){
         "</div>" +
         "</div>");
     $("#content-" + idRespuesta).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;"  data-id="' + idRespuesta + '" id="mathjax-' + idRespuesta + '"><math></math></div>');
-    document.getElementById("mathjax-" + idRespuesta).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
+    console.log("Esta es la funcion que me devuelve la ecuacion");
+    console.log(makeStringRec(tree));
+    document.getElementById("mathjax-" + idRespuesta).innerHTML = "<math>"+makeStringRec(tree)+"</math>";
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathjax-" + idRespuesta]);
 }
 
@@ -78,11 +86,6 @@ $(document).ready(function(){
      * *******************************************************************************
      * Crud general de respuestas y errores genuinos: crear, editar, eliminar, ver
      */
-    //Variables globales que permiten el almacenamiento en memoria de las respuestas que va creando el cliente
-    var respuestas = {};
-    var idRespuesta=0;
-    var respactual;
-    var eqActuallyIdRespuestaCorrecta = "";
 
     //Crear una nueva respuesta
     $("#crearRespuesta").click(function(){
