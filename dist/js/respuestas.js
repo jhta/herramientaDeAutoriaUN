@@ -1,4 +1,7 @@
 var eqactuallyres = "";
+function respuestaXmlToHtml(xml){
+    alert("Vamos a generar eso dinamicamente");
+}
 $(document).ready(function(){
     /*
      * *******************************************************************************
@@ -446,4 +449,6 @@ $(document).ready(function(){
         //Este evento que llama el trigger se encuentra en restfulleditor.js al final
         $( "#loadeq").trigger( "guardarxml", [ xml ] );
     });
+
+
 });
