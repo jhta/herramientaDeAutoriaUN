@@ -12,7 +12,7 @@
       <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
       <!--LIBRERIAS JS-->
       <script type="text/javascript" src="dist/libs/js/angular.min.js"></script>
-      <script type="text/javascript" src="dist/libs/js/XMLWriter-1.0.0-min.js"></script>
+      <script type="text/javascript" src="dist/js/XMLWriter-1.0.0-min.js"></script>
       <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
            MathJax.Hub.Config({
              extensions: ["mml2jax.js"],
@@ -39,7 +39,8 @@
       <script type="text/javascript" src="dist/js/insertequation.js"></script>
       <!--<script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>-->
       <script type="text/javascript" src="dist/js/respuestas.js"></script>
-      <!--<script type="text/javascript" src="dist/js/restfulleditor.js"></script>-->
+      <script type="text/javascript" src="dist/js/restfulleditor.js"></script>
+
   </head>
   <body ng-app>
       <!--Contenedor general-->
@@ -51,7 +52,7 @@
             <a class="navbar-brand" href="#">Ticademia</a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
-            <p class="navbar-text navbar-right">Logueado como <a href="#" id="nameUser" class="navbar-link">Jeison Higuita</a> | <a href="#" class="navbar-link">Salir</a></p>
+            <p class="navbar-text navbar-right">Logueado como <a href="#" id="nameUser" class="navbar-link">Jeison Higuita</a> | <a href="#" id="logout" class="navbar-link">Salir</a></p>
           </div>
         </div>
       </nav>
@@ -77,176 +78,7 @@
                       <div class="row">
                         <div class="col-xs-12 ">
                           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                              <div class="panel-heading" role="tab" id="headingOne">
-                                
-                                  <span class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                    Geometria
-                                    </a>
-                                  </span>
-                                  <div class="pull-right">
-                                    <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                
-                              </div>
-                              <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                  <!--Lista de operaciones-->
-                                  <ul class="list-group">
-                                      <li class="list-group-item">
-                                         <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button">
-                                                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                                </button>
-                                            </span>
-                                            <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
 
-                                        </div><!-- /input-group -->
-                                      </li>
-                                      <li class="list-group-item">
-                                        <span>X1</span>
-                                        <div class="pull-right">
-                                          <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                            
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                      <li class="list-group-item">
-                                        <span>X2</span>
-                                        <div class="pull-right">
-                                          <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                    </ul> 
-                                </div>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <div class="panel-heading" role="tab" id="headingTwo">
-                                <span class="panel-title">
-                                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                    Fisica
-                                  </a>
-                                </span>
-                                <div class="pull-right">
-                                    <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                    </div>
-                                </div>
-                              </div>
-                              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                  <ul class="list-group">
-                                      <li class="list-group-item">
-                                         <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button">
-                                                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                                </button>
-                                            </span>
-                                            <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
-
-                                        </div><!-- /input-group -->
-                                      </li>
-                                      <li class="list-group-item">
-                                        <span>Y1</span>
-                                        <div class="pull-right">
-                                          <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                            
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                      <li class="list-group-item">
-                                        <span>Y2</span>
-                                        <div class="pull-right">
-                                          <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                            <div class="btn-group" role="group" aria-label="...">
-                                              <a href="#">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                    </ul>
-                                </div>
-                              </div>
-                            </div>
-                            
                             <div class="input-group" style="margin-top:5px;">
                               <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-plus"></span></span>
                               <input type="text"  class="form-control" placeholder="Nueva Carpeta" aria-describedby="basic-addon1">
@@ -260,7 +92,7 @@
                         <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:15px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>  
                         
                         <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
-                        <button style="margin-top: 10px" id="loadeq" type="button" class="btn btn-default btn-success"type="button" >Cargar Ecuación</button>
+                        <button style="margin-top: 10px" id="loadeq" type="button" class="btn btn-default btn-success"type="button" >Guardar datos</button>
                         <input type="file" id="inputfiles" name="files[]" />  
                       </div>
                       
@@ -398,178 +230,8 @@
                         -->
                         <h4>Respuestas</h4>
                           <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                              <div class="panel-heading" role="tab" id="headingOne">
-                                
-                                  <span class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapseOnex" aria-expanded="true" aria-controls="collapseOnex">
-                                    Alto
-                                    </a>
-                                  </span>
-                                  <div class="pull-right">
-                                    <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                
-                              </div>
-                              <div id="collapseOnex" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                  <ul class="list-group">
-                                  <li class="list-group-item">
-                                     <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">Go!</button>
-                                        </span>
-                                        <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
 
-                                    </div><!-- /input-group -->
-                                    <div class="checkbox">
-                                      <label>
-                                        <input type="checkbox"> Respuesta Correcta
-                                      </label>
-                                    </div>                  
 
-                                  </li>
-                                  <li class="list-group-item">
-                                    <span>Ancho</span>
-                                    <div class="pull-right">
-                                      <div class="formula">
-                                        
-                                      </div>
-                                      <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                        
-                                      </div>
-                                    </div>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <span>Largo</span>
-                                    <div class="pull-right col-xs-6">
-                                      <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                                </ul> 
-                                </div>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <div class="panel-heading" role="tab" id="headingTwo">
-                                <span class="panel-title">
-                                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwox" aria-expanded="false" aria-controls="collapseTwox">
-                                    Ancho
-                                  </a>
-                                </span>
-                                <div class="pull-right">
-                                    <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                      <div class="btn-group" role="group" aria-label="...">
-                                        <a href="#">
-                                          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        </a>
-                                      </div>
-                                    </div>
-                                </div>
-                              </div>
-                              <div id="collapseTwox" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                  <ul class="list-group">
-                                  <li class="list-group-item">
-                                     <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">Go!</button>
-                                        </span>
-                                        <input type="text" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
-                                    </div><!-- /input-group -->
-                                    <div class="checkbox">
-                                      <label>
-                                        <input type="checkbox"> Respuesta Correcta
-                                      </label>
-                                    </div>  
-                                  </li>
-                                  <li class="list-group-item">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                    <span>Respuesta correcta: [...]</span>
-                                    <div class="pull-right">
-                                      <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                                  <li class="list-group-item">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                    <span>Error Genuino: [...]</span>
-                                    <div class="pull-right">
-                                      <div class="btn-toolbar" role="toolbar" aria-label="...">
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                        <div class="btn-group" role="group" aria-label="...">
-                                          <a href="#">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </li>
-                                </ul>  
-                                </div>
-                              </div>
-                            </div>
                             
                           </div>
                       
@@ -666,14 +328,13 @@
                           <span> = </span>
                           <!--boton cear-->
                           <div class="form-group">
-                            <input id="valorEsp" type="number" class="contenedor-variables-input form-control" required>
+                            <input id="valorEsp" class="contenedor-variables-input form-control" required>
                           </div>
                           
                           <button id="ag-varEspcifica" type="submit" class="btn btn-success">ag</button>
                           <br>
                           <span id="outFormEspecifica"></span>
                           <br>
-                          <button id="endVar" type="submit" class="hide btn btn-success">Terminar</button>
                         </form>
                       </div>
 
@@ -688,13 +349,13 @@
                           <span> = </span>
                           <!--boton cear-->
                           <div class="form-group">
-                            <input id="valorDis" type="number" class="contenedor-variables-input form-control" required>
+                            <input id="valorDis" class="contenedor-variables-input form-control" required>
                           </div>
 
                           <button id="ag-varDiscreta" type="submit" class="btn btn-success btn-ag">ag</button>
+                          <br>
                           <span id="outFormDiscreta"></span>
                           <br>
-                          <button id="endVar" type="submit" class="hide btn btn-success">Terminar</button>
 
                         </form>
                       </div>
@@ -716,7 +377,6 @@
                           <br>
                           <span id="outFormCategorica"></span>
                           <br>
-                          <button id="endVar" type="submit" class="hide btn btn-success">Terminar</button>
                         </form>
                       </div>
                       
@@ -729,22 +389,21 @@
                           <!--input valor-->
                           <span> , µ = </span>
                           <div class="form-group">
-                            <input id="normalNor" type="number" class="form-control contenedor-variables-input" required>
+                            <input id="normalNor" class="form-control contenedor-variables-input" required>
                           </div>
 
                           <span> , σ = </span>
                           <div class="form-group">
-                            <input id="desviacionNor" type="number" class="form-control contenedor-variables-input" required>
+                            <input id="desviacionNor" class="form-control contenedor-variables-input" required>
                           </div>
                           <div class="form-group">
-                              <input id="incNor" type="number"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
+                              <input id="incNor"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
                           </div>
 
                           <button id="ag-varNormal" type="submit" class="btn btn-success btn-ag">ag</button>
                           <br>
                           <span id="outFormNormal"></span>
                           <br>
-                          <button id="endVar" type="submit" class="hide btn btn-success">Terminar</button>
 
                         </form>
                       </div>
@@ -758,15 +417,15 @@
                           <!--input valor-->
                           <span> , a = </span>
                           <div class="form-group">
-                            <input id="valueaUni" type="number" class="form-control contenedor-variables-input" required>
+                            <input id="valueaUni" class="form-control contenedor-variables-input" required>
                           </div>
 
                           <span> , b = </span>
                           <div class="form-group">
-                            <input id="valuebUni" type="number" class="form-control contenedor-variables-input" required>
+                            <input id="valuebUni" class="form-control contenedor-variables-input" required>
                           </div>
                           <div class="form-group">
-                              <input id="incUni" type="number"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
+                              <input id="incUni" class="contenedor-variables-input--increment form-control"  placeholder="inc">
                           </div>
 
 
@@ -774,7 +433,6 @@
                           <br>
                           <span id="outFormUniforme"></span>
                           <br>
-                          <button id="endVar" type="submit" class="hide btn btn-success">Terminar</button>
 
                         </form>
                       </div>
@@ -788,21 +446,21 @@
                           <!--input valor-->
                           <span> , λ = </span>
                           <div class="form-group">
-                            <input id="valueExp" type="number" class="form-control contenedor-variables-input" required>
+                            <input id="valueExp" class="form-control contenedor-variables-input" required>
                           </div>
                           <div class="form-group">
-                              <input id="incExp" type="number"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
+                              <input id="incExp"  class="contenedor-variables-input--increment form-control"  placeholder="inc">
                           </div>
 
                           <button id="ag-varExponencial" type="submit" class="btn btn-success btn-ag">ag</button>
                           <br>
                           <span id="outFormExponencial"></span>
                           <br>
-                          <button id="endVar" type="submit" class="hide btn btn-success">Terminar</button>
 
                         </form>
                       </div>
 
+                      <button id="endVar" type="submit" class="hide btn btn-success" hidden="hidden">Terminar</button>
                     </div>
                 </div>
                 <!--FIN: Panel de variables-->
@@ -845,30 +503,7 @@
                                       <div class="panel-body">
         
                                         
-                                        <div class="card" id="base" data-id="var" data-content="x">
-                                            <span class="var">x</span>
-                                        </div>
-                                        <div class="card" data-id="var" data-content="y">
-                                            <span class="var">y</span>
-                                        </div>
-                                        <div class="card" data-id="var" data-content="z">
-                                            <span class="var">z</span>
-                                        </div>
-                                        <div class="card" data-id="var" data-content="w">
-                                            <span class="var">w</span>
-                                        </div>
-                                        <div class="card" data-id="cons" data-content="1">
-                                            <span class="var">1</span>
-                                        </div>
-                                        <div class="card" data-id="cons" data-content="2">
-                                            <span class="var">2</span>
-                                        </div>
-                                        <div class="card" data-id="cons" data-content="3">
-                                            <span class="var">3</span>
-                                        </div>
-                                        <div class="card" data-id="cons" data-content="4">
-                                            <span class="var">4</span>
-                                        </div>
+                                       
                                         <div class="card" data-id="cons" data-content="&#945">
                                             <span class="var">&#945;</span>
                                         </div>

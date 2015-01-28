@@ -1,7 +1,10 @@
 $(document).ready(function(){
+    var folderactual;
+    var questionactual;
+
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
-        var client = new $.RestClient('http://localhost:4000/api/');
+        var client = new $.RestClient('http://104.236.247.200:4000/api/');
         client.add('user');
         client.add('folder');
         client.add('question');
@@ -91,6 +94,12 @@ $(document).ready(function(){
                 });
         }).fail(function () {
             alert("Error, inténtalo de nuevo");
+        });
+
+        $("#logout").click(function(){
+            sessionStorage.removeItem('id');
+            sessionStorage.removeItem('name');
+            $(location).attr('href','login.html');
         });
 
         /*
@@ -203,7 +212,7 @@ $(document).ready(function(){
 
         $("#accordion").on("click",".addQuestion",function(){
             var $this = this;
-            client.question.create({folderid:$(this).data('id'),titulo:$(this).parent().next().val(),xml_pregunta:'',xml_metadatos:''}).done(function (val) {
+            client.question.create({folderid:$(this).data('id'),titulo:$(this).parent().next().val(),xml_pregunta:'',xml_metados:''}).done(function (val) {
                 $($this).parent().next().val('');
                 $("#body-" + $($this).data('id')).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
                     "<span data-title='"+ val.titulo +"'>" + val.titulo + "</span>" +
@@ -276,6 +285,59 @@ $(document).ready(function(){
             });
 
         });
+
+        /*
+         Cargar toda la información de una pregunta(xml de la pregunta)
+         */
+        $("#accordion").on("click",".LoadQuestion",function(){
+            if(typeof folderactual !== 'undefined'){
+                questionactual.css( "background-color",'' );
+                folderactual.css( "background-color",'' );
+            };
+            questionactual =  $("#accordion").find("#"+$(this).data('id'));
+            folderactual = questionactual.parent().parent().parent().parent().find(":first");
+            questionactual.css( "background-color",'yellow' );
+            folderactual.css( "background-color",'yellow' );
+            var id =questionactual.attr('id');
+            client.question.read(id).done(function (data) {
+                console.log(data);
+                xmlToObjects(data)
+            }).fail(function () {
+                alert("Error, inténtalo de nuevo");
+            });
+
+        });
+
+        //Envía la petición al backend para guardar el string xml de la pregunta que actualmente se encuentre editando
+        $("#loadeq").on( "guardarxml", function( event, xml) {
+            if(typeof questionactual !== 'undefined'){
+                var id =questionactual.attr('id');
+                var $this= this;
+
+                client.question.update(id,{xml_pregunta:xml,xml_metados:''}).done(function (data) {
+                    alert("Datos cargados correctamente");
+                }).fail(function () {
+                    alert("Error, inténtalo de nuevo");
+                });
+
+            }else{
+                alert("Debes seleccionar primero una pregunta para poder guardar los datos");
+            }
+
+        });
+
+        //Transforma el string xml en objetos javascript y carga html correspondientes
+        function xmlToObjects(xml){
+            var xmlDoc = xml.xml_pregunta
+            console.log(xmlDoc);
+            var json = $.xml2json(xmlDoc);
+            console.log(json);
+            alert(json.respuestas);
+
+        }
+
+
+
 
 
         }else{

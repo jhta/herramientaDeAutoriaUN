@@ -1,15 +1,13 @@
+var eqactuallyres = "";
 $(document).ready(function(){
     /*
      * *******************************************************************************
      * Crud general de respuestas y errores genuinos: crear, editar, eliminar, ver
      */
-
-
     //Variables globales que permiten el almacenamiento en memoria de las respuestas que va creando el cliente
     var respuestas = {};
     var idRespuesta=0;
     var respactual;
-    var eqactuallyres = "";
     var eqActuallyIdRespuestaCorrecta = "";
 
     //Crear una nueva respuesta
@@ -68,7 +66,7 @@ $(document).ready(function(){
             "</div>");
         idRespuesta++;
         $("#inputNuevaRespuesta").val('');
-        $("#content-"+respactual.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;"  data-id="'+respactual.id+'" id="mathjax-'+respactual.id+'"><math></math></div>');
+        $("#content-"+respactual.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #888;padding: 2px 4px;display:inline-block;"  data-id="'+respactual.id+'" id="mathjax-'+respactual.id+'"><math></math></div>');
         document.getElementById("mathjax-"+respactual.id).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,"mathjax-"+respactual.id]);
 
@@ -76,15 +74,17 @@ $(document).ready(function(){
 
         eqActuallyIdRespuestaCorrecta = "";
         $('#content-drop-respuestas').html("");
-        rebootTree2(); // reinicia el html, crea un treeactual nuevo
+        rebootTree(); // reinicia el html, crea un treeactual nuevo
         respactual.html="";
-        respactual.tree = treeActualRespuestas ;
+        respactual.tree = treeActual ;
         respuestas[respactual.id+""] = respactual;
+        console.log(respuestas);
         eqactuallyres = respactual.id;
     });
 
     //Agregar error genuino a una respuesta
     $("#accordion2").on("click",".addErrorGenuino",function(){
+        inRespuesta = true;
         respactual = respuestas[$(this).data("id")+""];
         var error = new Error();
         error.id=respactual.id+ "-" + respactual.error_genuino.length;
@@ -122,7 +122,7 @@ $(document).ready(function(){
 
         eqActuallyIdRespuestaCorrecta = respactual.id;
         $('#content-drop-respuestas').html("");
-        rebootTree2(); // reinicia el html, crea un treeactual nuevo
+        rebootTree(); // reinicia el html, crea un treeactual nuevo
         eqactuallyres = error.id;
     });
 
@@ -172,19 +172,9 @@ $(document).ready(function(){
      * Manipulación de las ecuaciones que se generan para las respuestas correctas y errores genuinos
      */
 
-    (function () {
-        var QUEUE = MathJax.Hub.queue;
-        var math = null;
-        window.UpdateMath = function (MathML) {
-            QUEUE.Push(function () {
-                math = MathJax.Hub.getAllJax(eqactuallyres)[0];
-            });
-            QUEUE.Push(["Text", math, MathML]);
-        }
-    })();
+   
 
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
-        inRespuesta = true;
          var id = $(this).data('id');
         var tipo = $(this).data('tipo');
 
@@ -192,9 +182,7 @@ $(document).ready(function(){
 
         $('#content-drop-respuestas').html("");
         if (tipo.localeCompare("error") == 0) {
-            console.log("Error genuino");
-            console.log(respuestas);
-            console.log(id);
+
             var respuestaid = $(this).data('respuestaid');
             eqActuallyIdRespuestaCorrecta =  respuestaid;
             var res = respuestas[respuestaid+""];
@@ -202,16 +190,14 @@ $(document).ready(function(){
                 if (typeof value != 'undefined')
                     if ((value.id).localeCompare(id) == 0) {
                         $('#content-drop-respuestas').html(value.html);
-                        treeActualRespuestas = value.tree;
+                        treeActual = value.tree;
                     }
             });
         }else{
-            console.log("Respuesta correcta");
-            console.log(respuestas);
-            console.log(id);
+
             eqActuallyIdRespuestaCorrecta = "";
             $('#content-drop-respuestas').html(respuestas[id+""].html);
-            treeActualRespuestas = respuestas[id+""].tree;
+            treeActual = respuestas[id+""].tree;
         }
         eqactuallyres = id;
 
@@ -244,14 +230,14 @@ $(document).ready(function(){
                 $.each( res.error_genuino, function( index, value ) {
                     if (typeof value != 'undefined') {
                         if ((value.id).localeCompare(eqactuallyres) == 0) {
-                            res.error_genuino[index].tree = treeActualRespuestas;
+                            res.error_genuino[index].tree = treeActual;
                             res.error_genuino[index].html = $('#content-drop-respuestas').html();
                         };
                     }
                 });
             }else{
                 var res = respuestas[eqactuallyres+""];
-                res.tree = treeActualRespuestas;
+                res.tree = treeActual;
                 res.html = $('#content-drop-respuestas').html();
             }
         }
@@ -275,7 +261,7 @@ $(document).ready(function(){
 
     function Error(){
         this.id = '';
-        this.name='Error genuino';
+        this.nombre='Error genuino';
         this.cifras_decimales = '';
         this.formula = '';
         this.calificacion = '';
@@ -283,9 +269,181 @@ $(document).ready(function(){
         this.tree = '';
         this.retroalimentacion='';
     }
+    function respuestasToXml(){
+        var resp = JSON.stringify(respuestas);
 
-    //Se ejecuta cuando se crea una nueva pregunta
-    function addNewRespuestaTree(){
+        var xw = new XMLWriter('UTF-8');
+        xw.formatting = 'indented';//add indentation and newlines
+        xw.indentChar = ' ';//indent with spaces
+        xw.indentation = 2;//add 2 spaces per level
+        xw.writeStartDocument();
+        xw.writeStartElement('respuestas');
 
-    }
+            for(var element in respuestas)
+            {
+                var res = respuestas[element];
+                console.log(res);
+                console.log(respuestas[element]);
+            xw.writeStartElement('respuesta');
+            xw.writeAttributeString( "nombre", res.nombre );
+            xw.writeAttributeString( "id", res.id);
+            xw.writeAttributeString( "cifras_decimales", "0.2" );
+            xw.writeAttributeString( "formula", "" );
+            var errores = res.error_genuino;
+            for(var e=0;e<errores.length;e++){
+                var egen= errores[e];
+                xw.writeStartElement('error_genuino');
+                xw.writeAttributeString( "id", egen.id );
+                xw.writeAttributeString( "formula", egen.nombre );
+                xw.writeAttributeString( "cifras_decimales", "0.2" );
+                xw.writeAttributeString( "calificacion", "0" );
+                xw.writeAttributeString( "retroalimentacion", "Error" );
+                xw.writeEndElement();
+            }
+            xw.writeEndElement();
+        }
+        xw.writeEndElement();
+        xw.writeStartElement('objetos_respuestas');
+        xw.writeString(resp);
+        xw.writeEndElement();
+        xw.writeEndDocument();
+        return xw.flush();
+    };
+
+    $("#loadeq").click(function(){
+        var resp = JSON.stringify(respuestas);
+
+        var xw = new XMLWriter('UTF-8');
+        xw.formatting = 'indented';//add indentation and newlines
+        xw.indentChar = ' ';//indent with spaces
+        xw.indentation = 2;//add 2 spaces per level
+        xw.writeStartDocument();
+        xw.writeStartElement('xml');
+
+        xw.writeStartElement('variables');
+
+        var variables = varToXML();
+        xw.writeString(variables);
+        xw.writeEndElement();
+
+
+
+
+        /****************************************
+         * XML de las ecuaciones
+         */
+
+        var array = [];
+        var idEquations = [];
+        var bools = [];
+
+        //Esto se hace, porque no se tiene la certeza de que la última ecuacion
+        // que se ha creado ya esten guardados sus datos en los json globables
+        treeActivos[equations[eqactually]] = treeActual;
+        html[eqactually+""] = $('.drop').html();
+        var i=0;
+        var objecto = $("#eq").html();
+        $("#eq").children().each (function() {
+
+            idEquations.push($(this).attr('id'));
+            $(this).html("<123456789>");
+        })
+        var texto = $("#eq").text();
+
+        while(texto.length>0){
+            var n = texto.indexOf("<123456789>");
+            if(n==-1){
+                str = texto.replace(/\s+/g, '');
+                if(str.length>0) {
+                    array.push(texto);
+                    bools.push(false);
+                }
+                texto="";
+            }else{
+
+                var res = texto.substring(0, n);
+                str = res.replace(/\s+/g, '');
+                if(str.length>0) {
+                    array.push(res);
+                    bools.push(false);
+                }
+                array.push(idEquations[i]);
+                bools.push(true);
+                i++;
+                if( texto.substring(n+10, texto.length).length>1) {
+                    texto = texto.substring(n + 11, texto.length);
+                }else{
+                    texto="";
+                }
+            }
+
+        }
+
+        $("#eq").html(objecto);
+        $("#eq").children().each (function() {
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(this).attr('id')]);
+        })
+
+        xw.writeStartElement('pregunta');
+        xw.writeStartElement('formulacion');
+        for(var i=0;i<array.length;i++){
+            if(bools[i]){
+                xw.writeElementString('expresion', array[i]);
+            }else{
+                xw.writeElementString('texto', array[i]);
+            }
+        }
+
+        xw.writeEndElement();
+        xw.writeStartElement('objetos');
+        xw.writeElementString('json', JSON.stringify( treeActivos));
+        xw.writeElementString('html', JSON.stringify(html));
+        xw.writeEndElement();
+        xw.writeEndElement();
+
+        /***************************************************
+         * XML de las respuestas
+         */
+
+        var resp = JSON.stringify(respuestas);
+
+        xw.writeStartElement('respuestas');
+
+        for(var element in respuestas)
+        {
+            var res = respuestas[element];
+            console.log(res);
+            console.log(respuestas[element]);
+            xw.writeStartElement('respuesta');
+            xw.writeAttributeString( "nombre", res.nombre );
+            xw.writeAttributeString( "id", res.id);
+            xw.writeAttributeString( "cifras_decimales", "0.2" );
+            xw.writeAttributeString( "formula", "" );
+            var errores = res.error_genuino;
+            for(var e=0;e<errores.length;e++){
+                var egen= errores[e];
+                xw.writeStartElement('error_genuino');
+                xw.writeAttributeString( "id", egen.id );
+                xw.writeAttributeString( "formula", egen.nombre );
+                xw.writeAttributeString( "cifras_decimales", "0.2" );
+                xw.writeAttributeString( "calificacion", "0" );
+                xw.writeAttributeString( "retroalimentacion", "Error" );
+                xw.writeEndElement();
+            }
+            xw.writeEndElement();
+        }
+        xw.writeEndElement();
+        xw.writeStartElement('objetos_respuestas');
+        xw.writeString(resp);
+        xw.writeEndElement();
+
+        xw.writeEndElement();
+        xw.writeEndDocument();
+
+
+        var xml = xw.flush();
+        console.log(xw.flush());
+        //Este evento que llama el trigger se encuentra en restfulleditor.js al final
+        $( "#loadeq").trigger( "guardarxml", [ xml ] );
+    });
 });

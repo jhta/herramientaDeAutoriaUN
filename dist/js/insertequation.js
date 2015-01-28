@@ -1,10 +1,13 @@
+var eqactually = "";
+var treeActivos = [];
+var html = {};
+var equations = {};
 $(document).ready(function(){
     var idEquation = -1,
-    mathml = "",
-    eqactually = "",
-    equations = {},
-    html = {},
-    treeActivos = [];
+        mathml = "";
+
+
+
 
     $("#inserteq").click(function(){
         inRespuesta = false;
@@ -94,42 +97,26 @@ $(document).ready(function(){
         }
     }
 
-    (function () {
-        console.log(mathml);
-        var QUEUE = MathJax.Hub.queue;
-        var math = null;
-
-        window.UpdateMath = function (MathML) {
-            //alert("Vamos a actualizar ps en "+eqactually);
-            QUEUE.Push(function () {
-                math = MathJax.Hub.getAllJax(eqactually)[0];
-            });
-            // MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqactually]);
-            QUEUE.Push(["Text", math, MathML]);
-        }
-    })();
-
-
-
     $("#eq").on("click", ".pre-equation", function () {
         inRespuesta = false;
         var idpre = $(this).attr('id');
         var idsplit = idpre.split('-')[1];
-        
         //------- guardar datos actuales
         treeActivos.splice(equations[eqactually], 1, treeActual);
         html[eqactually] = $('.drop').html();
         //--------------
-
+        //$('#previsualizar').text(html[eqactually]);
         eqactually = idpre;
         $('.panel-2').html("");
+        console.log("Este es el html");
+        console.log(html[eqactually]);
         $('.panel-2').html(html[eqactually]);
+
         if(html[eqactually] == ""){
             $(".panel-2").droppable(funcDroppableDrop);
         }
 
         treeActual = treeActivos[idsplit];
-
         $('.drop code, .drop div').each(function(index){
             if($(this).hasClass("ultimo-e")){
                 $(this).droppable(funcDroppable);
@@ -142,50 +129,12 @@ $(document).ready(function(){
                 });
             }
         });
-
     });
-    
-    
-    $("#loadeq").click(function(){
-        $("#inputfiles").click();
-        
-    });
-    
-    
-    
-    $("#inputfiles").change(function(evt){
-        var files = evt.target.files; // FileList object  
-        if(files.length > 0){
-            console.log("ACA");
-            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            }
-            else {// code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.open("GET", "links.xml", false); //prueba con archivo en local
-            xmlhttp.send();
-            xmlDoc = xmlhttp.responseXML;
-            
-        }
-                    
 
-        /*// files is a FileList of File objects. List some properties.
-        var output = [];
-        for (var i = 0, f; f = files[i]; i++) {
-          output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                      f.size, ' bytes, last modified: ',
-                      f.lastModifiedDate.toLocaleDateString(), '</li>');
-            console.log(f);
-        }
-        
-        console.log(output.join(''));*/
-    });
-    
-    
-    
 
-    $("#exportarxml").click(function(){
+
+
+    function equationsToXml(){
 
         var array = [];
         var idEquations = [];
@@ -193,7 +142,7 @@ $(document).ready(function(){
 
         //Esto se hace, porque no se tiene la certeza de que la última ecuacion
         // que se ha creado ya esten guardados sus datos en los json globables
-        objsons[eqactually+""] = treeActual;
+        treeActivos[equations[eqactually]] = treeActual;
         html[eqactually+""] = $('.drop').html();
         var i=0;
         var objecto = $("#eq").html();
@@ -232,12 +181,9 @@ $(document).ready(function(){
             }
 
         }
-        console.log(JSON.stringify(array));
-        console.log(JSON.stringify(bools));
 
         $("#eq").html(objecto);
         $("#eq").children().each (function() {
-            //alert($(this).html());
             MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(this).attr('id')]);
         })
 
@@ -259,13 +205,12 @@ $(document).ready(function(){
 
         xw.writeEndElement();
         xw.writeStartElement('objetos');
-        xw.writeElementString('json', JSON.stringify( objsons));
+        xw.writeElementString('json', JSON.stringify( treeActivos));
         xw.writeElementString('html', JSON.stringify(html));
         xw.writeEndElement();
         xw.writeEndElement();
 
         xw.writeEndDocument();
-        alert(xw.flush());
-        console.log(xw.flush());
-    });
+        return xw.flush();
+    };
 });
