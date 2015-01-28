@@ -12,8 +12,8 @@ function respuestaXmlToHtml(xml){
     respuestas= {};
     eqActuallyIdRespuestaCorrecta = "";
     eqactuallyres = "";
-    console.log(JSON.parse(xml));
-    var xmlrespuesta = JSON.parse(xml);
+    console.log(xml);
+    var xmlrespuesta = xml;
     $("#accordion2").html("");
     var cont = 0;
     for (var res in xmlrespuesta) {
@@ -75,8 +75,12 @@ function printHtmlrespuesta(idRespuesta, nombre,tree){
         "</div>");
     $("#content-" + idRespuesta).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;"  data-id="' + idRespuesta + '" id="mathjax-' + idRespuesta + '"><math></math></div>');
     console.log("Esta es la funcion que me devuelve la ecuacion");
-    console.log(makeStringRec(tree));
-    document.getElementById("mathjax-" + idRespuesta).innerHTML = "<math>"+makeStringRec(tree)+"</math>";
+    treei = new Tree();
+    treei.tree = tree;
+    console.log(treei);
+    console.log(treei.makeString());
+
+    document.getElementById("mathjax-" + idRespuesta).innerHTML = "<math>"+treei.makeString()+"</math>";
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathjax-" + idRespuesta]);
 }
 
@@ -483,6 +487,8 @@ $(document).ready(function(){
          */
 
         var resp = JSON.stringify(respuestas);
+        var x2js = new X2JS();
+        var resp = x2js.json2xml_str(respuestas);
 
         xw.writeStartElement('respuestas');
 
