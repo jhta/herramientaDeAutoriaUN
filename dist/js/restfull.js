@@ -33,18 +33,15 @@ $(document).ready(function(){
             newPass = $("#newPass").val(),
             repeatPass = $("#repeatPass").val();
         console.log(newName+" "+newMail+" "+newPass);
-        client = new $.RestClient('http://104.236.247.200:4000/api/user',{
-            name: newName,
-            mail: newMail,
-            pass: newPass
-        });
+        client = new $.RestClient('http://104.236.247.200:4000/api/');
         client.add('user');
-        client.user.create({email:newMail,pass:newPass}).done(function(data){
+        client.user.create({email:newMail,pass:newPass, name: newName}).done(function(data){
             alert("bienvenido");
             console.log("si se pudo");
             console.log(data.id);
+            $(location).attr('href','index.html');
         }).fail(function(){
-            alert("la que te pario");
+            alert("Ocurrio un error al crear el usuario");
         });
     });
 });
