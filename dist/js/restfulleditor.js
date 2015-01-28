@@ -4,7 +4,7 @@ $(document).ready(function(){
 
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
-        var client = new $.RestClient('http://localhost:4000/api/');
+        var client = new $.RestClient('http://104.236.247.200:4000/api/');
         client.add('user');
         client.add('folder');
         client.add('question');

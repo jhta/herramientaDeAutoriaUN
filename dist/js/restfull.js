@@ -6,7 +6,7 @@ $(document).ready(function(){
         var user = $("#username").val();
         var pass = $("#password").val();
 
-        client = new $.RestClient('http://localhost:4000/api/', {
+        client = new $.RestClient('http://104.236.247.200:4000/api/', {
             username: user,
             password: pass
         });
