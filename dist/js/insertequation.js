@@ -109,9 +109,43 @@ $(document).ready(function(){
 
         //$('#previsualizar').text(html[eqactually]);
 
+
+
+
+
+
+
+
+
+
+
         eqactually = idpre;
         $('.panel-2').html("");
+
+        console.log("Este es el html");
+        console.log(html[eqactually]);
+
+        alert("");
+
         $('.panel-2').html(html[eqactually]);
+
+
+        console.log("Este es el html que fue cargado");
+        console.log($('.panel-2').html());
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+
         if(html[eqactually] == ""){
             $(".panel-2").droppable(funcDroppableDrop);
         }
@@ -129,7 +163,7 @@ $(document).ready(function(){
                     revert: "invalid",
                 });
             }
-        });
+        });*/
     });
 
 
