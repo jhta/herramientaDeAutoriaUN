@@ -734,7 +734,7 @@ $(document).ready(function(){
 
     });
 
-    $("#endVar").on('click', function(e){
+   /* $("#endVar").on('click', function(e){
         agregarvariableHTML(varn);
         $(".view-variable").draggable({
             appendTo: "body",
@@ -744,17 +744,14 @@ $(document).ready(function(){
         });
         $(this).addClass('hide');
         limpiar();
+    })*/
+
+    $('#endVar').click(function(){
+        agregarvariableHTML(varn);
+        $(this).addClass('hide');
+        limpiar();
     })
 
-    $("#idddd").on('click', function(e){
-        console.log("entro");
-        $(".view-variable").draggable({
-            appendTo: "body",
-            cursor: "move",
-            helper: "clone",
-            revert: "invalid"
-        });
-    })
 });
 
 
@@ -952,6 +949,12 @@ function agregarvariableHTML(v){
 
 
         $("#panel-variables").append(htmlVar + '<span class="var">' + v.name + '</span></div>');
+        $('.view-variable').draggable({
+             appendTo: "body",
+            cursor: "move",
+            helper: "clone",
+            revert: "invalid"
+        })
         conjuntoVariables.splice(conjuntoVariables.length, 0,  v );
 
 }

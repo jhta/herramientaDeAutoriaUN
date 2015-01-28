@@ -101,57 +101,22 @@ $(document).ready(function(){
         inRespuesta = false;
         var idpre = $(this).attr('id');
         var idsplit = idpre.split('-')[1];
-
         //------- guardar datos actuales
         treeActivos.splice(equations[eqactually], 1, treeActual);
         html[eqactually] = $('.drop').html();
         //--------------
-
         //$('#previsualizar').text(html[eqactually]);
-
-
-
-
-
-
-
-
-
-
-
         eqactually = idpre;
         $('.panel-2').html("");
-
         console.log("Este es el html");
         console.log(html[eqactually]);
-
-        alert("");
-
         $('.panel-2').html(html[eqactually]);
-
-
-        console.log("Este es el html que fue cargado");
-        console.log($('.panel-2').html());
-
-
-
-
-
-/*
-
-
-
-
-
-
-
 
         if(html[eqactually] == ""){
             $(".panel-2").droppable(funcDroppableDrop);
         }
 
         treeActual = treeActivos[idsplit];
-
         $('.drop code, .drop div').each(function(index){
             if($(this).hasClass("ultimo-e")){
                 $(this).droppable(funcDroppable);
@@ -160,10 +125,10 @@ $(document).ready(function(){
                 $(this).draggable({
                     appendTo: "body",
                     cursor: "move",
-                    revert: "invalid",
+                    revert: "invalid"
                 });
             }
-        });*/
+        });
     });
 
 
