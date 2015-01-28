@@ -96,6 +96,10 @@ $(document).ready(function(){
             alert("Error, inténtalo de nuevo");
         });
 
+        $("#logout").click(function(){
+            alert("Nos vamos a desloguear");
+        });
+
         /*
         Agregar una nueva carpeta
         */
