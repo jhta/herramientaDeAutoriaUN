@@ -1,4 +1,78 @@
 var eqactuallyres = "";
+
+//Carga todas las respuestas que posea la pregunta dinámicamente
+function respuestaXmlToHtml(xml){
+    console.log(xml);
+    $("#accordion2").html("");
+    var xmlrespuesta = xml.respuesta;
+    if(xmlrespuesta.length>1) {
+        for (var res in xmlrespuesta) {
+            console.log(res);
+            console.log(xml.respuesta[res].id);
+            var idRespuesta = xml.respuesta[res].id;
+            var nombre = xml.respuesta[res].nombre;
+            printHtmlrespuesta(idRespuesta,nombre);
+
+        }
+    }else{
+        printHtmlrespuesta(xmlrespuesta.id,xmlrespuesta.nombre);
+    }
+}
+function printHtmlrespuesta(idRespuesta, nombre){
+    $("#accordion2").append("<div class='panel panel-default'>" +
+        "<div class='panel-heading' role='tab' >" +
+        "<span class='panel-title'>" +
+        "<a id='title-" + idRespuesta + "' class='collapsed' data-toggle='collapse' data-parent='#accordion2' href='#" + idRespuesta + "' aria-expanded='false' aria-controls='#" + idRespuesta + "'>" +
+        nombre +
+        "</a>" +
+        "</span>" +
+        "<div class='pull-right'>" +
+        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+        "<div class='btn-group' role='group' aria-label='...'>" +
+        "<a href='#' class='editRespuesta' data-id='" + idRespuesta + "'>" +
+        "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
+        "</a>" +
+        " </div>" +
+        "<div class='btn-group' role='group' aria-label='...'>" +
+        "<a href='#' class='deleteRespuesta' data-id='" + idRespuesta + "'>" +
+        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
+        " </a>" +
+        "</div>" +
+        "<div class='btn-group' role='group' aria-label='...'>" +
+        "<button  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
+        "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
+        "</button>" +
+        "</div>" +
+        "</div>" +
+        " </div>" +
+        "</div>" +
+        "<div id='" + idRespuesta + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo'>" +
+        "<div class='panel-body'>" +
+        "<ul class='list-group'>" +
+        " <li class='list-group-item'>" +
+        "<span class='glyphicon glyphicon-ok'></span>" +
+        " <span>Respuesta correcta:</span>" +
+        "<div class='pull-right'>" +
+        "<div id='content-" + idRespuesta + "'></div>" +
+        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+        "<div class='btn-group' role='group' aria-label='...'>" +
+        "<a href='#' data-id='" + idRespuesta + "' class='pre-equation-respuesta' data-tipo='correcta'>" +
+        "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
+        "</a>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</li>" +
+        "</ul>" +
+        "</div>" +
+        "</div>" +
+        "</div>");
+    $("#content-" + idRespuesta).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;"  data-id="' + idRespuesta + '" id="mathjax-' + idRespuesta + '"><math></math></div>');
+    document.getElementById("mathjax-" + idRespuesta).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathjax-" + idRespuesta]);
+}
+
+
 $(document).ready(function(){
     /*
      * *******************************************************************************
@@ -172,10 +246,10 @@ $(document).ready(function(){
      * Manipulación de las ecuaciones que se generan para las respuestas correctas y errores genuinos
      */
 
-   
+
 
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
-         var id = $(this).data('id');
+        var id = $(this).data('id');
         var tipo = $(this).data('tipo');
 
         guardar();
@@ -203,7 +277,7 @@ $(document).ready(function(){
 
 
 
-         var cont=0;
+        var cont=0;
         $(".drop code,.drop div").each(function(index){
             if($(this).hasClass("ultimo-e")){
                 cont++;
@@ -279,11 +353,11 @@ $(document).ready(function(){
         xw.writeStartDocument();
         xw.writeStartElement('respuestas');
 
-            for(var element in respuestas)
-            {
-                var res = respuestas[element];
-                console.log(res);
-                console.log(respuestas[element]);
+        for(var element in respuestas)
+        {
+            var res = respuestas[element];
+            console.log(res);
+            console.log(respuestas[element]);
             xw.writeStartElement('respuesta');
             xw.writeAttributeString( "nombre", res.nombre );
             xw.writeAttributeString( "id", res.id);
@@ -446,4 +520,6 @@ $(document).ready(function(){
         //Este evento que llama el trigger se encuentra en restfulleditor.js al final
         $( "#loadeq").trigger( "guardarxml", [ xml ] );
     });
+
+
 });

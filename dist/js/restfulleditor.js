@@ -236,6 +236,9 @@ $(document).ready(function(){
                     "</div>" +
                     " </div>" +
                     " </li>");
+
+                $("#accordion").find("#"+val._id).find(".LoadQuestion").trigger( "click" );
+
             }).fail(function () {
                 alert("Error, inténtalo de nuevo");
             });
@@ -327,17 +330,16 @@ $(document).ready(function(){
         });
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
-        function xmlToObjects(xml){
+        function xmlToObjects(xml) {
             var xmlDoc = xml.xml_pregunta
-            console.log(xmlDoc);
             var json = $.xml2json(xmlDoc);
-            console.log(json);
-            alert(json.respuestas);
+            if (typeof json !== 'undefined') {
+                if (typeof json.respuestas !== 'undefined') {
+                    respuestaXmlToHtml(json.respuestas)
 
+                }
+            }
         }
-
-
-
 
 
         }else{
