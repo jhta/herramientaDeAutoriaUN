@@ -25,4 +25,16 @@ $(document).ready(function(){
         })
     });
 
+    $("#createUser").click(function(){
+        var newName = $("#newName").val(),
+            newMail = $("#newMail").val(),
+            newPass = $("#newPass").val(),
+            repeatPass = $("#repeatPass").val();
+
+        client = new $.RestClient('http://localhost:4000/api/',{
+            newName: newName,
+            newMail: newMail,
+            newPass: newPass
+        });
+    });
 });
