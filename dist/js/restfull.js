@@ -27,4 +27,21 @@ $(document).ready(function(){
         })
     });
 
+    $("#createUser").click(function(){
+        var newName = $("#newName").val(),
+            newMail = $("#newMail").val(),
+            newPass = $("#newPass").val(),
+            repeatPass = $("#repeatPass").val();
+        console.log(newName+" "+newMail+" "+newPass);
+        client = new $.RestClient('http://104.236.247.200:4000/api/',{
+            name: newName,
+            mail: newMail,
+            pass: newPass
+        });
+        client.add('user');
+        client.user.create({email:newMail,pass:newPass,name: newName}).done(function(data {
+            console.log("si se pudo");
+            console.log(data.id);
+        }));
+    });
 });

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // jQuery REST Client - v0.0.7 - https://github.com/jpillora/jquery.rest
 // Jaime Pillora <dev@jpillora.com> - MIT Copyright 2013
 (function(window,document,$,undefined) {
@@ -6,6 +7,15 @@ var Cache, Resource, Verb, defaultOpts, deleteWarning, encode64, error, inheritE
 
 error = function(msg) {
   throw "ERROR: jquery.rest: " + msg;
+=======
+// jQuery REST Client - v1.0.2 - https://github.com/jpillora/jquery.rest
+// Jaime Pillora <dev@jpillora.com> - MIT Copyright 2014
+(function(window,$,undefined) {'use strict';
+var Cache, Resource, Verb, defaultOpts, deleteWarning, encode64, error, inheritExtend, s, stringify, validateOpts, validateStr;
+
+error = function(msg) {
+  throw new Error("ERROR: jquery.rest: " + msg);
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
 };
 
 s = function(n) {
@@ -66,6 +76,11 @@ defaultOpts = {
   request: function(resource, options) {
     return $.ajax(options);
   },
+<<<<<<< HEAD
+=======
+  isSingle: false,
+  autoClearCache: true,
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
   cachableMethods: ['GET'],
   methodOverride: false,
   stringifyData: false,
@@ -202,7 +217,11 @@ Resource = (function() {
   Resource.prototype.constructRoot = function(options) {
     this.opts = inheritExtend(defaultOpts, options);
     this.root = this;
+<<<<<<< HEAD
     this.numParents = 0;
+=======
+    this.expectedIds = 0;
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
     this.urlNoId = this.url;
     this.cache = new Cache(this);
     this.parent = null;
@@ -222,10 +241,22 @@ Resource = (function() {
       options.url = '';
     }
     this.opts = inheritExtend(this.parent.opts, options);
+<<<<<<< HEAD
     this.root = this.parent.root;
     this.numParents = this.parent.numParents + 1;
     this.urlNoId = this.parent.url + ("" + (this.opts.url || this.name) + "/");
     this.url = this.urlNoId + (":ID_" + this.numParents + "/");
+=======
+    this.opts.isSingle = 'isSingle' in options && options.isSingle;
+    this.root = this.parent.root;
+    this.urlNoId = this.parent.url + ("" + (this.opts.url || this.name) + "/");
+    this.url = this.urlNoId;
+    this.expectedIds = this.parent.expectedIds;
+    if (!this.opts.isSingle) {
+      this.expectedIds += 1;
+      this.url += ":ID_" + this.expectedIds + "/";
+    }
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
     $.each(this.opts.verbs, $.proxy(this.addVerb, this));
     if (this.destroy) {
       this.del = this.destroy;
@@ -273,7 +304,11 @@ Resource = (function() {
   };
 
   Resource.prototype.extractUrlData = function(name, args) {
+<<<<<<< HEAD
     var arg, canUrl, canUrlNoId, data, i, id, ids, msg, numIds, params, t, url, _i, _j, _len, _len1;
+=======
+    var arg, canUrl, canUrlNoId, data, i, id, ids, msg, params, providedIds, t, url, _i, _j, _len, _len1;
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
     ids = [];
     data = null;
     params = null;
@@ -290,6 +325,7 @@ Resource = (function() {
         error(("Invalid argument: " + arg + " (" + t + ").") + " Must be strings or ints (IDs) followed by one optional object and one optional query params object.");
       }
     }
+<<<<<<< HEAD
     numIds = ids.length;
     canUrl = name !== 'create';
     canUrlNoId = name !== 'update' && name !== 'delete';
@@ -298,16 +334,35 @@ Resource = (function() {
       url = this.url;
     }
     if (canUrlNoId && numIds === this.numParents - 1) {
+=======
+    providedIds = ids.length;
+    canUrl = name !== 'create';
+    canUrlNoId = name !== 'update' && name !== 'delete';
+    url = null;
+    if (canUrl && providedIds === this.expectedIds) {
+      url = this.url;
+    }
+    if (canUrlNoId && providedIds === this.expectedIds - 1) {
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
       url = this.urlNoId;
     }
     if (url === null) {
       if (canUrlNoId) {
+<<<<<<< HEAD
         msg = this.numParents - 1;
       }
       if (canUrl) {
         msg = (msg ? msg + ' or ' : '') + this.numParents;
       }
       error("Invalid number of ID arguments, required " + msg + ", provided " + numIds);
+=======
+        msg = this.expectedIds - 1;
+      }
+      if (canUrl) {
+        msg = (msg ? msg + ' or ' : '') + this.expectedIds;
+      }
+      error("Invalid number of ID arguments, required " + msg + ", provided " + providedIds);
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
     }
     for (i = _j = 0, _len1 = ids.length; _j < _len1; i = ++_j) {
       id = ids[i];
@@ -323,7 +378,11 @@ Resource = (function() {
   };
 
   Resource.prototype.ajax = function(method, url, data) {
+<<<<<<< HEAD
     var ajaxOpts, encoded, headers, key, req, useCache,
+=======
+    var ajaxOpts, encoded, escapedUrl, headers, key, req, useCache,
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
       _this = this;
     if (!method) {
       error("method missing");
@@ -336,7 +395,11 @@ Resource = (function() {
       encoded = encode64(this.opts.username + ":" + this.opts.password);
       headers.Authorization = "Basic " + encoded;
     }
+<<<<<<< HEAD
     if (data && this.opts.stringifyData) {
+=======
+    if (data && this.opts.stringifyData && (method !== 'GET' && method !== 'HEAD')) {
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
       data = stringify(data);
       headers['Content-Type'] = "application/json";
     }
@@ -347,7 +410,13 @@ Resource = (function() {
     if (this.opts.stripTrailingSlash) {
       url = url.replace(/\/$/, "");
     }
+<<<<<<< HEAD
     ajaxOpts = {
+=======
+      //headers['Content-Type'] = "application/json";
+
+      ajaxOpts = {
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
       url: url,
       type: method,
       headers: headers
@@ -364,6 +433,13 @@ Resource = (function() {
         return req;
       }
     }
+<<<<<<< HEAD
+=======
+    if (this.opts.cache && this.opts.autoClearCache && $.inArray(method, this.opts.cachableMethods) === -1) {
+      escapedUrl = url.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+      this.root.cache.clear(new RegExp(escapedUrl));
+    }
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
     req = this.opts.request(this.parent, ajaxOpts);
     if (useCache) {
       req.done(function() {
@@ -380,4 +456,8 @@ Resource = (function() {
 Resource.defaults = defaultOpts;
 
 $.RestClient = Resource;
+<<<<<<< HEAD
 }(window,document,jQuery));
+=======
+}.call(this,window,jQuery));
+>>>>>>> a61601536acd23bbed44e9841919265ee5baaa4b
