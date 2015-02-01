@@ -18,7 +18,7 @@ $(document).ready(function(){
             jQuery.each( data.User.folders, function( i, val ) {
                 console.log(val);
 
-                $("#accordion").prepend("<div class='panel panel-default'>" +
+                $("#accordion").append("<div class='panel panel-default'>" +
                         "<div class='panel-heading' role='tab' id='header-"+val._id+"'>" +
                         "<span class='panel-title'  data-title='"+val.name+"'>" +
                         "<a data-toggle='collapse' data-parent='#accordion' href='#body-"+val._id+"' aria-expanded='true' aria-controls='body-"+val._id+"'>" +
