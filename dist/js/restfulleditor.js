@@ -293,6 +293,8 @@ $(document).ready(function(){
          Cargar toda la información de una pregunta(xml de la pregunta)
          */
         $("#accordion").on("click",".LoadQuestion",function(){
+            $("#carpetas").fadeOut();
+            $("#rootWizard").fadeIn();
             if(typeof folderactual !== 'undefined'){
                 questionactual.css( "background-color",'' );
                 folderactual.css( "background-color",'' );
