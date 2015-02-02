@@ -61,7 +61,7 @@
         </div>
       </nav>
       <!-- Carpetas -->
-      <section id="carpetas" class="carpetas panel panel-default col-xs-8 col-xs-offset-2">
+      <section id="carpetas" style="display: none;"class="carpetas panel panel-default col-xs-8 col-xs-offset-2">
         <div class="panel-body">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="input-group" style="margin:5px 0;">
@@ -81,9 +81,9 @@
               <div class="col-xs-8  u-pad0" id="tab-content">
                 <!--Panel de problema-->
                 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                  <li class="active"><a href="#formulacion" class="tab-li" data-toggle="tab">Formulacíon</a></li>
-                  <li><a href="#respuestas" class="tab-li" data-toggle="tab">Respuestas</a></li>
-                  <li><a href="#metadatos" class="tab-li" data-toggle="tab">Metadatos</a></li>
+                  <li id="tab-formulacion" class="active"><a href="#formulacion" class="tab-li" data-toggle="tab">Formulacíon</a></li>
+                  <li id="tab-respuestas"><a href="#respuestas" class="tab-li" data-toggle="tab">Respuestas</a></li>
+                  <li id="tab-metadatos"><a href="#metadatos" class="tab-li" data-toggle="tab">Metadatos</a></li>
                 </ul>
                 <div id="my-tab-content" style="height: 100%; overflow: auto;" class=" panel panel-default tab-content">      
                   <!--Tab 1: Formulacion -->
@@ -229,7 +229,7 @@
                       </div>
                   </div>
                     <!--Tab 3: respuestas -->
-                  <div class="tab-pane" id="respuestas" ng-controller="respuestaController" >
+                  <div class="tab-pane" id="respuestas" >
                     <div class=" contenedor-panel tab-pane " id="tab2">
                       <div class="panel-body">
                         <!--
@@ -271,39 +271,7 @@
                         </div>
                       </div>    
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                        <form name="forma" ng-submit="agregarRespuesta()">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              <h4 class="modal-title" id="myModalLabel">Agrega respuestas!</h4>
-                            </div>
-                            <div class="modal-body">
-                              <h5>Respuesta:</h5>      
-                              <div class="form-group has-feedback" ng-class="{'has-error':forma.respuesta.$invalid, 'has-success': forma.respuesta.$valid}">
-    
-                                  <input type="text" required  name="respuesta" ng-model="nuevaRespuesta" class="form-control " size="3" placeholder="Respuesta">
-                              </div>
-                              <h5>Texto Explicativo:</h5>
-                              <textarea type="text" ng-model="nuevoTexto" name="texto" required  class="form-control has-feedback"  ng-class="{'has-error':forma.texto.$invalid, 'has-success': forma.texto.$valid}"  placeholder="Agrega un texto adicional"></textarea>
-                              <h5>Valor: </h5>
-                              <!--<div class="form-group">
-                                  <input type="number" class="form-control contenedor-variables-input" value="0" max="5" min="0" placeholder="valor">
-                              </div>-->
-                              <input id="valor" class="rating" ng-model="nuevoValor"  name="valor" data-min="0" data-max="5" data-step="1">
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                              <button type="submit" ng-disabled="forma.$invalid"class="btn btn-success">Agregar
-                                  <span class="glyphicon glyphicon-ok "></span>
-                              </button>
-                            </div>
-                        </form>
-                        </div>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -654,7 +622,7 @@
                                 </div> 
                                 
                                 <!-- Otras -->
-                                <div class="panel panel-default">
+                                <div class="panel panel-default" id="panelOtros">
                                    <div class="panel-heading" role="tab" id="headingOtras">
                                      <h4 class="panel-title">
                                        <a data-toggle="collapse" data-parent="#expresiones" href="#collapseOtras" aria-expanded="true" aria-controls="collapseOtras">
