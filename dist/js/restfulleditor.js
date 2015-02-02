@@ -338,6 +338,11 @@ $(document).ready(function(){
                     respuestaXmlToHtml(json.objetos_respuestas)
 
                 }
+                if (typeof json.variables !== 'undefined') {
+                    console.log(xml);
+                    console.log("xml");
+                    XMLToVar(xml.xml_pregunta);
+                }
             }
         }
 

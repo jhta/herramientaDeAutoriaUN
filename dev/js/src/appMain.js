@@ -245,15 +245,13 @@ function XMLToVar(entrada){
 
     var doc = parseXml(entrada);
 
-
-
     var elementos = doc.getElementsByTagName('variables')[0].childNodes;
     for(var ii =0; ii < elementos.length; ii++){
         var v = new Variable();
         var varia = elementos[ii];
-        var type = varia.attributes[0].value;
 
-        v.type = type;
+        var type = varia.attributes[0].value;
+        v.type = varia.tipo;
         v.name = varia.id;
 
         if(type == 'especifica'){
