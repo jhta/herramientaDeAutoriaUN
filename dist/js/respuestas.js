@@ -67,9 +67,9 @@ function printHtmlrespuesta(idRespuesta, nombre,treei){
         " </a>" +
         "</div>" +
         "<div class='btn-group' role='group' aria-label='...'>" +
-        "<button  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
+        "<a  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
         "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
-        "</button>" +
+        "</a>" +
         "</div>" +
         "</div>" +
         " </div>" +
@@ -162,9 +162,9 @@ $(document).ready(function(){
             " </a>"+
             "</div>"+
             "<div class='btn-group' role='group' aria-label='...'>"+
-            "<button  class='addErrorGenuino' data-id='respuesta-"+idRespuesta+"'>"+
+            "<a  class='addErrorGenuino' data-id='respuesta-"+idRespuesta+"'>"+
             "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>"+
-            "</button>"+
+            "</a>"+
             "</div>"+
             "</div>"+
             " </div>"+

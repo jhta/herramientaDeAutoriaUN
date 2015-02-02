@@ -595,7 +595,19 @@ var varn,
 
 var conjuntoVariables = [];
 $(document).ready(function(){
+
+    $("#tab-respuestas").click(function(){
+        $("#panelOtros").toggleClass("hide");
+
+    });
     
+    $("#tab-formulacion").click(function(){
+        $("#panelOtros").removeClass("hide");
+    })
+
+    $("#tab-metadatos").click(function(){
+        $("#panelOtros").removeClass("hide");
+    })
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();
     $("#valorA").rating();
