@@ -305,6 +305,9 @@ $(document).ready(function(){
             folderactual.css( "background-color",'yellow' );
             var id =questionactual.attr('id');
             client.question.read(id).done(function (data) {
+                //input de los metadatos
+                $("#titulo").val(data.titulo);
+                $("#titulo-pregunta-actual").html(data.titulo);
                 console.log(data);
                 xmlToObjects(data)
             }).fail(function () {
@@ -347,6 +350,10 @@ $(document).ready(function(){
                 }
             }
         }
+
+        $(window).on("beforeunload", function() {
+            return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
+        })
 
 
         }else{
