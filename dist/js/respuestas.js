@@ -15,16 +15,38 @@ function respuestaXmlToHtml(xml){
     console.log(xml);
     var xmlrespuesta = xml;
     $("#accordion2").html("");
+    $('#content-drop-respuestas').html("");
     var cont = 0;
     for (var res in xmlrespuesta) {
         var obres = xmlrespuesta[res];
-        respuestas[obres.id+""] = obres;
+        var treei = new Tree();
+        treei.tree = obres.tree;
+        treei.id= obres.id;
+        treei.cifras_decimales = obres.cifras_decimales;
+        if(obres.error_genuino.length==0){
+            treei.error_genuino = [];
+        }else{
+            treei.error_genuino = obres.error_genuino;
+        }
+
+        treei.formula = obres.formula;
+        treei.html = obres.html;
+        treei.nombre = obres.nombre;
+
+        console.log(treei);
+        console.log(treei.makeString());
+        respuestas[obres.id+""] = treei;
         cont++;
-        printHtmlrespuesta(obres.id, obres.nombre,obres.tree);
+        printHtmlrespuesta(obres.id, obres.nombre,treei);
+        for(var i =0; i<treei.error_genuino.length;i++){
+            printHtmlerror(treei.error_genuino[i],treei.id);
+        }
     }
     idRespuesta = cont;
 }
-function printHtmlrespuesta(idRespuesta, nombre,tree){
+
+
+function printHtmlrespuesta(idRespuesta, nombre,treei){
     $("#accordion2").append("<div class='panel panel-default'>" +
         "<div class='panel-heading' role='tab' >" +
         "<span class='panel-title'>" +
@@ -73,16 +95,39 @@ function printHtmlrespuesta(idRespuesta, nombre,tree){
         "</div>" +
         "</div>" +
         "</div>");
-    $("#content-" + idRespuesta).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;"  data-id="' + idRespuesta + '" id="mathjax-' + idRespuesta + '"><math></math></div>');
-    console.log("Esta es la funcion que me devuelve la ecuacion");
-    treei = new Tree();
-    treei.tree = tree;
-    console.log(treei);
-    console.log(treei.makeString());
+    $("#content-" + idRespuesta).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #888;padding: 2px 4px;display:inline-block;"  data-id="'+idRespuesta+'" id="mathjax-'+idRespuesta+'"><math></math></div>');
+
 
     document.getElementById("mathjax-" + idRespuesta).innerHTML = "<math>"+treei.makeString()+"</math>";
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathjax-" + idRespuesta]);
 }
+
+    function printHtmlerror(error,idRes){
+        $("#"+idRes).find(".list-group").append(" <li class='list-group-item' id='"+error.id+"' data-respuestaid='"+idRes+"'>"+
+            "<span class='glyphicon glyphicon-remove'></span>"+
+            " <span>Error genuino:</span>"+
+            "<div class='pull-right col-xs-6' style='display:table;'>"+
+            "<div id='content-"+error.id+"' style='display: table-cell' class='col-xs-8'></div>"+
+            "<div class='btn-toolbar col-xs-2 col-xs-offset-1 pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
+            "<div class='btn-group' role='group' aria-label='...'>"+
+            "<a href='#' data-id='"+error.id+"' class='pre-equation-respuesta' data-tipo='error' data-respuestaid='"+idRes+"'>"+
+            "<span class='glyphicon glyphicon-wrench'   aria-hidden='true'></span>"+
+            "</a>"+
+            "</div>"+
+            "<div class='btn-group' role='group' aria-label='...'>"+
+            "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+idRes+"'>"+
+            "<span class='glyphicon glyphicon-remove'   aria-hidden='true'></span>"+
+            " </a>"+
+            "</div>"+
+            "</div>"+
+            "</div>"+
+            "</li>");
+
+        $("#content-"+error.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;"  data-id="'+idRes+'" id="mathjax-'+error.id+'"><math></math></div>');
+        document.getElementById("mathjax-"+error.id).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>6</mn></math>";
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,"mathjax-"+error.id]);
+
+    }
 
 
 $(document).ready(function(){
@@ -148,6 +193,7 @@ $(document).ready(function(){
         idRespuesta++;
         $("#inputNuevaRespuesta").val('');
         $("#content-"+respactual.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #888;padding: 2px 4px;display:inline-block;"  data-id="'+respactual.id+'" id="mathjax-'+respactual.id+'"><math></math></div>');
+
         document.getElementById("mathjax-"+respactual.id).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,"mathjax-"+respactual.id]);
 
@@ -168,6 +214,7 @@ $(document).ready(function(){
         inRespuesta = true;
         respactual = respuestas[$(this).data("id")+""];
         var error = new Error();
+        console.log(respactual);
         error.id=respactual.id+ "-" + respactual.error_genuino.length;
         respactual.error_genuino.push(error);
         respuestas[respactual.id+""] = respactual;

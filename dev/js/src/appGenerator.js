@@ -588,3 +588,19 @@ function rebootTree(){
             QUEUE.Push(["Text", math, MathML]);
         }
     })();
+
+function addnewinput(objec){
+    var elementDrop = $("#baseInput").clone();
+    elementDrop.show();
+    elementDrop.find(".var").html($(objec).val());
+    elementDrop.removeAttr('id');
+    makeTree(elementDrop, $(objec).parent());
+     var padre=  $(objec).parent();
+    $(objec).remove();
+    padre.append(elementDrop);
+
+    var jsn = treeActual.makeString();
+    UpdateMath("<math>" + jsn + "</math>");
+
+
+}

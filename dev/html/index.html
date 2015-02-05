@@ -45,6 +45,7 @@
       <script type="text/javascript" src="dist/js/xml2json.min.js"></script>
 
 
+
   </head>
   <body ng-app>
       <!--Contenedor general-->
@@ -54,6 +55,8 @@
           <div class="navbar-header">
             
             <a class="navbar-brand" href="#">Ticademia</a>
+              <div id="titulo-pregunta-actual"></div>
+
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
             <p class="navbar-text navbar-right">Logueado como <a href="#" id="nameUser" class="navbar-link">Jeison Higuita</a> | <a href="#" id="logout" class="navbar-link">Salir</a></p>
@@ -61,7 +64,9 @@
         </div>
       </nav>
       <!-- Carpetas -->
+
       <section id="carpetas" class="carpetas panel panel-default col-xs-8 col-xs-offset-2">
+
         <div class="panel-body">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="input-group" style="margin:5px 0;">
@@ -131,7 +136,7 @@
                                   <div class="form-group">
                                   <label for="title">Título: </label>
                                   <input type="text" id="titulo" class="form-control" 
-                                         placeholder=""  maxlength="128"> 
+                                         placeholder=""  maxlength="128" disabled>
                                 </div>
                                  <div class="form-group">
                                   <label for="title">Lenguaje: </label>
@@ -485,9 +490,12 @@
                                    </div>
                                    <div id="collapseAritmeticas" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingAritmeticas">
                                       <div class="panel-body">
-        
-                                        
-                                       
+
+                                          <!-- Este div está oculto y funciona cuando el usuario ingresa un nuevo elemento en el arbol el cual
+                                           contiene el texto que haya escrito en el input text-->
+                                          <div class="card" id="baseInput" style="display: none" data-id="cons">
+                                              <span class="var">&#946;</span>
+                                          </div>
                                         <div class="card" data-id="cons" data-content="&#945">
                                             <span class="var">&#945;</span>
                                         </div>

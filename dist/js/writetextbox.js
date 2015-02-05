@@ -14,15 +14,8 @@ $( document ).ready(function() {
             if ($.trim(this.value).length>20) {
             $(this).parent().html("");
             }else{
-            addnewinput(this,"text");
-            /*
-             if(/^[0-9]+$/.test(this.value)){
-             addnewinput(this,"cons");
-             }else if(/^[a-zA-Z]+$/.test(this.value)){
-             addnewinput(this,"var");
-             }else{
-             $(this).parent().html("");
-             }*/
+                $("#baseInput").attr('data-content', this.value);
+                addnewinput(this);
             }
         }
     });
@@ -34,28 +27,27 @@ $( document ).ready(function() {
 ////////////////////////////////////////////////////////////////////////
 
     $("#div-iner2").on("click", ".spa", function () {
-        alert("hola :D");
+
         if($(this).children().length < 1) {
             $(this).html('<input id="input-new" type="text" style="padding: 10px 10px 10px 10px">');
             $("#input-new").focus();
         }
     });
     $("#div-iner2").on("blur", "#input-new", function () {
+        var valor = this.value+"";
         if (!$.trim(this.value).length) {
             $(this).parent().html("");
         }else{
             if ($.trim(this.value).length>20) {
-            $(this).parent().html("");
-            }else{
-            addnewinput(this,"text");
-            /*
-             if(/^[0-9]+$/.test(this.value)){
-             addnewinput(this,"cons");
-             }else if(/^[a-zA-Z]+$/.test(this.value)){
-             addnewinput(this,"var");
-             }else{
-             $(this).parent().html("");
-             }*/
+                $(this).parent().html("");
+            }
+            else if(! /^\d+$/.test(valor)){
+                $(this).parent().html("");
+            }
+            else{
+
+                $("#baseInput").attr('data-content', this.value);
+                addnewinput(this);
             }
         }
     });

@@ -589,6 +589,22 @@ function rebootTree(){
         }
     })();
 
+function addnewinput(objec){
+    var elementDrop = $("#baseInput").clone();
+    elementDrop.show();
+    elementDrop.find(".var").html($(objec).val());
+    elementDrop.removeAttr('id');
+    makeTree(elementDrop, $(objec).parent());
+     var padre=  $(objec).parent();
+    $(objec).remove();
+    padre.append(elementDrop);
+
+    var jsn = treeActual.makeString();
+    UpdateMath("<math>" + jsn + "</math>");
+
+
+}
+
 var varn,
     arrayValues = [];
     jsonValues = {};
@@ -848,15 +864,13 @@ function XMLToVar(entrada){
 
     var doc = parseXml(entrada);
 
-
-
     var elementos = doc.getElementsByTagName('variables')[0].childNodes;
     for(var ii =0; ii < elementos.length; ii++){
         var v = new Variable();
         var varia = elementos[ii];
-        var type = varia.attributes[0].value;
 
-        v.type = type;
+        var type = varia.attributes[0].value;
+        v.type = varia.tipo;
         v.name = varia.id;
 
         if(type == 'especifica'){

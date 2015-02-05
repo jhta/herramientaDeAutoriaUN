@@ -293,6 +293,8 @@ $(document).ready(function(){
          Cargar toda la información de una pregunta(xml de la pregunta)
          */
         $("#accordion").on("click",".LoadQuestion",function(){
+            $("#carpetas").fadeOut();
+            $("#rootWizard").fadeIn();
             if(typeof folderactual !== 'undefined'){
                 questionactual.css( "background-color",'' );
                 folderactual.css( "background-color",'' );
@@ -303,6 +305,9 @@ $(document).ready(function(){
             folderactual.css( "background-color",'yellow' );
             var id =questionactual.attr('id');
             client.question.read(id).done(function (data) {
+                //input de los metadatos
+                $("#titulo").val(data.titulo);
+                $("#titulo-pregunta-actual").html(data.titulo);
                 console.log(data);
                 xmlToObjects(data)
             }).fail(function () {
@@ -338,8 +343,17 @@ $(document).ready(function(){
                     respuestaXmlToHtml(json.objetos_respuestas)
 
                 }
+                if (typeof json.variables !== 'undefined') {
+                    console.log(xml);
+                    console.log("xml");
+                    XMLToVar(xml.xml_pregunta);
+                }
             }
         }
+
+        $(window).on("beforeunload", function() {
+            return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
+        })
 
 
         }else{
