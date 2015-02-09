@@ -289,20 +289,29 @@ $(document).ready(function(){
 
         });
 
+        function changeBackground(color){
+            $(questionactual).css('background-color',color);
+            $(folderactual).css('background-color',color);
+        }
+        //Boton volver
+        $("#btnVolver").on("click", function(){
+            $("#carpetas").fadeIn();
+            $("#rootWizard").fadeOut();
+            changeBackground("");
+        });
+
+
         /*
          Cargar toda la información de una pregunta(xml de la pregunta)
          */
         $("#accordion").on("click",".LoadQuestion",function(){
             $("#carpetas").fadeOut();
             $("#rootWizard").fadeIn();
-            if(typeof folderactual !== 'undefined'){
-                questionactual.css( "background-color",'' );
-                folderactual.css( "background-color",'' );
-            };
+            if(typeof folderactual !== 'undefined') changeBackground("");
+
             questionactual =  $("#accordion").find("#"+$(this).data('id'));
             folderactual = questionactual.parent().parent().parent().parent().find(":first");
-            questionactual.css( "background-color",'yellow' );
-            folderactual.css( "background-color",'yellow' );
+            changeBackground("yellow");
             var id =questionactual.attr('id');
             client.question.read(id).done(function (data) {
                 //input de los metadatos
