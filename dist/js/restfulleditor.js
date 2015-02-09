@@ -111,7 +111,7 @@ $(document).ready(function(){
             client.folder.create({name:$(this).next().val(),userid:sessionStorage.getItem('id')}).done(function (data) {
                 $($this).next().val('');
                 var val = data;
-                $("#accordion").prepend("<div class='panel panel-default'>" +
+                $("#accordion").append("<div class='panel panel-default'>" +
                         "<div class='panel-heading' role='tab' id='header-"+val._id+"'>" +
                         "<span class='panel-title' data-title='"+val.name+"'>" +
                         "<a data-toggle='collapse' data-parent='#accordion' href='#body-"+val._id+"' aria-expanded='true' aria-controls='body-"+val._id+"'>" +
@@ -293,13 +293,16 @@ $(document).ready(function(){
             $(questionactual).css('background-color',color);
             $(folderactual).css('background-color',color);
         }
-        //Boton volver
-        $("#btnVolver").on("click", function(){
+
+        function comeBack(){
             $("#carpetas").fadeIn();
             $("#rootWizard").fadeOut();
             changeBackground("");
+        }
+        //Boton volver
+        $("#btnVolver").on("click", function(){
+            comeBack();
         });
-
 
         /*
          Cargar toda la información de una pregunta(xml de la pregunta)
@@ -316,7 +319,7 @@ $(document).ready(function(){
             client.question.read(id).done(function (data) {
                 //input de los metadatos
                 $("#titulo").val(data.titulo);
-                $("#titulo-pregunta-actual").html(data.titulo);
+                $("#titulo-pregunta-actual").html(" | "+data.titulo);
                 console.log(data);
                 xmlToObjects(data)
             }).fail(function () {
