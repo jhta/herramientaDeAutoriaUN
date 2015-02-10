@@ -80,9 +80,9 @@ function printHtmlrespuesta(idRespuesta, nombre,treei){
         " <li class='list-group-item'>" +
         "<span class='glyphicon glyphicon-ok'></span>" +
         " <span>Respuesta correcta:</span>" +
-        "<div class='pull-right'>" +
-        "<div id='content-" + idRespuesta + "'></div>" +
-        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+        "<div class='pull-right col-xs-6'>" +
+        "<div id='content-" + idRespuesta + " col-xs-8'></div>" +
+        "<div class='btn-toolbar col-xs-4' role='toolbar' aria-label='...'>" +
         "<div class='btn-group' role='group' aria-label='...'>" +
         "<a href='#' data-id='" + idRespuesta + "' class='pre-equation-respuesta' data-tipo='correcta'>" +
         "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
@@ -108,7 +108,7 @@ function printHtmlrespuesta(idRespuesta, nombre,treei){
             " <span>Error genuino:</span>"+
             "<div class='pull-right col-xs-6' style='display:table;'>"+
             "<div id='content-"+error.id+"' style='display: table-cell' class='col-xs-8'></div>"+
-            "<div class='btn-toolbar col-xs-2 col-xs-offset-1 pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
+            "<div class='btn-toolbar col-xs-4  pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
             "<div class='btn-group' role='group' aria-label='...'>"+
             "<a href='#' data-id='"+error.id+"' class='pre-equation-respuesta' data-tipo='error' data-respuestaid='"+idRes+"'>"+
             "<span class='glyphicon glyphicon-wrench'   aria-hidden='true'></span>"+
@@ -177,7 +177,7 @@ $(document).ready(function(){
             " <span>Respuesta correcta:</span>"+
             "<div class='pull-right col-xs-6' style='display: table;'>"+
             "<div id='content-"+respactual.id+"' class='col-xs-8' style='display: table-cell'></div>"+
-            "<div class='btn-toolbar col-xs-2 pull-right' role='toolbar' aria-label='...'  style='display: table-cell' >"+
+            "<div class='btn-toolbar col-xs-4 pull-right' role='toolbar' aria-label='...'  style='display: table-cell' >"+
             "<div class='btn-group' role='group' aria-label='...'>"+
             "<a href='#' data-id='"+respactual.id+"' class='pre-equation-respuesta' data-tipo='correcta'>"+
             "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
@@ -227,7 +227,7 @@ $(document).ready(function(){
             " <span>Error genuino:</span>"+
             "<div class='pull-right col-xs-6' style='display:table;'>"+
             "<div id='content-"+error.id+"' style='display: table-cell' class='col-xs-8'></div>"+
-            "<div class='btn-toolbar col-xs-2 col-xs-offset-1 pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
+            "<div class='btn-toolbar col-xs-4  pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
             "<div class='btn-group' role='group' aria-label='...'>"+
             "<a href='#' data-id='"+error.id+"' class='pre-equation-respuesta' data-tipo='error' data-respuestaid='"+respactual.id+"'>"+
             "<span class='glyphicon glyphicon-wrench'   aria-hidden='true'></span>"+

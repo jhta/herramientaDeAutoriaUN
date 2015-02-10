@@ -297,12 +297,17 @@ $(document).ready(function(){
         function comeBack(){
             $("#carpetas").fadeIn();
             $("#rootWizard").fadeOut();
+            $("#titulo-pregunta-actual").html("");
             changeBackground("");
         }
         //Boton volver
         $("#btnVolver").on("click", function(){
             comeBack();
         });
+
+        $("#title-ticademia").on("click", function(){
+            comeBack();
+        })
 
         /*
          Cargar toda la información de una pregunta(xml de la pregunta)
