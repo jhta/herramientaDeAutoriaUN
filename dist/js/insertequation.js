@@ -25,11 +25,9 @@ $(document).ready(function(){
         }
         //--------------
 
-
         equations[preid] = idEquation
         html[preid] = "";
         rebootTree(); // reinicia el html, crea un treeactual nuevo
-
 
         $('.drop').html("");
         eqactually = preid;

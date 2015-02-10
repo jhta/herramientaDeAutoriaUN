@@ -5,6 +5,39 @@ var idRespuesta=0;
 var respactual;
 var eqActuallyIdRespuestaCorrecta = "";
 
+//Cargar toda la formulación
+function formulacionXMLToHtml(xml){
+    console.log(xml);
+    //Reiniciando variables
+    if (typeof xml.objetos !== 'undefined') {
+        if (typeof xml.objetos.json !== 'undefined') {
+            treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
+        }
+        if (typeof xml.objetos.html !== 'undefined') {
+            html = JSON.parse(decodeURIComponent(xml.objetos.html));
+        }
+    }
+
+    if (typeof xml.formulacion !== 'undefined') {
+        $("#eq").html('');
+        equations = {};
+        for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
+
+            if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
+                var preid =xml.formulacion.expresion[i].texto;
+                var idEquation = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
+                $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+                document.getElementById(preid).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
+                MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
+                equations[preid] = idEquation;
+
+                eqactually = preid;
+            }else{
+                $("#eq").append(xml.formulacion.expresion[i].texto+" ");
+            }
+        }
+    }
+}
 
 //Carga todas las respuestas que posea la pregunta dinámicamente
 function respuestaXmlToHtml(xml){
@@ -397,46 +430,6 @@ $(document).ready(function(){
         this.tree = '';
         this.retroalimentacion='';
     }
-    function respuestasToXml(){
-        var resp = JSON.stringify(respuestas);
-
-        var xw = new XMLWriter('UTF-8');
-        xw.formatting = 'indented';//add indentation and newlines
-        xw.indentChar = ' ';//indent with spaces
-        xw.indentation = 2;//add 2 spaces per level
-        xw.writeStartDocument();
-        xw.writeStartElement('respuestas');
-
-        for(var element in respuestas)
-        {
-            var res = respuestas[element];
-            console.log(res);
-            console.log(respuestas[element]);
-            xw.writeStartElement('respuesta');
-            xw.writeAttributeString( "nombre", res.nombre );
-            xw.writeAttributeString( "id", res.id);
-            xw.writeAttributeString( "cifras_decimales", "0.2" );
-            xw.writeAttributeString( "formula", "" );
-            var errores = res.error_genuino;
-            for(var e=0;e<errores.length;e++){
-                var egen= errores[e];
-                xw.writeStartElement('error_genuino');
-                xw.writeAttributeString( "id", egen.id );
-                xw.writeAttributeString( "formula", egen.nombre );
-                xw.writeAttributeString( "cifras_decimales", "0.2" );
-                xw.writeAttributeString( "calificacion", "0" );
-                xw.writeAttributeString( "retroalimentacion", "Error" );
-                xw.writeEndElement();
-            }
-            xw.writeEndElement();
-        }
-        xw.writeEndElement();
-        xw.writeStartElement('objetos_respuestas');
-        xw.writeString(resp);
-        xw.writeEndElement();
-        xw.writeEndDocument();
-        return xw.flush();
-    };
 
     $("#loadeq").click(function(){
         var resp = JSON.stringify(respuestas);
@@ -516,16 +509,22 @@ $(document).ready(function(){
         xw.writeStartElement('formulacion');
         for(var i=0;i<array.length;i++){
             if(bools[i]){
-                xw.writeElementString('expresion', array[i]);
+                xw.writeStartElement('expresion');
+                xw.writeAttributeString( "tipo", "expresion" );
+                xw.writeAttributeString( "texto", array[i] );
+                xw.writeEndElement();
             }else{
-                xw.writeElementString('texto', array[i]);
+                xw.writeStartElement('expresion');
+                xw.writeAttributeString( "tipo", "texto" );
+                xw.writeAttributeString( "texto", array[i] );
+                xw.writeEndElement();
             }
         }
 
         xw.writeEndElement();
         xw.writeStartElement('objetos');
-        xw.writeElementString('json', JSON.stringify( treeActivos));
-        xw.writeElementString('html', JSON.stringify(html));
+        xw.writeElementString('json',  encodeURIComponent(JSON.stringify(treeActivos)));
+        xw.writeElementString('html', encodeURIComponent(JSON.stringify(html)));
         xw.writeEndElement();
         xw.writeEndElement();
 
@@ -576,6 +575,8 @@ $(document).ready(function(){
         //Este evento que llama el trigger se encuentra en restfulleditor.js al final
         $( "#loadeq").trigger( "guardarxml", [ xml ] );
     });
+
+
 
 
 });
