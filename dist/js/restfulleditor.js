@@ -353,7 +353,7 @@ $(document).ready(function(){
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
         function xmlToObjects(xml) {
-            var xmlDoc = xml.xml_pregunta
+            var xmlDoc = xml.xml_pregunta;
             var json = $.xml2json(xmlDoc);
             if (typeof json !== 'undefined') {
                 if (typeof json.objetos_respuestas !== 'undefined') {
@@ -363,7 +363,10 @@ $(document).ready(function(){
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
                     console.log("xml");
-                    XMLToVar(xml.xml_pregunta);
+                    //XMLToVar(json.xml_pregunta);
+                }
+                if (typeof json.pregunta !== 'undefined') {
+                    formulacionXMLToHtml(json.pregunta);
                 }
             }
         }

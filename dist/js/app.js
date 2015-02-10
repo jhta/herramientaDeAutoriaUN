@@ -864,47 +864,53 @@ function XMLToVar(entrada){
 
     var doc = parseXml(entrada);
 
-    var elementos = doc.getElementsByTagName('variables')[0].childNodes;
-    for(var ii =0; ii < elementos.length; ii++){
-        var v = new Variable();
-        var varia = elementos[ii];
 
-        var type = varia.attributes[0].value;
-        v.type = varia.tipo;
-        v.name = varia.id;
+    if(entrada != ""){
+        var elementos = doc.getElementsByTagName('variables')[0].childNodes;
+        for(var ii =0; ii < elementos.length; ii++){
+            var v = new Variable();
+            var varia = elementos[ii];
 
-        if(type == 'especifica'){
-            v.numb = [varia.children[0].textContent]
+            if(varia.attributes){
+                var type = varia.attributes[0].value;
+                v.type = varia.tipo;
+                v.name = varia.id;
+
+                if(type == 'especifica'){
+                    v.numb = [varia.children[0].textContent]
+                }
+                else if(type == 'discreta' || type == 'categorica'){ //arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
+                    var childrenss = varia.children;
+                    for (var jj in childrenss) {
+                        if(childrenss[jj].textContent)
+                            v.numb.splice(v.numb.length, 0, childrenss[jj].textContent);
+                    };
+                }
+                else if(type == 'normal'){
+                    var childrenss = varia.children;
+                    v.inc = childrenss[0].textContent;
+                    v.value['media'] = childrenss[1].textContent;
+                    v.value['desviacion'] = childrenss[2].textContent;
+
+                }else if(type == 'uniforme'){
+                    var childrenss = varia.children;
+                    v.inc = childrenss[0].textContent;
+                    v.value['inicio'] = childrenss[1].textContent;
+                    v.value['fin'] = childrenss[2].textContent;
+            
+                }
+                else if(type == 'exponencial'){
+                    var childrenss = varia.children;
+                    v.inc = childrenss[0].textContent;
+                    v.value['lamda'] = childrenss[1].textContent;
+                }
+
+                agregarvariableHTML(v);
+            }
+
         }
-        else if(type == 'discreta' || type == 'categorica'){ //arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
-            var childrenss = varia.children;
-            for (var jj in childrenss) {
-                if(childrenss[jj].textContent)
-                    v.numb.splice(v.numb.length, 0, childrenss[jj].textContent);
-            };
-        }
-        else if(type == 'normal'){
-            var childrenss = varia.children;
-            v.inc = childrenss[0].textContent;
-            v.value['media'] = childrenss[1].textContent;
-            v.value['desviacion'] = childrenss[2].textContent;
-
-        }else if(type == 'uniforme'){
-            var childrenss = varia.children;
-            v.inc = childrenss[0].textContent;
-            v.value['inicio'] = childrenss[1].textContent;
-            v.value['fin'] = childrenss[2].textContent;
-    
-        }
-        else if(type == 'exponencial'){
-            var childrenss = varia.children;
-            v.inc = childrenss[0].textContent;
-            v.value['lamda'] = childrenss[1].textContent;
-        }
-
-        agregarvariableHTML(v);
-
     }
+    
 
 }
 

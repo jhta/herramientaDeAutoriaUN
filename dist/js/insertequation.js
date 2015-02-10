@@ -25,11 +25,9 @@ $(document).ready(function(){
         }
         //--------------
 
-
         equations[preid] = idEquation
         html[preid] = "";
         rebootTree(); // reinicia el html, crea un treeactual nuevo
-
 
         $('.drop').html("");
         eqactually = preid;
@@ -108,9 +106,11 @@ $(document).ready(function(){
         //$('#previsualizar').text(html[eqactually]);
         eqactually = idpre;
         $('.panel-2').html("");
-        console.log("Este es el html");
-        console.log(html[eqactually]);
-        $('.panel-2').html(html[eqactually]);
+
+        var find = 'code';
+        var re = new RegExp(find, 'g');
+
+        $('.panel-2').html(html[eqactually].replace(re, "div"));
 
         if(html[eqactually] == ""){
             $(".panel-2").droppable(funcDroppableDrop);
