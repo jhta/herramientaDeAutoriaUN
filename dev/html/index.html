@@ -54,9 +54,8 @@
         <div class="container-fluid" >
           <div class="navbar-header">
             
-            <a class="navbar-brand" href="#">Ticademia</a>
-              <div id="titulo-pregunta-actual"></div>
-
+            <a class="navbar-brand" href="#">Ticademia<span class="small" id="titulo-pregunta-actual"></span></a>
+              
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
             <p class="navbar-text navbar-right">Logueado como <a href="#" id="nameUser" class="navbar-link">Jeison Higuita</a> | <a href="#" id="logout" class="navbar-link">Salir</a></p>
@@ -64,7 +63,9 @@
         </div>
       </nav>
       <!-- Carpetas -->
-      <section id="carpetas"class="carpetas panel panel-default col-xs-8 col-xs-offset-2">
+
+      <section id="carpetas" class="carpetas panel panel-default col-xs-8 col-xs-offset-2">
+
         <div class="panel-body">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="input-group" style="margin:5px 0;">
@@ -80,6 +81,9 @@
       <section class=" contenedor" id="rootWizard">
          
           <article class="row">
+              <div class="row">
+                <a style="margin-right: 15px;"  id="btnVolver" class="btn btn-default pull-right">Volver</a>
+              </div>
               <!--Contenido de la Izquierda - Pestañas-->
               <div class="col-xs-8  u-pad0" id="tab-content">
                 <!--Panel de problema-->
@@ -98,10 +102,7 @@
                         <div class="col-xs-12 ">
                           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-                            <div class="input-group" style="margin-top:5px;">
-                              <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-plus"></span></span>
-                              <input type="text"  class="form-control" placeholder="Nueva Carpeta" aria-describedby="basic-addon1">
-                            </div>
+                           
                           </div>
             
                           
@@ -281,7 +282,7 @@
               <!--FIN: Seccion Derecha-->
               <!--Seccion izquierda-->
 
-              <div class="col-xs-4" >
+              <div class="col-xs-4" style="padding-right: 0px;" >
                 <!--Panel de variabless-->
                 <div class="contenedor-variables panel panel-default"  ng-controller="variableController">
                     <div class="panel-heading">
