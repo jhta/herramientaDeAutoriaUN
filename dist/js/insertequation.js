@@ -107,17 +107,13 @@ $(document).ready(function(){
         eqactually = idpre;
         $('.panel-2').html("");
 
-        var find = 'code';
-        var re = new RegExp(find, 'g');
-
-        $('.panel-2').html(html[eqactually].replace(re, "div"));
+        $('.panel-2').html(html[eqactually]);
 
         if(html[eqactually] == ""){
             $(".panel-2").droppable(funcDroppableDrop);
         }
-
         treeActual = treeActivos[idsplit];
-        $('.drop code, .drop div').each(function(index){
+        $('.drop div').each(function(index){
             if($(this).hasClass("ultimo-e")){
                 $(this).droppable(funcDroppable);
 
