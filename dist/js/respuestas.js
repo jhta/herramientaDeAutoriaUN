@@ -9,6 +9,8 @@ var eqActuallyIdRespuestaCorrecta = "";
 function formulacionXMLToHtml(xml){
     console.log(xml);
     //Reiniciando variables
+
+    var conteq = -1;
     if (typeof xml.objetos !== 'undefined') {
         if (typeof xml.objetos.json !== 'undefined') {
             treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
@@ -25,17 +27,22 @@ function formulacionXMLToHtml(xml){
 
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
                 var preid =xml.formulacion.expresion[i].texto;
-                var idEquation = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
-                $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+                var idEq = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
+                $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
                 document.getElementById(preid).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
-                equations[preid] = idEquation;
+                equations[preid] = idEq;
 
                 eqactually = preid;
+                conteq++;
+
             }else{
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
             }
         }
+        //Trigger para que la última expresión quede activa (cargado su html y sombreada de color activo)
+        $("#"+eqactually).trigger( "click" );
+        idEquation = conteq;
     }
 }
 

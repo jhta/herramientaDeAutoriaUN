@@ -189,7 +189,7 @@ function makeTree(elementDrop, uu){
         tree.tag = '<mn>' + elementDrop.data("content") + '</mn>';
     }
     else if(idData == "llaves" || idData == "parentesis" || idData == "corchetes" || idData == "factorial"){
-        var child = elementDrop.find('code:nth-child(1)');
+        var child = elementDrop.find('.code:nth-of-type(1)');
         child.attr('data-id', ++idCode);
         child.attr('data-pos', 0);
         child.attr('data-father', idElement);
@@ -215,7 +215,7 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mi>□</mi>']);        
     }
     else if(idData == "trig"){
-        var child = elementDrop.find('code:nth-child(1)');
+        var child = elementDrop.find('.code:nth-of-type(1)');
         child.attr('data-id', ++idCode);
         child.attr('data-pos', 0);
         child.attr('data-father', idElement);
@@ -226,7 +226,7 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mi>□</mi>']);
     }
     else if(idData == "raiz"){
-        var child = elementDrop.find('code:nth-child(1)');
+        var child = elementDrop.find('.code:nth-of-type(1)');
         child.attr('data-id', ++idCode);
         child.attr('data-pos', 0);
         child.attr('data-father', idElement);
@@ -237,13 +237,13 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mi>□</mi>']);
     }
     else if(idData == "raiz-n"){
-        var child1 = elementDrop.find("code:nth-child(1)");
+        var child1 = elementDrop.find(".code:nth-of-type(1)");
         child1.attr('data-id', ++idCode);
         child1.attr('data-pos', 1);
         child1.attr('data-father', idElement);
         child1.addClass('ultimo-e');
         
-        var child2 = elementDrop.find("code:nth-child(3)");
+        var child2 = elementDrop.find(".code:nth-of-type(2)");
         child2.attr('data-id', ++idCode);
         child2.attr('data-pos', 0);
         child2.attr('data-father', idElement);
@@ -254,13 +254,13 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "expo" || idData == "expo-base"){
-        var child1 = elementDrop.find("code:nth-child(1)");
+        var child1 = elementDrop.find(".code:nth-of-type(1)");
         child1.attr('data-id', ++idCode);
         child1.attr('data-pos', 0);
         child1.attr('data-father', idElement);
         child1.addClass('ultimo-e');
         
-        var child2 = elementDrop.find("code:nth-child(2)");
+        var child2 = elementDrop.find(".code:nth-of-type(2)");
         child2.attr('data-id', ++idCode);
         child2.attr('data-pos', 1);
         child2.attr('data-father', idElement);
@@ -276,13 +276,13 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "log"){
-        var child1 = elementDrop.find("code:nth-child(1)");
+        var child1 = elementDrop.find(".code:nth-of-type(1)");
         child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
         child1.addClass('ultimo-e');
         
-        var child2 = elementDrop.find("code:nth-child(2)");
+        var child2 = elementDrop.find(".code:nth-of-type(2)");
         child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 1);
         child2.attr('data-father', idElement);
@@ -293,13 +293,13 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "suma" || idData == "resta" || idData == "mult" || idData == "igual"){
-        var child1 = elementDrop.find("code:nth-child(1)");
+        var child1 = elementDrop.find(".code:nth-of-type(1)");
         child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
         child1.addClass('ultimo-e');
         
-        var child2 = elementDrop.find("code:nth-child(2)");
+        var child2 = elementDrop.find(".code:nth-of-type(2)");
         child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 2);
         child2.attr('data-father', idElement);
@@ -310,13 +310,13 @@ function makeTree(elementDrop, uu){
         tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mo>' + elementDrop.data('content') + '</mo>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "funcionf"){
-        var child1 = elementDrop.find("code:nth-child(1)");
+        var child1 = elementDrop.find(".code:nth-of-type(1)");
         child1.attr("data-id", ++idCode);
         child1.attr("data-pos", 0);
         child1.attr('data-father', idElement);
         child1.addClass('ultimo-e');
         
-        var child2 = elementDrop.find("code:nth-child(2)");
+        var child2 = elementDrop.find(".code:nth-of-type(2)");
         child2.attr("data-id", ++idCode);
         child2.attr("data-pos", 2);
         child2.attr('data-father', idElement);
@@ -373,7 +373,7 @@ function makeTree(elementDrop, uu){
         child2.attr('data-father', idElement);
         child2.addClass('ultimo-e');
 
-        var child3 = elementDrop.find("code");
+        var child3 = elementDrop.find(".code");
         child3.attr("data-id", ++idCode);
         child3.attr("data-pos", 3);
         child3.attr('data-father', idElement);
@@ -396,7 +396,7 @@ function makeTree(elementDrop, uu){
         var vec = [];
 
         for(var i = 0; i < num; i++){
-            var text = "code:nth-child("+(i+1)+")";
+            var text = ".code:nth-of-type("+(i+1)+")";
             var child = elementDrop.find(text);
             
             child.attr("data-id", ++idCode);

@@ -2,9 +2,10 @@ var eqactually = "";
 var treeActivos = [];
 var html = {};
 var equations = {};
+var idEquation = -1;
 $(document).ready(function(){
-    var idEquation = -1,
-        mathml = "";
+
+        var mathml = "";
 
 
 
@@ -14,8 +15,10 @@ $(document).ready(function(){
         document.getElementById('eq').focus();
         var preid ="equation-"+ (++idEquation);
 
-        pasteHtmlAtCaret('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:gold; border:1px solid black;padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
-        document.getElementById(preid).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>5</mn></math>";
+        $("#"+eqactually).css('background-color', '#ccc');
+
+        pasteHtmlAtCaret('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#F0F514; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+        document.getElementById(preid).innerHTML = "<math></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
 
         //------- guardar datos actuales
@@ -103,21 +106,27 @@ $(document).ready(function(){
         treeActivos.splice(equations[eqactually], 1, treeActual);
         html[eqactually] = $('.drop').html();
         //--------------
+
+        //Quitar color activo al recuadro de la expresión
+        $("#"+eqactually).css('background-color', '#ccc');
+
+
+
         //$('#previsualizar').text(html[eqactually]);
         eqactually = idpre;
+
+        //Colocar color a la nueva expresión que se ha seleccionado
+        $("#"+eqactually).css('background-color', '#F0F514');
+
         $('.panel-2').html("");
 
-        var find = 'code';
-        var re = new RegExp(find, 'g');
-
-        $('.panel-2').html(html[eqactually].replace(re, "div"));
+        $('.panel-2').html(html[eqactually]);
 
         if(html[eqactually] == ""){
             $(".panel-2").droppable(funcDroppableDrop);
         }
-
         treeActual = treeActivos[idsplit];
-        $('.drop code, .drop div').each(function(index){
+        $('.drop div').each(function(index){
             if($(this).hasClass("ultimo-e")){
                 $(this).droppable(funcDroppable);
 
