@@ -31,12 +31,16 @@ var Printer = {
 	        "<div id='" + idRespuesta + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo'>" +
 	        "<div class='panel-body'>" +
 	        "<ul class='list-group'>" +
-	        " <li class='list-group-item'>" +
+	        " <li class='list-group-item ' style='display: flex;'>" +
+	        "<div class='col-xs-6 p-0'>"+
 	        "<span class='glyphicon glyphicon-ok'></span>" +
 	        " <span>Respuesta correcta:</span>" +
-	        "<div class='pull-right col-xs-6'>" +
-	        "<div id='content-" + idRespuesta + " col-xs-8'></div>" +
-	        "<div class='btn-toolbar col-xs-4' role='toolbar' aria-label='...'>" +
+	        "</div>"+
+	        "<div class='pull-right col-xs-6 p-0'>" +
+	        "<div id='content-" + idRespuesta + "' class='p-0 col-xs-10'>"+
+			"<input type='text' class='input-res form-control'>"+
+	        "</div>" +
+	        "<div class='btn-toolbar col-xs-2' role='toolbar' aria-label='...'>" +
 	        "<div class='btn-group' role='group' aria-label='...'>" +
 	        "<a href='#' data-id='" + idRespuesta + "' class='pre-equation-respuesta' data-tipo='correcta'>" +
 	        "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
@@ -127,20 +131,22 @@ var Printer = {
 	},
 
 	addErrorToAnswer: function( data, error, respactual ) {
-		console
-		$("#"+data).find(".list-group").append(" <li class='list-group-item' id='"+error.id+"' data-respuestaid='"+respactual.id+"'>"+
+		console.log("//////////////////////");
+    	console.debug("array: ",arrayValues);
+    	console.debug("fsdf", varn);
+    	console.debug("fdsf", jsonValues);
+		$("#"+data).find(".list-group").append(" <li class='list-group-item ' style='display: flex' id='"+error.id+"' data-respuestaid='"+respactual.id+"'>"+
+            "<div class='col-xs-6 p-0'>"+
             "<span class='glyphicon glyphicon-remove'></span>"+
-            " <span>-Error genuino:</span>"+
-            "<div class='pull-right col-xs-6' style='display:table;'>"+
-            "<div id='content-"+error.id+"' style='display: table-cell' class='col-xs-8'></div>"+
-            "<div class='btn-toolbar col-xs-4  pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
-            "<div class='btn-group' role='group' aria-label='...'>"+
-            "<a href='#' data-id='"+error.id+"' class='pre-equation-respuesta' data-tipo='error' data-respuestaid='"+respactual.id+"'>"+
-            "<span class='glyphicon glyphicon-wrench'   aria-hidden='true'></span>"+
-            "</a>"+
+            " <span> Error genuino:</span>"+
             "</div>"+
+            "<div class='pull-right col-xs-6 p-0' style='display:table;'>"+
+            "<div  style='display: table-cell' class='p-0 col-xs-10'>"+
+			"<input type='text' class='input-res form-control'>"+
+            "</div>"+
+            "<div class='btn-toolbar col-xs-2 p-0 pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
             "<div class='btn-group' role='group' aria-label='...'>"+
-            "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+respactual.id+"'>"+
+            "<a href='#' class='deleteErrorGenuino btn' data-id='"+error.id+"'  data-respuestaid='"+respactual.id+"'>"+
             "<span class='glyphicon glyphicon-remove'   aria-hidden='true'></span>"+
             " </a>"+
             "</div>"+

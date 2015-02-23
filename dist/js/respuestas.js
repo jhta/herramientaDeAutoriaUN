@@ -82,7 +82,7 @@ function respuestaXmlToHtml(xml){
 function printHtmlrespuesta(idRespuesta, nombre,treei){
     console.log("entro");
     Printer.htmlAnswer(idRespuesta, nombre,treei);
-    document.getElementById("mathjax-" + idRespuesta).innerHTML = " <math>"+treei.makeString()+"</math>";
+    //document.getElementById("mathjax-" + idRespuesta).innerHTML = " <math>"+treei.makeString()+"</math>";
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathjax-" + idRespuesta]);
 }
 
@@ -93,7 +93,9 @@ function printHtmlerror(error,idRes){
 
 }
 
-
+function checkChar( c ) {
+    return ( ( c >= 58  ) || ( c <= 39 ) || ( c == 44 ));
+}
 $(document).ready(function(){
     /*
      * *******************************************************************************
@@ -101,6 +103,21 @@ $(document).ready(function(){
      */
 
     //Crear una nueva respuesta
+    console.log("//////////////////////");
+    console.debug("array: ",arrayValues);
+
+    $(document).on("keypress",".input-res",function(event) {
+        if(event.which == 13) {
+            alert(eval($(this).val()));
+            event.preventDefault();
+            console.log("enter");
+            
+        }else if( checkChar( event.which ) ){
+            console.log("paila");
+            return false;
+        }
+
+    });
     $("#crearRespuesta").click(function(){
         inRespuesta = true;
         respactual = new Respuesta();
