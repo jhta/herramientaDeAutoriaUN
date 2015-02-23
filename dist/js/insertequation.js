@@ -24,6 +24,7 @@ $(document).ready(function(){
         //------- guardar datos actuales
         if(!(eqactually == "")){
             treeActivos.splice(equations[eqactually], 1, treeActual);
+            console.log(treeActual);
             html[eqactually] = $('.drop').html();
         }
         //--------------

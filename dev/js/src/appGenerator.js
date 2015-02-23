@@ -47,8 +47,8 @@ var funcDroppableOut = {
             elementSpa.addClass('drop2');
             elementSpa.droppable(funcDroppable);
 
-            treeActual.removeNode(idFather, position);
-            var jsn = treeActual.makeString();
+            removeNode(treeActual, idFather, position);
+            var jsn = makeString(treeActual);
 
             
             UpdateMath("<math>" + jsn + "</math>");
@@ -68,7 +68,7 @@ var funcDroppableDrop = {
         makeTree(elementDrop, $(this));
         
         $(this).append(elementDrop);
-        var jsn = treeActual.makeString();
+        var jsn = makeString(treeActual);
 
         UpdateMath("<math>" + jsn + "</math>");
 
@@ -99,7 +99,7 @@ var funcDroppable = {
         makeTree(elementDrop, $(this));
        
        $(this).append(elementDrop);
-        var jsn = treeActual.makeString();
+        var jsn = makeString(treeActual);
         UpdateMath("<math>" + jsn + "</math>");
         
        console.log('mathml:');
@@ -212,7 +212,7 @@ function makeTree(elementDrop, uu){
             tree.tag = '';
             tree.closetag = '<mtext>)!</mtext></mrow>';
         }
-        tree.setChildren(['<mi>□</mi>']);        
+        setChildren(tree,['<mi>□</mi>']);
     }
     else if(idData == "trig"){
         var child = elementDrop.find('.code:nth-of-type(1)');
@@ -223,7 +223,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = '<mrow><mi>' + elementDrop.data('content') + '</mi><mtext>(</mtext>';
         tree.closetag = '<mtext>)</mtext></mrow>';
-        tree.setChildren(['<mi>□</mi>']);
+        setChildren(tree,['<mi>□</mi>']);
     }
     else if(idData == "raiz"){
         var child = elementDrop.find('.code:nth-of-type(1)');
@@ -234,7 +234,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = '<mrow><msqrt><mtext>(</mtext>';
         tree.closetag = '</msqrt><mtext>)</mtext></mrow>';
-        tree.setChildren(['<mi>□</mi>']);
+        setChildren(tree,['<mi>□</mi>']);
     }
     else if(idData == "raiz-n"){
         var child1 = elementDrop.find(".code:nth-of-type(1)");
@@ -251,7 +251,7 @@ function makeTree(elementDrop, uu){
         
         tree.opentag = '<mrow><mroot>';
         tree.closetag = '</mroot></mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "expo" || idData == "expo-base"){
         var child1 = elementDrop.find(".code:nth-of-type(1)");
@@ -273,7 +273,7 @@ function makeTree(elementDrop, uu){
             tree.opentag = '<mrow><msub>';
             tree.closetag = '</msub></mrow>';  
         }
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "log"){
         var child1 = elementDrop.find(".code:nth-of-type(1)");
@@ -290,7 +290,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = '<mrow><mi>' + elementDrop.data('content') + '</mi><msub>';
         tree.closetag = '</msub></mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "suma" || idData == "resta" || idData == "mult" || idData == "igual"){
         var child1 = elementDrop.find(".code:nth-of-type(1)");
@@ -307,7 +307,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = '<mrow><mtext>(</mtext>';
         tree.closetag = '<mtext>)</mtext></mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mo>' + elementDrop.data('content') + '</mo>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mo>' + elementDrop.data('content') + '</mo>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "funcionf"){
         var child1 = elementDrop.find(".code:nth-of-type(1)");
@@ -324,7 +324,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = '<mrow><mtext>f(</mtext>';
         tree.closetag = '</mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mo>)=</mo>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mo>)=</mo>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "combinatoria"){
         var child1 = elementDrop.find("div:nth-child(2)").find("div:nth-child(1)");
@@ -341,7 +341,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = "<mrow><mtext>(</mtext><mfrac linethickness='0em'>";
         tree.closetag = '</mfrac><mtext>)</mtext></mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "division"){
         var child1 = elementDrop.find("div:nth-child(2)").find("div:nth-child(1)");
@@ -358,7 +358,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = "<mrow><mtext>(</mtext><mfrac linethickness='1px'>";
         tree.closetag = '</mfrac><mtext>)</mtext></mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "sumatoria" || idData == "integral" || idData == "multiplicatoria"){
         var child1 = elementDrop.find("div:nth-child(3)").find("div:nth-child(2)");
@@ -389,7 +389,7 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = "<mrow><munderover>" + simbolo;
         tree.closetag = '</mrow>';
-        tree.setChildren(['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>', '</munderover>', '<mrow><mi>□</mi></mrow>']);
+        setChildren(tree,['<mrow><mi>□</mi></mrow>', '<mrow><mi>□</mi></mrow>', '</munderover>', '<mrow><mi>□</mi></mrow>']);
     }
     else if(idData == "func-2" || idData == "func-3" || idData == "func-4" || idData == "func-5"){
         var num = idData.substring(idData.lastIndexOf('-') + 1);
@@ -409,10 +409,10 @@ function makeTree(elementDrop, uu){
 
         tree.opentag = '<mrow><mtext>(</mtext>';
         tree.closetag = '<mtext>)</mtext></mrow>';
-        tree.setChildren(vec);
+        setChildren(tree,vec);
     }
 
-    treeActual.addNode(idFather, tree, position);
+    addNode(treeActual,idFather, tree, position);
     
     
     var elementSpa = elementDrop.find('.spa');
@@ -441,6 +441,56 @@ function Tree(){
     
 };
 
+function init(tree, id, tag, opentag, closetag, children){
+    tree.id = id;
+    tree.tag = tag;
+    tree.opentag = opentag;
+    tree.closetag = closetag;
+    tree.children = children;
+}
+
+function setChildren(tree, child){
+    tree.children = child;
+}
+
+function setChildrenPos(tree, pos, children){
+    console.log('children');
+    console.log(children);
+    tree.children.splice(pos, 1, children);
+}
+
+function makeString(tree){
+    var r = makeStringRec(tree);
+    return r;
+}
+
+function addNode(tree, idFather, data, pos){
+    endFunction = false;
+    if(tree.children.length == 0){
+        tree.children = [data];
+    }else{
+        addNodeRec(tree, idFather, function(node, err){
+            if(err)
+                console.log(err);
+            else{
+                setChildrenPos(node, pos, data);
+            }
+        });
+    }
+}
+
+function removeNode(tree, idFather, pos){
+    endFunction = false;
+    removeNodeRec(tree, idFather, function(resp, err){
+        if(err)
+            console.log(err);
+        else{
+            resp.children[pos] = '<mi>□</mi>'
+        }
+    });
+}
+
+/*
 Tree.prototype.init = function(id, tag, opentag, closetag, children){
     this.id = id;
     this.tag = tag;
@@ -462,11 +512,11 @@ Tree.prototype.setChildrenPos = function(pos, children){
 Tree.prototype.makeString = function(){
     var r = makeStringRec(this);
     return r;
-}
+}*/
 
 function makeStringRec(tree){
     var result = '';
-    if(tree instanceof Tree){
+    if(tree instanceof Tree || tree instanceof Object){
         if(tree.opentag)
             result = tree.opentag;
         if(tree.tag)
@@ -493,6 +543,8 @@ function makeStringRec(tree){
     return result;
 }
 
+/*
+
 Tree.prototype.addNode = function(idFather, data, pos){
     endFunction = false;
     if(this.children.length == 0){
@@ -506,7 +558,7 @@ Tree.prototype.addNode = function(idFather, data, pos){
             }
         });
     }
-}
+}*/
 
 function addNodeRec(tree, idFather, callback){
     if(tree.id === idFather){
@@ -529,6 +581,7 @@ function addNodeRec(tree, idFather, callback){
     }
 }
 
+/*
 Tree.prototype.removeNode = function(idFather, pos){
     endFunction = false;
     removeNodeRec(this, idFather, function(resp, err){
@@ -540,9 +593,10 @@ Tree.prototype.removeNode = function(idFather, pos){
             
     });
 }
+*/
 
 function removeNodeRec(tree, idFather, callback){
-    if(tree instanceof Tree){
+    if(tree instanceof Tree || tree instanceof Object){
         if(tree.id == idFather){
             endFunction = true;
             callback(tree);
@@ -599,7 +653,7 @@ function addnewinput(objec){
     $(objec).remove();
     padre.append(elementDrop);
 
-    var jsn = treeActual.makeString();
+    var jsn = makeString(treeActual);
     UpdateMath("<math>" + jsn + "</math>");
 
 
