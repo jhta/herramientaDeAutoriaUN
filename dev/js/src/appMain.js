@@ -1,26 +1,42 @@
 var varn,
-    arrayValues = [];
+    hashVariables = [],
+    arrayValues = [],
     jsonValues = {};
+var TOGGLE_TAB_RES = false;
+var focusComponentId = null;
 
 var conjuntoVariables = [];
 $(document).ready(function(){
 
     $("#tab-respuestas").click(function(){
         $("#panelOtros").toggleClass("hide");
+        TOGGLE_TAB_RES = true; 
 
     });
     
     $("#tab-formulacion").click(function(){
+        TOGGLE_TAB_RES = false; 
         $("#panelOtros").removeClass("hide");
     })
 
     $("#tab-metadatos").click(function(){
+        TOGGLE_TAB_RES = false; 
         $("#panelOtros").removeClass("hide");
     })
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();
     $("#valorA").rating();
     
+    $(".input-res").on("focus", function(){
+        console.log("fsfa");
+        focusComponentId = $(this).parent(".list-group-item ").data("respuestaid");
+        console.log(focusComponentId);
+        //focusComponent = $(this);
+        //list-group-item 
+    });
+    $("body").on("click", ".card", function(){
+        if(TOGGLE_TAB_RES) console.log($(this).data("code"));
+    });
     function limpiar(){
         varn = new Variable();
         arrayValues = [];
@@ -73,11 +89,14 @@ $(document).ready(function(){
     $("#ag-varEspcifica").click(function(){
         var name = $('#nameEsp').val();
         arrayValues = [$('#valorEsp').val()];
-        
+        console.log("arrayValues", arrayValues);
         varn.name = name;
         varn.type = 'especifica';
-        $('#outFormEspecifica').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").removeClass('hide');
+        console.log("varn", varn);
+        hashVariables[varn.name] = varn;
+        console.debug("hash: ",hashVariables)
+        agregarvariableHTML(varn);
+        limpiar();
     });
 
     $("#ag-varDiscreta").click(function(){
@@ -86,9 +105,8 @@ $(document).ready(function(){
         arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
         varn.name = name;
         varn.type = 'discreta';
-
-        $('#outFormDiscreta').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").removeClass('hide');
+        agregarvariableHTML(varn);
+        limpiar();
 
     });
 
@@ -97,10 +115,8 @@ $(document).ready(function(){
         arrayValues.splice(arrayValues.length, 0,  [$('#valorCat').val()] );
         varn.name = name;
         varn.type = 'categorica';
-
-        $('#outFormCategorica').text(name + '= ' + '[' + arrayValues  + ']');
-        $("#endVar").removeClass('hide');
-
+        agregarvariableHTML(varn);
+        limpiar();
     });
 
     $("#ag-varNormal").click(function(){
@@ -116,8 +132,8 @@ $(document).ready(function(){
         jsonValues['media'] = norm;
         jsonValues['desviacion'] = desv;
         
-        $('#outFormNormal').text(name + '= ' + '[' + 'µ=' + norm + ', σ=' + desv + ', inc=' + inc + ']');
-        $("#endVar").removeClass('hide');
+        agregarvariableHTML(varn);
+        limpiar();
 
     });
 
@@ -134,8 +150,9 @@ $(document).ready(function(){
         jsonValues['inicio'] = a;
         jsonValues['fin'] = b;
 
-        $('#outFormUniforme').text(name + '= ' + '[' + 'a=' + a + ', b=' + b + ', inc=' + inc + ']');
-        $("#endVar").removeClass('hide');
+        agregarvariableHTML(varn);
+        limpiar();
+
     });
 
     $("#ag-varExponencial").click(function(){
@@ -150,9 +167,8 @@ $(document).ready(function(){
 
         jsonValues['lamda'] = exp;
         
-        $('#outFormExponencial').text(name + '= ' + '[' + 'λ=' + exp + ', inc=' + inc + ']');
-        $("#endVar").removeClass('hide');
-
+        agregarvariableHTML(varn);
+        limpiar();
     });
 
    /* $("#endVar").on('click', function(e){
@@ -169,7 +185,7 @@ $(document).ready(function(){
 
     $('#endVar').click(function(){
         agregarvariableHTML(varn);
-        $(this).addClass('hide');
+        
         limpiar();
     })
 
@@ -339,7 +355,9 @@ function agregarvariableHTML(v){
         v.value = jsonValues;
         v.numb = arrayValues
         
-
+        hashVariables[v.name] = v;
+        console.log("agregada");
+        console.debug(JSON.stringify(hashVariables));
         if(v.type == 'especifica'){
             htmlVar = htmlVar + ' data-type="especifica" data-metadatos="' + arrayValues[0] + '">';
         }
