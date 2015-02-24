@@ -671,23 +671,23 @@ $(document).ready(function(){
 
     $("#tab-respuestas").click(function(){
         $("#panelOtros").toggleClass("hide");
-        TOGGLE_TAB_RES = true; 
+        TOGGLE_TAB_RES = true;
 
     });
-    
+
     $("#tab-formulacion").click(function(){
-        TOGGLE_TAB_RES = false; 
+        TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
     })
 
     $("#tab-metadatos").click(function(){
-        TOGGLE_TAB_RES = false; 
+        TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
     })
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();
     $("#valorA").rating();
-    
+
     $(".input-res").on("focus", function(){
         console.log("fsfa");
         focusComponentId = $(this).parent(".list-group-item ").data("respuestaid");
@@ -742,26 +742,47 @@ $(document).ready(function(){
         $("#formExponencial").fadeIn();
     });
     /*$("#varChi").click(function(){
-        limpiar();
-        $("#formChi").fadeIn();
-    });*/
+     limpiar();
+     $("#formChi").fadeIn();
+     });*/
 
 
     $("#ag-varEspcifica").click(function(){
         var name = $('#nameEsp').val();
-        arrayValues = [$('#valorEsp').val()];
-        console.log("arrayValues", arrayValues);
-        varn.name = name;
-        varn.type = 'especifica';
-        console.log("varn", varn);
-        hashVariables[varn.name] = varn;
-        console.debug("hash: ",hashVariables)
-        agregarvariableHTML(varn);
-        limpiar();
+        arrayValues = $('#valorEsp').val().split(",");
+        if(hashVariables[name]){
+            $("#err-varEspcifica").html("Error, el nombre de la variable ya se encuentra en uso");
+        } else if(!validarValoresEspecifica(arrayValues)){
+            $("#err-varEspcifica").html("Error, ingresaste mal los elementos, posees elementos repetidos o algunos de tus elementos no es un número");
+        } else {
+            varn.name = name;
+            varn.type = 'especifica';
+            console.log("varn", varn);
+            hashVariables[varn.name] = varn;
+            console.debug("hash: ", hashVariables)
+
+            var rand = getRandomInt(0,arrayValues.length-1);
+            alert(arrayValues[rand]);
+
+            agregarvariableHTML(varn);
+            limpiar();
+            $('#valorEsp').val("");
+            $('#nameEsp').val("");
+            $("#err-varEspcifica").html("");
+            $("#vals-varEspcifica").html("");
+
+
+        }
+    });
+
+    $("#valorEsp").change(function(){
+        var array = $('#valorEsp').val().split(",");
+        var string = posiblesValoresCategorica(array);
+        $("#vals-varEspcifica").html(string);
     });
 
     $("#ag-varDiscreta").click(function(){
-        
+
         var name = $('#nameDis').val();
         arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
         varn.name = name;
@@ -773,11 +794,36 @@ $(document).ready(function(){
 
     $("#ag-varCategorica").click(function(){
         var name = $('#nameCat').val();
-        arrayValues.splice(arrayValues.length, 0,  [$('#valorCat').val()] );
-        varn.name = name;
-        varn.type = 'categorica';
-        agregarvariableHTML(varn);
-        limpiar();
+        arrayValues = $('#valorCat').val().split(",");
+        if(hashVariables[name]){
+            $("#err-varCategorica").html("Error, el nombre de la variable ya se encuentra en uso");
+        }
+        else if(!validarValoresCategorica(arrayValues)){
+            $("#err-varCategorica").html("Error, ingresas mal los elementos o posees elementos repetidos");
+        }
+        else {
+            varn.name = name;
+            varn.type = 'categorica';
+
+            var rand = getRandomInt(0,arrayValues.length-1);
+            alert(arrayValues[rand]);
+
+            agregarvariableHTML(varn);
+            limpiar();
+            $('#valorCat').val("");
+            $('#nameCat').val("");
+            $("#err-varCategorica").html("");
+            $("#vals-varCategorica").html("");
+
+
+
+        }
+    });
+
+    $("#valorCat").change(function(){
+        var array = $('#valorCat').val().split(",");
+        var string = posiblesValoresCategorica(array);
+        $("#vals-varCategorica").html(string);
     });
 
     $("#ag-varNormal").click(function(){
@@ -792,32 +838,68 @@ $(document).ready(function(){
 
         jsonValues['media'] = norm;
         jsonValues['desviacion'] = desv;
-        
+
         agregarvariableHTML(varn);
         limpiar();
 
     });
 
-    $("#ag-varUniforme").click(function(){
+    $("#ag-varUniforme").click(function() {
         var name = $('#nameUni').val();
-        var a = $('#valueaUni').val();
-        var b = $('#valuebUni').val();
+        var min = $('#valueaUni').val();
+        var max = $('#valuebUni').val();
         var inc = $('#incUni').val();
+        flag=true;
 
-        varn.name = name;
-        varn.type = 'uniforme';
-        varn.inc = inc;
+        if (min > max) {
+            $("#err-varUniforme").html("Error, el mínimo no debe superar el máximo");
+            flag=false;
+        }
+        else if(inc>= (max-min)){
+            $("#err-varUniforme").html("Error, el incremento supera el rango entre el máximo y el mínimo");
+            flag = false;
+        }
 
-        jsonValues['inicio'] = a;
-        jsonValues['fin'] = b;
 
-        agregarvariableHTML(varn);
-        limpiar();
 
+        if(flag){
+            if(hashVariables[name]){
+                $("#err-varUniforme").html("Error, el nombre de la variable ya se encuentra en uso");
+            }else {
+                varn.name = name;
+                varn.type = 'uniforme';
+                varn.inc = inc;
+
+                jsonValues['inicio'] = min;
+                jsonValues['fin'] = max;
+
+                agregarvariableHTML(varn);
+                limpiar();
+                $('#nameUni').val("");
+                $('#valueaUni').val("");
+                $('#valuebUni').val("");
+                $('#incUni').val("");
+                $("#err-varUniforme").html("");
+                $("#vals-varUniforme").html("");
+
+                var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
+                rand = RoundInc(parseFloat(rand),parseFloat(inc));
+                alert(rand);
+            }
+        }
+    });
+
+    $("#incUni").change(function(){
+        var min = $('#valueaUni').val();
+        var max = $('#valuebUni').val();
+        var inc = $('#incUni').val();
+        var string = posiblesValores(min,max,inc);
+        string = "Posibles valores : "+string;
+        $("#vals-varUniforme").html(string);
     });
 
     $("#ag-varExponencial").click(function(){
-      
+
         var name = $('#nameExp').val();
         var exp = $('#valueExp').val();
         var inc = $('#incExp').val();
@@ -827,26 +909,26 @@ $(document).ready(function(){
         varn.inc = inc;
 
         jsonValues['lamda'] = exp;
-        
+
         agregarvariableHTML(varn);
         limpiar();
     });
 
-   /* $("#endVar").on('click', function(e){
-        agregarvariableHTML(varn);
-        $(".view-variable").draggable({
-            appendTo: "body",
-            cursor: "move",
-            helper: "clone",
-            revert: "invalid"
-        });
-        $(this).addClass('hide');
-        limpiar();
-    })*/
+    /* $("#endVar").on('click', function(e){
+     agregarvariableHTML(varn);
+     $(".view-variable").draggable({
+     appendTo: "body",
+     cursor: "move",
+     helper: "clone",
+     revert: "invalid"
+     });
+     $(this).addClass('hide');
+     limpiar();
+     })*/
 
     $('#endVar').click(function(){
         agregarvariableHTML(varn);
-        
+
         limpiar();
     })
 
@@ -874,15 +956,15 @@ function varToXML(){
             else if(x.type == 'discreta'){
                 v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 for(var ii in x.numb){
-                    v = v + '<valor>' + x.numb[ii] + '</valor>';    
+                    v = v + '<valor>' + x.numb[ii] + '</valor>';
                 }
                 v = v + '</variable>';
-                
+
             }
             else if(x.type == 'categorica'){
                 v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 for(var ii in x.numb){
-                    v = v + '<valor>' + x.numb[ii] + '</valor>';    
+                    v = v + '<valor>' + x.numb[ii] + '</valor>';
                 }
                 v = v + '</variable>';
             }
@@ -967,7 +1049,7 @@ function XMLToVar(entrada){
                     v.inc = childrenss[0].textContent;
                     v.value['inicio'] = childrenss[1].textContent;
                     v.value['fin'] = childrenss[2].textContent;
-            
+
                 }
                 else if(type == 'exponencial'){
                     var childrenss = varia.children;
@@ -980,7 +1062,7 @@ function XMLToVar(entrada){
 
         }
     }
-    
+
 
 }
 
@@ -997,7 +1079,7 @@ function setEndOfContenteditable(contentEditableElement)
         selection.addRange(range);//make the range you have just created the visible selection
     }
     else if(document.selection)//IE 8 and lower
-    { 
+    {
         range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
         range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
         range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
@@ -1008,57 +1090,88 @@ function setEndOfContenteditable(contentEditableElement)
 $(document).ready(function(){
     var elem = document.getElementById('eq');//This is the element that you want to move the caret to the end of
     setEndOfContenteditable(elem);
+
+    $("#panel-variables").on("mouseover", ".view-variable", function () {
+        $("#infoVariables").html("<b>Tipo</b>: "+$(this).data("type")+ " <b>Datos</b>: "+$(this).data("metadatos"));
+    });
+    $("#panel-variables").on("mouseout", ".view-variable", function () {
+        $("#infoVariables").html("");
+    });
 });
+
 
 
 function agregarvariableHTML(v){
     var htmlVar = '<div class="card view-variable" data-id="var" data-content="' + v.name + '"';
-        v.value = jsonValues;
-        v.numb = arrayValues
-        
-        hashVariables[v.name] = v;
-        console.log("agregada");
-        console.debug(JSON.stringify(hashVariables));
-        if(v.type == 'especifica'){
-            htmlVar = htmlVar + ' data-type="especifica" data-metadatos="' + arrayValues[0] + '">';
+    v.value = jsonValues;
+    v.numb = arrayValues
+
+    hashVariables[v.name] = v;
+    console.log("agregada");
+    console.debug(JSON.stringify(hashVariables));
+    if(v.type == 'especifica'){
+        var result = '[ ';
+        for (var i = 0; i < arrayValues.length; i++) {
+
+            if(!isEmpty(arrayValues[i].trim())) {
+                if(i<(arrayValues.length-1)) {
+                    result = result + arrayValues[i].trim() + " , ";
+                }else{
+                    result = result + arrayValues[i].trim() ;
+                }
+            }
         }
-        else if(v.type == 'discreta'){
-            var result = '';
-            for (var ii in arrayValues) {
-                result = result + arrayValues[ii] +",";
-            };
-            htmlVar = htmlVar + ' data-type="discreta" data-metadatos="' + result + '">';
+        result= result + ' ]';
+        htmlVar = htmlVar + ' data-type="especifica" data-metadatos="' + result + '">';
+    }
+    else if(v.type == 'discreta'){
+        var result = '';
+        for (var ii in arrayValues) {
+            result = result + arrayValues[ii] +",";
+        };
+        htmlVar = htmlVar + ' data-type="discreta" data-metadatos="' + result + '">';
+
+    }
+    else if(v.type == 'categorica'){
+        var result = '[ ';
+        for (var i = 0; i < arrayValues.length; i++) {
+            if(!isEmpty(arrayValues[i].trim())) {
+                if(i<(arrayValues.length-1)) {
+                    result = result + arrayValues[i].trim() + " , ";
+                }else{
+                    result = result + arrayValues[i].trim() ;
+
+                }
+            }
+
+
 
         }
-        else if(v.type == 'categorica'){
-            var result = '';
-            for (var ii in arrayValues) {
-                result = result + arrayValues[ii] +",";
-            };
-            htmlVar = htmlVar + ' data-type="categorica" data-metadatos="' + result + '">';
-        }
-        else if(v.type == 'normal'){
-            var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'] + ",inc," + v.inc;
-            htmlVar = htmlVar + ' data-type="normal" data-metadatos="' + result + '">';
-            
-        }
-        else if(v.type == 'uniforme'){
-            var result = "inicio," + jsonValues['inicio'] + ",fin," + jsonValues['fin'] + ",inc," + v.inc;
-            htmlVar = htmlVar + ' data-type="uniforme" data-metadatos="' + result + '">';
-        }
-        else{
-            var result = "lamda," + jsonValues['lamda'];
-            htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + ",inc," + v.inc + '">';
-        }
+        result= result + ' ]';
+        htmlVar = htmlVar + ' data-type="categorica" data-metadatos="' + result + '">';
+    }
+    else if(v.type == 'normal'){
+        var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'] + ",inc," + v.inc;
+        htmlVar = htmlVar + ' data-type="normal" data-metadatos="' + result + '">';
+
+    }
+    else if(v.type == 'uniforme'){
+        var result = "inicio: " + jsonValues['inicio'] + " fin: " + jsonValues['fin'] + " inc: " + v.inc;
+        htmlVar = htmlVar + 'data-toggle="popover" data-placement="top" title="Popover title" data-content="Default popover" data-type="uniforme" data-metadatos="' + result + '">';
+    }
+    else{
+        var result = "lamda," + jsonValues['lamda'];
+        htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + ",inc," + v.inc + '">';
+    }
 
 
-        $("#panel-variables").append(htmlVar + '<span class="var">' + v.name + '</span></div>');
-        $('.view-variable').draggable({
-             appendTo: "body",
-            cursor: "move",
-            helper: "clone",
-            revert: "invalid"
-        })
-        conjuntoVariables.splice(conjuntoVariables.length, 0,  v );
+    $("#panel-variables").append(htmlVar + '<span class="var">' + v.name + '</span></div>');
+    $('.view-variable').draggable({
+        appendTo: "body",
+        cursor: "move",
+        helper: "clone",
+        revert: "invalid"
+    })
+    conjuntoVariables.splice(conjuntoVariables.length, 0,  v );
 
 }

@@ -36,6 +36,7 @@
       <script type="text/javascript" src="dev/js/src/appGenerator.js"></script>
       <!--<script type="text/javascript" src="dist/js/metadatos.js"></script> -->
       <script type="text/javascript" src="dist/js/writetextbox.js"></script>
+      <script type="text/javascript" src="dist/js/random.js"></script>
       <script type="text/javascript" src="dist/js/printer.js"></script>
       <script type="text/javascript" src="dist/js/insertequation.js"></script>
       <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
@@ -297,31 +298,38 @@
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                           <li rolec="presentation"><a role="menuitem" id="varEspecifica" tabindex="-1" href="#">Especifica</a></li>
-                          <li role="presentation"><a role="menuitem" id="varDiscreta" tabindex="-1" href="#">Discreta</a></li>
-                          <li role="presentation"><a role="menuitem" id="varCategorica" tabindex="-1" href="#">Categorica</a></li>
-                          <li role="presentation"><a role="menuitem" id="varNormal" tabindex="-1" href="#">Normal</a></li>
-                          <li role="presentation"><a role="menuitem" id="varUniforme" tabindex="-1" href="#">Uniforme</a></li>
-                          <li role="presentation"><a role="menuitem" id="varExponencial" tabindex="-1" href="#">Exponencial</a></li>
-                          <!--<li role="presentation"><a role="menuitem" id="varChi" tabindex="-1" href="#">Chi-Cuadrado</a></li>-->
+                            <!--<li role="presentation"><a role="menuitem" id="varDiscreta" tabindex="-1" href="#">Discreta</a></li>-->
+                            <li role="presentation"><a role="menuitem" id="varCategorica" tabindex="-1" href="#">Categorica</a></li>
+                            <!--<li role="presentation"><a role="menuitem" id="varNormal" tabindex="-1" href="#">Normal</a></li>-->
+                            <li role="presentation"><a role="menuitem" id="varUniforme" tabindex="-1" href="#">Uniforme</a></li>
+                            <!--<li role="presentation"><a role="menuitem" id="varExponencial" tabindex="-1" href="#">Exponencial</a></li>
+                            <!--<li role="presentation"><a role="menuitem" id="varChi" tabindex="-1" href="#">Chi-Cuadrado</a></li>-->
                         </ul>
                       </div>
 
                       <div>
                         <form class="form-ag form-inline u-no_display" role="form" id="formEspecifica">
                           <!--input variable-->
+                            <span><b>Variable Específica</b></span>
+                            <br>
+                            <span>Nombre</span>
                           <div class="form-group">
                             <input id="nameEsp" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
                           </div>
                           <!--input valor-->
-                          <span> = </span>
                           <!--boton cear-->
+                            <br>
+                            <span>Elementos (Separados por coma)</span>
+                            <br>
                           <div class="form-group">
-                            <input id="valorEsp" class="contenedor-variables-input form-control" required>
+                            <input id="valorEsp" style="width: 350px !important;" placeholder="1, 5, 10, 12, 17, 25, 30, 33, 34, 45, 70"  class="contenedor-variables-input form-control" required>
                           </div>
-
-                          <button id="ag-varEspcifica" type="submit" class="btn btn-success">ag</button>
+                            <br>
+                            <p id="vals-varEspcifica"></p>
+                          <button id="ag-varEspcifica" type="submit" class="btn btn-success">Crear</button>
                           <br>
                           <span id="outFormEspecifica"></span>
+                            <p id="err-varEspcifica"></p>
                           <br>
                         </form>
                       </div>
@@ -351,20 +359,30 @@
                       <div>
                         <form class="form-ag form-inline u-no_display" role="form" id="formCategorica">
                             <!--input variable-->
-                          <div class="form-group">
-                            <input id="nameCat" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                            <span><b>Variable Categórica</b></span>
+                            <br>
+                            <span>Nombre</span>
+
+                            <div class="form-group">
+                            <input id="nameCat" type="text" class="form-control contenedor-variables-input" size="3" placeholder="Y" required>
                           </div>
                           <!--input valor-->
-                          <span> = </span>
                           <!--boton cear-->
-                          <div class="form-group">
-                            <input id="valorCat" type="text" class="contenedor-variables-input form-control" required>
+                            <br>
+                            <span>Elementos (Separados por coma)</span>
+                            <br>
+                            <div class="form-group">
+                            <input id="valorCat" type="text" style="width: 350px !important;" class="contenedor-variables-input form-control" placeholder="manzana, pera, banano, lulo" required>
                           </div>
-
-                          <button id="ag-varCategorica" type="submit" class="btn btn-success btn-ag">ag</button>
+                            <brf>
+                            <p id="vals-varCategorica"></p>
+                          <button id="ag-varCategorica" type="submit" class="btn btn-success btn-ag">Crear</button>
                           <br>
                           <span id="outFormCategorica"></span>
-                          <br>
+
+                            <p id="err-varCategorica"></p>
+
+                            <br>
                         </form>
                       </div>
 
@@ -399,26 +417,36 @@
                       <div>
                         <form class="form-ag form-inline u-no_display" role="form" id="formUniforme">
                             <!--input variable-->
-                          <div class="form-group">
-                            <input id="nameUni" type="text" class="form-control contenedor-variables-input" size="3" placeholder="var" required>
+                            <span><b>Variable Uniforme</b></span>
+                            <br>
+                            <span>Nombre</span>
+                            <div class="form-group">
+                            <input id="nameUni" type="text" class="form-control contenedor-variables-input" size="3" placeholder="x" required>
                           </div>
                           <!--input valor-->
-                          <span> , a = </span>
-                          <div class="form-group">
-                            <input id="valueaUni" class="form-control contenedor-variables-input" required>
-                          </div>
-
-                          <span> , b = </span>
-                          <div class="form-group">
-                            <input id="valuebUni" class="form-control contenedor-variables-input" required>
-                          </div>
-                          <div class="form-group">
-                              <input id="incUni" class="contenedor-variables-input--increment form-control"  placeholder="inc">
-                          </div>
-
-
-                          <button id="ag-varUniforme" type="submit" class="btn btn-success btn-ag">ag</button>
                           <br>
+                          <span>Válor Mínimo</span>
+                          <div class="form-group">
+                            <input id="valueaUni" class="form-control contenedor-variables-input" type="number" step="any" required>
+                          </div>
+                          <br>
+                          <span>Valor Máximo</span>
+                          <div class="form-group">
+                            <input id="valuebUni" class="form-control contenedor-variables-input" type="number" step="any" required>
+                          </div>
+                            <br>
+                            <span>Incremento</span>
+                          <div class="form-group">
+                              <input id="incUni" class="contenedor-variables-input--increment form-control" type="number"  step="any" placeholder="0.5">
+                          </div>
+
+
+                            <p id="vals-varUniforme"></p>
+
+                          <br>
+                          <button id="ag-varUniforme" type="submit" class="btn btn-success btn-ag">Crear</button>
+                          <br>
+                            <p id="err-varUniforme"></p>
                           <span id="outFormUniforme"></span>
                           <br>
 
@@ -475,6 +503,7 @@
                                       <div class="panel-body" id="panel-variables">
 
                                       </div>
+                                       <div id ="infoVariables"></div>
                                     </div>
                                 </div>
 
