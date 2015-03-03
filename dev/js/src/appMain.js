@@ -190,11 +190,11 @@ $(document).ready(function(){
         var inc = $('#incUni').val();
         flag=true;
 
-        if (min > max) {
+        if (parseFloat(min) > parseFloat(max)) {
             $("#err-varUniforme").html("Error, el mínimo no debe superar el máximo");
             flag=false;
         }
-        else if(inc>= (max-min)){
+        else if(parseFloat(inc)>= (parseFloat(max)-parseFloat(min))){
             $("#err-varUniforme").html("Error, el incremento supera el rango entre el máximo y el mínimo");
             flag = false;
         }
@@ -222,7 +222,14 @@ $(document).ready(function(){
                 $("#vals-varUniforme").html("");
 
                 var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
+                //alert(rand);
                 rand = RoundInc(parseFloat(rand),parseFloat(inc));
+               // rand=  rand + parseFloat(min);
+               /* if(rand> parseFloat(max)) {
+                    alert("Es mayor");
+                    rand -= parseFloat(inc);
+                }
+                */
                 alert(rand);
             }
         }
