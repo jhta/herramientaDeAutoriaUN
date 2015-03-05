@@ -885,12 +885,12 @@ $(document).ready(function(){
                 var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
                 //alert(rand);
                 rand = RoundInc(parseFloat(rand),parseFloat(inc));
-               // rand=  rand + parseFloat(min);
-               /* if(rand> parseFloat(max)) {
-                    alert("Es mayor");
-                    rand -= parseFloat(inc);
-                }
-                */
+                // rand=  rand + parseFloat(min);
+                /* if(rand> parseFloat(max)) {
+                 alert("Es mayor");
+                 rand -= parseFloat(inc);
+                 }
+                 */
                 alert(rand);
             }
         }
@@ -1109,7 +1109,7 @@ $(document).ready(function(){
 
 
 function agregarvariableHTML(v){
-    var htmlVar = '<div class="card view-variable" data-id="var" data-content="' + v.name + '"';
+    var metadatos,tipo;
     v.value = jsonValues;
     v.numb = arrayValues
 
@@ -1129,7 +1129,8 @@ function agregarvariableHTML(v){
             }
         }
         result= result + ' ]';
-        htmlVar = htmlVar + ' data-type="especifica" data-metadatos="' + result + '">';
+        tipo = "especifica";
+        metadatos = result;
     }
     else if(v.type == 'discreta'){
         var result = '';
@@ -1147,15 +1148,13 @@ function agregarvariableHTML(v){
                     result = result + arrayValues[i].trim() + " , ";
                 }else{
                     result = result + arrayValues[i].trim() ;
-
                 }
             }
-
-
-
         }
         result= result + ' ]';
-        htmlVar = htmlVar + ' data-type="categorica" data-metadatos="' + result + '">';
+
+        tipo = "categorica";
+        metadatos = result;
     }
     else if(v.type == 'normal'){
         var result = "media," + jsonValues['media'] + ",desviacion," + jsonValues['desviacion'] + ",inc," + v.inc;
@@ -1163,16 +1162,43 @@ function agregarvariableHTML(v){
 
     }
     else if(v.type == 'uniforme'){
-        var result = "inicio: " + jsonValues['inicio'] + " fin: " + jsonValues['fin'] + " inc: " + v.inc;
-        htmlVar = htmlVar + 'data-toggle="popover" data-placement="top" title="Popover title" data-content="Default popover" data-type="uniforme" data-metadatos="' + result + '">';
+        var array = {};
+        array.inicio = jsonValues['inicio'];
+        array.fin = jsonValues['fin'];
+        array.inc= v.inc;
+        var result = JSON.stringify(array)//"inicio: " + jsonValues['inicio'] + " fin: " + jsonValues['fin'] + " inc: " + v.inc;
+        tipo = "uniforme";
+        metadatos = result;
     }
     else{
         var result = "lamda," + jsonValues['lamda'];
         htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + ",inc," + v.inc + '">';
     }
 
+    var htmlVar = "<div  class='panel panel-default' style='margin-top: 10px'>"+
+        "<div class='panel-heading' role='tab' id=''>"+
+        "<span class='panel-title'>" +
+        "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo+"' data-metadatos='"+metadatos+"'> <span class='var'>" + v.name + "</span></div>"+
+        "</span>" +
+        "<div class='pull-right hide-tools'>"+
+        "<div class='btn-toolbar' role='toolbar' aria-label='...'>"+
+        "<div class='btn-group' role='group' aria-label='...'>"+
+        "<a href='#' class='editFolder'>"+
+        "<span class='glyphicon glyphicon-pencil'  aria-hidden='true'></span>"+
+        "</a>"+
+        "</div>"+
+        "<div class='btn-group' role='group' aria-label='...'>"+
+        "<a href='#' class='deleteFolder' '>"+
+        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>"+
+        "</a>"+
+        "</div>"+
+        "</div>"+
+        "</div>"+
+        "</div>"+
+        "</div>";
 
-    $("#panel-variables").append(htmlVar + '<span class="var">' + v.name + '</span></div>');
+
+    $("#listVars").append(htmlVar);
     $('.view-variable').draggable({
         appendTo: "body",
         cursor: "move",
