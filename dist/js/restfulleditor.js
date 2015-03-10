@@ -363,7 +363,8 @@ $(document).ready(function(){
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
                     console.log("xml");
-                    //XMLToVar(json.xml_pregunta);
+                    console.log(json);
+                    XMLToVar(xml.xml_pregunta);
                 }
                 if (typeof json.pregunta !== 'undefined') {
                     formulacionXMLToHtml(json.pregunta);

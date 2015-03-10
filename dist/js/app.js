@@ -689,7 +689,6 @@ $(document).ready(function(){
     $("#valorA").rating();
 
     $(".input-res").on("focus", function(){
-        console.log("fsfa");
         focusComponentId = $(this).parent(".list-group-item ").data("respuestaid");
         console.log(focusComponentId);
         //focusComponent = $(this);
@@ -698,25 +697,7 @@ $(document).ready(function(){
     $("body").on("click", ".card", function(){
         if(TOGGLE_TAB_RES) console.log($(this).data("code"));
     });
-    function limpiar(){
-        varn = new Variable();
-        arrayValues = [];
-        jsonValues = {};
-        $("#formEspecifica").fadeOut("fast");
-        $("#formDiscreta").fadeOut("fast");
-        $("#formCategorica").fadeOut("fast");
-        $("#formNormal").fadeOut("fast");
-        $("#formUniforme").fadeOut("fast");
-        $("#formExponencial").fadeOut("fast");
-        //$("#formChi").fadeOut("fast");
 
-        $('#outFormEspecifica').text('');
-        $('#outFormDiscreta').text('');
-        $('#outFormCategorica').text('');
-        $('#outFormNormal').text('');
-        $('#outFormUniforme').text('');
-        $('#outFormExponencial').text('');
-    }
     $("#varEspecifica").click(function(){
         limpiar();
         $("#formEspecifica").fadeIn();
@@ -764,7 +745,7 @@ $(document).ready(function(){
             var rand = getRandomInt(0,arrayValues.length-1);
             alert(arrayValues[rand]);
 
-            agregarvariableHTML(varn);
+            agregarvariableHTML(varn,true);
             limpiar();
             $('#valorEsp').val("");
             $('#nameEsp').val("");
@@ -774,6 +755,34 @@ $(document).ready(function(){
 
         }
     });
+    $("#listVars").on("click", "#ag-varEspcificaEdit", function () {
+        alert("Supuestamente si");
+        var name = $('#nameEspEdit').val();
+        arrayValues = $('#valorEspEdit').val().split(",");
+        if(!validarValoresEspecifica(arrayValues)){
+            $("#err-varEspcificaEdit").html("Error, ingresaste mal los elementos, posees elementos repetidos o algunos de tus elementos no es un número");
+        } else {
+            varn.name = name;
+            varn.type = 'especifica';
+            console.log("varn", varn);
+            hashVariables[varn.name] = varn;
+            console.debug("hash: ", hashVariables)
+
+            var rand = getRandomInt(0,arrayValues.length-1);
+            alert(arrayValues[rand]);
+
+            $("#ag-varEspcificaEdit").parent().parent().parent().parent().remove();
+
+
+            agregarvariableHTML(varn,false);
+            limpiar();
+            $('#valorEsp').val("");
+            $('#nameEsp').val("");
+            $("#err-varEspcifica").html("");
+            $("#vals-varEspcifica").html("");
+        }
+    });
+
 
     $("#valorEsp").change(function(){
         var array = $('#valorEsp').val().split(",");
@@ -808,15 +817,33 @@ $(document).ready(function(){
             var rand = getRandomInt(0,arrayValues.length-1);
             alert(arrayValues[rand]);
 
-            agregarvariableHTML(varn);
+            agregarvariableHTML(varn,true);
             limpiar();
             $('#valorCat').val("");
             $('#nameCat').val("");
             $("#err-varCategorica").html("");
             $("#vals-varCategorica").html("");
+        }
+    });
 
+    $("#listVars").on("click", "#ag-varCategoricaEdit", function () {
+        var name = $('#nameCatEdit').val();
+        arrayValues = $('#valorCatEdit').val().split(",");
 
+        if(!validarValoresCategorica(arrayValues)){
+            $("#err-varCategoricaEdit").html("Error, ingresas mal los elementos o posees elementos repetidos");
+        }
+        else {
+            varn.name = name;
+            varn.type = 'categorica';
 
+            var rand = getRandomInt(0,arrayValues.length-1);
+            alert(arrayValues[rand]);
+
+            $("#ag-varCategoricaEdit").parent().parent().parent().parent().remove();
+
+            agregarvariableHTML(varn,false);
+            limpiar();
         }
     });
 
@@ -849,60 +876,45 @@ $(document).ready(function(){
         var min = $('#valueaUni').val();
         var max = $('#valuebUni').val();
         var inc = $('#incUni').val();
-        flag=true;
+        saveVarUniform(name,max,min,inc,true);
+    });
 
-        if (parseFloat(min) > parseFloat(max)) {
-            $("#err-varUniforme").html("Error, el mínimo no debe superar el máximo");
+    $("#listVars").on("click", "#ag-varUniformeEdit", function () {
+        var name = $('#nameUniEdit').val();
+        var min = $('#valueaUniEdit').val();
+        var max = $('#valuebUniEdit').val();
+        var inc = $('#incUniEdit').val();
+        saveVarUniform(name,max,min,inc,false);
+    });
+
+
+        $("#incUni").change(function(){
+        var min = $('#valueaUni').val();
+        var max = $('#valuebUni').val();
+        var inc = $(this).val();
+        var flag= true;
+
+        if(!inc || inc == undefined || parseFloat(inc)==0) {
+            $("#err-varUniforme").html("Error, el incremento no puede ser cero");
             flag=false;
         }
-        else if(parseFloat(inc)>= (parseFloat(max)-parseFloat(min))){
+        else if (!min || min == undefined || !max || max == undefined || parseFloat(min) >= parseFloat(max)) {
+            $("#err-varUniforme").html("Error, el mínimo no debe superar o ser igual al máximo");
+            flag=false;
+        }
+        else if(parseFloat(inc)> (parseFloat(max)-parseFloat(min))){
             $("#err-varUniforme").html("Error, el incremento supera el rango entre el máximo y el mínimo");
             flag = false;
         }
 
-
-
-        if(flag){
-            if(hashVariables[name]){
-                $("#err-varUniforme").html("Error, el nombre de la variable ya se encuentra en uso");
-            }else {
-                varn.name = name;
-                varn.type = 'uniforme';
-                varn.inc = inc;
-
-                jsonValues['inicio'] = min;
-                jsonValues['fin'] = max;
-
-                agregarvariableHTML(varn);
-                limpiar();
-                $('#nameUni').val("");
-                $('#valueaUni').val("");
-                $('#valuebUni').val("");
-                $('#incUni').val("");
-                $("#err-varUniforme").html("");
-                $("#vals-varUniforme").html("");
-
-                var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
-                //alert(rand);
-                rand = RoundInc(parseFloat(rand),parseFloat(inc));
-                // rand=  rand + parseFloat(min);
-                /* if(rand> parseFloat(max)) {
-                 alert("Es mayor");
-                 rand -= parseFloat(inc);
-                 }
-                 */
-                alert(rand);
-            }
+        if(flag) {
+            $("#err-varUniforme").html("");
+            var string = posiblesValores(min, max, inc);
+            string = "Posibles valores : " + string;
+            $("#vals-varUniforme").html(string);
+        }else{
+            $("#vals-varUniforme").html("");
         }
-    });
-
-    $("#incUni").change(function(){
-        var min = $('#valueaUni').val();
-        var max = $('#valuebUni').val();
-        var inc = $('#incUni').val();
-        var string = posiblesValores(min,max,inc);
-        string = "Posibles valores : "+string;
-        $("#vals-varUniforme").html(string);
     });
 
     $("#ag-varExponencial").click(function(){
@@ -921,24 +933,83 @@ $(document).ready(function(){
         limpiar();
     });
 
-    /* $("#endVar").on('click', function(e){
-     agregarvariableHTML(varn);
-     $(".view-variable").draggable({
-     appendTo: "body",
-     cursor: "move",
-     helper: "clone",
-     revert: "invalid"
-     });
-     $(this).addClass('hide');
-     limpiar();
-     })*/
+    $("#listVars").on("click", ".deleteVar", function () {
+        var nameVar = $(this).data("content");
+        delete hashVariables[nameVar];
+        for(var index in conjuntoVariables){
+            var x = conjuntoVariables[index];
+            if(x.name == nameVar){
+                conjuntoVariables.splice(index,1);
+                break;
+            }
+        }
+        $(this).parent().parent().parent().parent().parent().remove();
+    });
+
+    $("#listVars").on("click", ".editVar", function () {
+        if($(this).data("type").localeCompare("uniforme")==0){
+            var json = $(this).data("metadatos");
+            var htmlVar = '<div id="formUniformeEdit" class="panel panel-default" style="margin-top: 10px">' +
+                '<div class="panel-heading" role="tab">' +
+                '<span class="panel-title" data-title="">' +
+                '<input id="nameUniEdit"  style="width: 20px !important" type="text" class="contenedor-variables-input" size="3" placeholder="x" value="'+$(this).data("content")+'" disabled>' +
+                '<input id="valueaUniEdit" style="width: 50px !important" class="contenedor-variables-input" type="number" step="any" placeholder="min"  value="'+json.inicio+'" required>' +
+                '<input id="valuebUniEdit" style="width: 50px !important" class="contenedor-variables-input" type="number" step="any" placeholder="max"  value="'+json.fin+'" required>' +
+                '<input id="incUniEdit" style="width: 60px !important" class="contenedor-variables-input" type="number"  step="any" value="'+json.inc+'" placeholder="inc">' +
+                '<a href="#" id="ag-varUniformeEdit">' +
+                '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' +
+                '</a>' +
+                '<p id="vals-varUniformeEdit"></p>' +
+                '<p id="err-varUniformeEdit"></p>' +
+                '<span id="outFormUniformeEdit"></span>' +
+                '</span>' +
+                '</div>' +
+                '</div>';
+            $(this).parent().parent().parent().parent().parent().html(htmlVar);
+        }else if($(this).data("type").localeCompare("especifica")==0){
+            var array = $(this).data("metadatos");
+
+            var htmlVar = '<div id="formEspecificaEdit" class="panel panel-default" style="margin-top: 10px">'+
+                '<div class="panel-heading" role="tab">'+
+                '<span class="panel-title" data-title="">'+
+                '<input id="nameEspEdit"  style="width: 20px !important" type="text" class=" contenedor-variables-input" size="3" placeholder="x" value="'+$(this).data("content")+'" disabled>'+
+                '<input id="valorEspEdit" style="width: 200px !important;" placeholder="1, 5, 10, 12, 17, 25, 30, 33, 34, 45, 70"  class="contenedor-variables-input" value="'+array.toString()+'" required>'+
+                '<a href="#" id="ag-varEspcificaEdit">'+
+                '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'+
+                '</a>'+
+                '<p id="vals-varEspcificaEdit"></p>'+
+                '<span id="outFormEspecificaEdit"></span>'+
+                '<p id="err-varEspcificaEdit"></p>'+
+                '</span>'+
+                '</div>'+
+                '</div>';
+            $(this).parent().parent().parent().parent().parent().html(htmlVar);
+        }else if($(this).data("type").localeCompare("categorica")==0){
+            var array = $(this).data("metadatos");
+
+            var htmlVar = '<div id="formCategoricaEdit" class="panel panel-default" style="margin-top: 10px">'+
+                '<div class="panel-heading" role="tab]">'+
+                '<span class="panel-title" data-title="">'+
+                '<input id="nameCatEdit"  style="width: 20px !important" type="text" class="contenedor-variables-input" size="3" placeholder="y" value="'+$(this).data("content")+'" disabled>'+
+                '<input id="valorCatEdit" type="text" style="width: 200px !important;"class="contenedor-variables-input" placeholder="manzana, pera, banano, lulo"  value="'+array.substring(1, array.length-1)+'" required>'+
+                '<a href="#" id="ag-varCategoricaEdit">'+
+                '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'+
+                '</a>'+
+                '<p id="vals-varCategoricaEdit"></p>'+
+                '<span id="outFormCategoricaEdit"></span>'+
+                '<p id="err-varCategoricaEdit"></p>'+
+                '</span>'+
+                '</div>'+
+                '</div>';
+            $(this).parent().parent().parent().parent().parent().html(htmlVar);
+        }
+    });
 
     $('#endVar').click(function(){
         agregarvariableHTML(varn);
 
         limpiar();
-    })
-
+    });
 });
 
 
@@ -951,16 +1022,13 @@ function Variable(){
 }
 
 function varToXML(){
-    var result = '<variables>';
+    var result = '';
     if(conjuntoVariables.length > 0){
         for(var index in conjuntoVariables){
             var x = conjuntoVariables[index];
             var v;
-            if(x.type == 'especifica'){
-                v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
-                v = v + '<valor>' + x.numb[0] + '</valor></variable>';
-            }
-            else if(x.type == 'discreta'){
+
+            if(x.type == 'discreta'){
                 v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 for(var ii in x.numb){
                     v = v + '<valor>' + x.numb[ii] + '</valor>';
@@ -968,7 +1036,7 @@ function varToXML(){
                 v = v + '</variable>';
 
             }
-            else if(x.type == 'categorica'){
+            else if(x.type == 'categorica' || x.type == 'especifica'){
                 v = '<variable tipo="' + x.type + '" id="' + x.name + '">';
                 for(var ii in x.numb){
                     v = v + '<valor>' + x.numb[ii] + '</valor>';
@@ -996,7 +1064,7 @@ function varToXML(){
             result = result + v;
 
         }
-        return result + '</variables>';
+        return result ;
     }
 }
 
@@ -1025,27 +1093,27 @@ function XMLToVar(entrada){
 
 
     if(entrada != ""){
+
         var elementos = doc.getElementsByTagName('variables')[0].childNodes;
         for(var ii =0; ii < elementos.length; ii++){
             var v = new Variable();
             var varia = elementos[ii];
 
             if(varia.attributes){
+
                 var type = varia.attributes[0].value;
-                v.type = varia.tipo;
+                v.type =  varia.attributes[0].value;
                 v.name = varia.id;
 
-                if(type == 'especifica'){
-                    v.numb = [varia.children[0].textContent]
-                }
-                else if(type == 'discreta' || type == 'categorica'){ //arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
+                if(type == 'especifica' || type == 'categorica'){ //arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
                     var childrenss = varia.children;
                     for (var jj in childrenss) {
                         if(childrenss[jj].textContent)
                             v.numb.splice(v.numb.length, 0, childrenss[jj].textContent);
                     };
-                }
-                else if(type == 'normal'){
+
+                    arrayValues = v.numb;
+                }else if(type == 'normal'){
                     var childrenss = varia.children;
                     v.inc = childrenss[0].textContent;
                     v.value['media'] = childrenss[1].textContent;
@@ -1057,20 +1125,21 @@ function XMLToVar(entrada){
                     v.value['inicio'] = childrenss[1].textContent;
                     v.value['fin'] = childrenss[2].textContent;
 
-                }
-                else if(type == 'exponencial'){
+                    jsonValues['inicio'] = v.value.inicio ;
+                    jsonValues['fin'] = v.value.fin ;
+
+                }else if(type == 'exponencial'){
                     var childrenss = varia.children;
                     v.inc = childrenss[0].textContent;
                     v.value['lamda'] = childrenss[1].textContent;
                 }
 
-                agregarvariableHTML(v);
+                agregarvariableHTML(v,true);
             }
 
         }
+        limpiar();
     }
-
-
 }
 
 function setEndOfContenteditable(contentEditableElement)
@@ -1097,18 +1166,11 @@ function setEndOfContenteditable(contentEditableElement)
 $(document).ready(function(){
     var elem = document.getElementById('eq');//This is the element that you want to move the caret to the end of
     setEndOfContenteditable(elem);
-
-    $("#panel-variables").on("mouseover", ".view-variable", function () {
-        $("#infoVariables").html("<b>Tipo</b>: "+$(this).data("type")+ " <b>Datos</b>: "+$(this).data("metadatos"));
-    });
-    $("#panel-variables").on("mouseout", ".view-variable", function () {
-        $("#infoVariables").html("");
-    });
 });
 
 
 
-function agregarvariableHTML(v){
+function agregarvariableHTML(v,isnew){
     var metadatos,tipo;
     v.value = jsonValues;
     v.numb = arrayValues
@@ -1126,6 +1188,8 @@ function agregarvariableHTML(v){
                 }else{
                     result = result + arrayValues[i].trim() ;
                 }
+            }else if(i==(arrayValues.length-1)){
+                result = result.substring(0, result.length-2);
             }
         }
         result= result + ' ]';
@@ -1149,6 +1213,8 @@ function agregarvariableHTML(v){
                 }else{
                     result = result + arrayValues[i].trim() ;
                 }
+            }else if(i==(arrayValues.length-1)){
+                result = result.substring(0, result.length-2);
             }
         }
         result= result + ' ]';
@@ -1183,12 +1249,12 @@ function agregarvariableHTML(v){
         "<div class='pull-right hide-tools'>"+
         "<div class='btn-toolbar' role='toolbar' aria-label='...'>"+
         "<div class='btn-group' role='group' aria-label='...'>"+
-        "<a href='#' class='editFolder'>"+
+        "<a href='#' class='editVar' data-metadatos='"+metadatos+"'  data-type='"+tipo+"' data-content='" + v.name + "'>"+
         "<span class='glyphicon glyphicon-pencil'  aria-hidden='true'></span>"+
         "</a>"+
         "</div>"+
         "<div class='btn-group' role='group' aria-label='...'>"+
-        "<a href='#' class='deleteFolder' '>"+
+        "<a href='#' class='deleteVar' data-content='" + v.name + "'>"+
         "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>"+
         "</a>"+
         "</div>"+
@@ -1197,7 +1263,6 @@ function agregarvariableHTML(v){
         "</div>"+
         "</div>";
 
-
     $("#listVars").append(htmlVar);
     $('.view-variable').draggable({
         appendTo: "body",
@@ -1205,6 +1270,120 @@ function agregarvariableHTML(v){
         helper: "clone",
         revert: "invalid"
     })
-    conjuntoVariables.splice(conjuntoVariables.length, 0,  v );
 
+    if(!isnew) {
+        for(var index in conjuntoVariables){
+            var x = conjuntoVariables[index];
+            if(x.name == v.name){
+                conjuntoVariables[index]= v;
+                break;
+            }
+        }
+    }else{
+        conjuntoVariables.splice(conjuntoVariables.length, 0, v);
+
+    }
+
+}
+function saveVarUniform(name,max,min,inc,isnew){
+    var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
+    //alert(rand);
+    rand = RoundInc(parseFloat(rand),parseFloat(inc),parseFloat(min),parseFloat(max));
+    // rand=  rand + parseFloat(min);
+    /* if(rand> parseFloat(max)) {
+     alert("Es mayor");
+     rand -= parseFloat(inc);
+     }
+     */
+    alert(rand);
+    /*
+    flag=true;
+
+
+    if(parseFloat(inc)==0) {
+        if(isnew)
+            $("#err-varUniforme").html("Error, el incremento no puede ser cero");
+        else
+            $("#err-varUniformeEdit").html("Error, el incremento no puede ser cero");
+
+
+        flag=false;
+    }
+    else if (parseFloat(min) >= parseFloat(max)) {
+        if(isnew)
+            $("#err-varUniforme").html("Error, el mínimo no debe superar o ser igual al máximo");
+        else
+            $("#err-varUniformeEdit").html("Error, el mínimo no debe superar o ser igual al máximo");
+
+        flag=false;
+    }
+    else if(parseFloat(inc)>= (parseFloat(max)-parseFloat(min))){
+        if(isnew)
+            $("#err-varUniforme").html("Error, el incremento supera el rango entre el máximo y el mínimo");
+        else
+            $("#err-varUniformeEdit").html("Error, el incremento supera el rango entre el máximo y el mínimo");
+
+        flag = false;
+    }
+
+    if(flag){
+        if(isnew && hashVariables[name]){
+            if(isnew)
+                $("#err-varUniforme").html("Error, el nombre de la variable ya se encuentra en uso");
+            else
+                $("#err-varUniformeEdit").html("Error, el nombre de la variable ya se encuentra en uso");
+
+        }else {
+            varn.name = name;
+            varn.type = 'uniforme';
+            varn.inc = inc;
+
+            jsonValues['inicio'] = min;
+            jsonValues['fin'] = max;
+
+            if(!isnew)
+                $("#ag-varUniformeEdit").parent().parent().parent().parent().remove();
+
+            agregarvariableHTML(varn,isnew);
+
+            limpiar();
+            $('#nameUni').val("");
+            $('#valueaUni').val("");
+            $('#valuebUni').val("");
+            $('#incUni').val("");
+            $("#err-varUniforme").html("");
+            $("#vals-varUniforme").html("");
+
+            var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
+            //alert(rand);
+            rand = RoundInc(parseFloat(rand),parseFloat(inc));
+            // rand=  rand + parseFloat(min);
+            /* if(rand> parseFloat(max)) {
+             alert("Es mayor");
+             rand -= parseFloat(inc);
+             }
+
+           // alert(rand);
+
+        }
+    }*/
+}
+function limpiar(){
+    varn = new Variable();
+    arrayValues = [];
+    jsonValues = {};
+    $("#formEspecifica").fadeOut("fast");
+    $("#formDiscreta").fadeOut("fast");
+    $("#formCategorica").fadeOut("fast");
+    $("#formNormal").fadeOut("fast");
+    $("#formUniforme").fadeOut("fast");
+    $("#formExponencial").fadeOut("fast");
+    //$("#formChi").fadeOut("fast");
+
+    $('#outFormEspecifica').text('');
+    $('#outFormDiscreta').text('');
+    $('#outFormCategorica').text('');
+    $('#outFormNormal').text('');
+    $('#outFormUniforme').text('');
+    $('#outFormExponencial').text('');
 }

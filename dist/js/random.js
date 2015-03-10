@@ -5,7 +5,7 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function RoundInc(num,inc){
+function RoundInc(num,inc,min,max){
     var n = Math.abs(inc); // Change to positive
     var decimal = n - Math.floor(n);
     var cant = decimalPlaces(decimal);
@@ -14,10 +14,16 @@ function RoundInc(num,inc){
         mul*=10;
     }
     if(num % inc==0){
-        return Math.round(num * mul) / mul;
+        if ((Math.round((num+(min % inc)) * mul) / mul)>max)
+            return Math.round((num-(min % inc)) * mul) / mul
+        else
+            return Math.round((num+(min % inc)) * mul) / mul
     }else{
         var falta= num%inc;
-        return Math.round((num+inc-falta) * mul) / mul;
+        if ((Math.round((num+inc-falta+(min % inc)) * mul) / mul)>max)
+            return Math.round((num-falta+(min % inc)) * mul) / mul
+        else
+            return Math.round((num+inc-falta+(min % inc)) * mul) / mul
     }
 }
 
@@ -35,9 +41,9 @@ function decimalPlaces(num) {
     return Math.max(
         0,
         // Number of digits right of decimal point.
-            (match[1] ? match[1].length : 0)
+        (match[1] ? match[1].length : 0)
             // Adjust for scientific notation.
-            - (match[2] ? +match[2] : 0));
+        - (match[2] ? +match[2] : 0));
 }
 
 function posiblesValores(min,max,inc){
@@ -50,11 +56,14 @@ function posiblesValores(min,max,inc){
         mul*=10;
     }
 
-    var string = "[ "+min+" ,";
+    var string = "[ "+min+" ,";0
     var acum = parseFloat(min);
     for(var i = 1;i<3;i++){
         acum+=parseFloat(inc);
-        acum = Math.round(acum * mul) / mul;
+        if(cant>0)
+            acum = Math.round(acum * mul) / mul;
+
+        if(acum>=max) break;
         string = string +  " "+acum+" ,";
     }
     string = string + " ... , "+max+" ]";
@@ -78,11 +87,11 @@ function posiblesValoresCategorica(array){
         if(!isEmpty(array[array.length-1].trim())) {
             string = string + array[array.length - 1] + " ]";
         }else{
-            string = string + " ]";
+            string = string.substring(0,string.length-2) + " ]";
         }
         return string;
     }else
-    return "";
+        return "";
 }
 
 function validarValoresCategorica(array){
