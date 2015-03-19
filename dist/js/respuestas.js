@@ -127,11 +127,12 @@ $(document).ready(function(){
      * Crud general de respuestas y errores genuinos: crear, editar, eliminar, ver
      */
 
-    //Crear una nueva respuesta
+    //Cada vez que se presiona una tecla, 
     $(document).on("keypress",".input-res",function(event) {
         if(event.which == 13) {
             var state = "";
             var flag = false;
+            console.log("el putisimo en persona",$(this).val());
             try {
                 state = math.eval($(this).val());
             } catch(err) {
@@ -240,11 +241,6 @@ $(document).ready(function(){
         respuestas[respactual.id+""]= respactual;
     });
 
-
-    /*
-     * *******************************************************************************
-     * Manipulación de las ecuaciones que se generan para las respuestas correctas y errores genuinos
-     */
 
 
      //Funcion para mostrar el input de las respuestas
