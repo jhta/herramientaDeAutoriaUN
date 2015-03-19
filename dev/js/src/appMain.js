@@ -4,6 +4,7 @@ var varn,
     jsonValues = {};
 var TOGGLE_TAB_RES = false;
 var focusComponentId = null;
+var focusElement = null;
 
 var conjuntoVariables = [];
 $(document).ready(function(){
@@ -27,14 +28,21 @@ $(document).ready(function(){
     $("#valor").rating();
     $("#valorA").rating();
 
-    $(".input-res").on("focus", function(){
-        focusComponentId = $(this).parent(".list-group-item ").data("respuestaid");
-        console.log(focusComponentId);
-        //focusComponent = $(this);
-        //list-group-item 
+     $("body").on("focus",".input-res", function(){
+        console.log("fsfa");
+        console.log($(this).attr("id"));
+        console.log($(this).val());
+        focusElement = $(this);
     });
-    $("body").on("click", ".card", function(){
-        if(TOGGLE_TAB_RES) console.log($(this).data("code"));
+     
+     $("body").on("click", ".card", function(){
+        if(TOGGLE_TAB_RES) {
+            console.log($(this).data("code"));
+            var caret=focusElement.caret();
+            //focusElement.val(focusElement.val()+$(this).data("code"));
+            console.log("el caret es ",focusElement.caret());
+            focusElement.val(focusElement.val()).caret(caret).caret($(this).data('code')).val();
+        }
     });
 
     $("#varEspecifica").click(function(){

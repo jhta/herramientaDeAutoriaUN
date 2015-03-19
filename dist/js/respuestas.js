@@ -6,6 +6,7 @@ var respactual;
 var eqActuallyIdRespuestaCorrecta = "";
 
 //Cargar toda la formulación
+/*
 function formulacionXMLToHtml(xml){
     console.log(xml);
     //Reiniciando variables
@@ -52,9 +53,10 @@ function formulacionXMLToHtml(xml){
         $("#"+eqactually).trigger( "click" );
         idEquation = conteq;
     }
-}
+}*/
 
 //Carga todas las respuestas que posea la pregunta dinámicamente
+/*
 function respuestaXmlToHtml(xml){
     //Reiniciando variables
     respuestas= {};
@@ -91,7 +93,7 @@ function respuestaXmlToHtml(xml){
         }
     }
     idRespuesta = cont;
-}
+}*/
 
 
 function printHtmlrespuesta(idRespuesta, nombre,treei){
@@ -111,6 +113,14 @@ function printHtmlerror(error,idRes){
 function checkChar( c ) {
     return ( ( c >= 58  ) || ( c <= 39 ) || ( c == 44 ));
 }
+
+function hideInput( input, label ) {
+    console.debug("hide", $(input));
+    $(input).addClass("hide");
+    $(label).removeClass("hide");
+}
+
+
 $(document).ready(function(){
     /*
      * *******************************************************************************
@@ -118,20 +128,27 @@ $(document).ready(function(){
      */
 
     //Crear una nueva respuesta
-    console.log("//////////////////////");
-    console.debug("array: ",arrayValues);
-
     $(document).on("keypress",".input-res",function(event) {
         if(event.which == 13) {
-            alert(eval($(this).val()));
+            var state = "";
+            var flag = false;
+            try {
+                state = math.eval($(this).val());
+            } catch(err) {
+                state = "error de formulacion";
+                flag = true;
+            }
+            alert(state);
+           if(!flag){
+               $("#p-"+$(this).attr("id")).text($(this).val());
+               hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+           }
             event.preventDefault();
-            console.log("enter");
-            
+
         }else if( checkChar( event.which ) ){
             console.log("paila");
             return false;
         }
-
     });
     $("#crearRespuesta").click(function(){
         inRespuesta = true;
@@ -230,52 +247,13 @@ $(document).ready(function(){
      */
 
 
-
+     //Funcion para mostrar el input de las respuestas
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
         var id = $(this).data('id');
         var tipo = $(this).data('tipo');
-
+        console.log("llavecita");
+        $("#error-"+id).removeClass("hide");
         guardar();
-
-        $('#content-drop-respuestas').html("");
-        if (tipo.localeCompare("error") == 0) {
-
-            var respuestaid = $(this).data('respuestaid');
-            eqActuallyIdRespuestaCorrecta =  respuestaid;
-            var res = respuestas[respuestaid+""];
-            $.each( res.error_genuino, function( index, value ) {
-                if (typeof value != 'undefined')
-                    if ((value.id).localeCompare(id) == 0) {
-                        $('#content-drop-respuestas').html(value.html);
-                        treeActual = value.tree;
-                    }
-            });
-        }else{
-
-            eqActuallyIdRespuestaCorrecta = "";
-            $('#content-drop-respuestas').html(respuestas[id+""].html);
-            treeActual = respuestas[id+""].tree;
-        }
-        eqactuallyres = id;
-
-
-
-        var cont=0;
-        $(".drop code,.drop div").each(function(index){
-            if($(this).hasClass("ultimo-e")){
-                cont++;
-                $(this).droppable(funcDroppable);
-
-            }else if($(this).hasClass("card2")){
-                cont++;
-                $(this).draggable({
-                    appendTo: "body",
-                    cursor: "move",
-                    revert: "invalid"
-                });
-            }
-        });
-        if(cont==0)  $("#content-drop-respuestas").droppable(funcDroppableDrop);
 
     });
 
