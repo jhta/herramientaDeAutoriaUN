@@ -356,9 +356,8 @@ $(document).ready(function(){
             var xmlDoc = xml.xml_pregunta;
             var json = $.xml2json(xmlDoc);
             if (typeof json !== 'undefined') {
-                if (typeof json.objetos_respuestas !== 'undefined') {
-                    respuestaXmlToHtml(json.objetos_respuestas)
-
+                if (typeof json.respuestas !== 'undefined') {
+                    respuestaXmlToHtml(json.respuestas)
                 }
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
