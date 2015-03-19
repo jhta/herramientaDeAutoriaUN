@@ -58,17 +58,19 @@ function formulacionXMLToHtml(xml){
 //Carga todas las respuestas que posea la pregunta dinámicamente
 
 function respuestaXmlToHtml(xml){
+
     //Reiniciando variables
     respuestas= {};
     eqActuallyIdRespuestaCorrecta = "";
     eqactuallyres = "";
-    console.log(xml);
+    console.debug("este es el xml",xml);
     var xmlrespuesta = xml;
     $("#accordion2").html("");
     $('#content-drop-respuestas').html("");
     var cont = 0;
     for (var res in xmlrespuesta) {
         var obres = xmlrespuesta[res];
+        console.log(obres);
         var treei = new Tree();
         treei.tree = obres.tree;
         treei.id= obres.id;
@@ -83,8 +85,6 @@ function respuestaXmlToHtml(xml){
         treei.html = obres.html;
         treei.nombre = obres.nombre;
 
-        console.log(treei);
-        console.log(treei.makeString());
         respuestas[obres.id+""] = treei;
         cont++;
         printHtmlrespuesta(obres.id, obres.nombre,treei);
@@ -301,7 +301,7 @@ $(document).ready(function(){
 
     $("#loadeq").click(function(){
         var resp = JSON.stringify(respuestas);
-
+        console.debug("ESTOY EN LOADEQ, POR AQUI TODO RAY");
         var xw = new XMLWriter('UTF-8');
         xw.formatting = 'indented';//add indentation and newlines
         xw.indentChar = ' ';//indent with spaces
@@ -422,25 +422,22 @@ $(document).ready(function(){
                 var egen= errores[e];
                 xw.writeStartElement('error_genuino');
                 xw.writeAttributeString( "id", egen.id );
+                xw.writeAttributeString( "respuesta_id", res.id );
                 xw.writeAttributeString( "formula", egen.nombre );
                 xw.writeAttributeString( "cifras_decimales", "0.2" );
-                xw.writeAttributeString( "calificacion", "0" );
                 xw.writeAttributeString( "retroalimentacion", "Error" );
                 xw.writeEndElement();
             }
             xw.writeEndElement();
         }
         xw.writeEndElement();
-        xw.writeStartElement('objetos_respuestas');
-        xw.writeString(resp);
-        xw.writeEndElement();
-
+        
         xw.writeEndElement();
         xw.writeEndDocument();
 
 
         var xml = xw.flush();
-        console.log(xw.flush());
+        console.debug("El puto html ressultante D: D:", xml);
         //Este evento que llama el trigger se encuentra en restfulleditor.js al final
         $( "#loadeq").trigger( "guardarxml", [ xml ] );
     });
