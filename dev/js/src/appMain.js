@@ -9,17 +9,19 @@ var focusElement = null;
 var conjuntoVariables = [];
 $(document).ready(function(){
 
+    //toogle nav superior
     $("#tab-respuestas").click(function(){
         $("#panelOtros").toggleClass("hide");
         TOGGLE_TAB_RES = true;
-
     });
 
+    //toogle nav superior
     $("#tab-formulacion").click(function(){
         TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
     })
 
+    //toogle nav superior
     $("#tab-metadatos").click(function(){
         TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
@@ -39,7 +41,6 @@ $(document).ready(function(){
         if(TOGGLE_TAB_RES) {
             console.log($(this).data("code"));
             var caret=focusElement.caret();
-            //focusElement.val(focusElement.val()+$(this).data("code"));
             console.log("el caret es ",focusElement.caret());
             focusElement.val(focusElement.val()).caret(caret).caret($(this).data('code')).val();
         }
@@ -69,11 +70,6 @@ $(document).ready(function(){
         limpiar();
         $("#formExponencial").fadeIn();
     });
-    /*$("#varChi").click(function(){
-     limpiar();
-     $("#formChi").fadeIn();
-     });*/
-
 
     $("#ag-varEspcifica").click(function(){
         var name = $('#nameEsp').val();
@@ -235,7 +231,7 @@ $(document).ready(function(){
     });
 
 
-        $("#incUni").change(function(){
+    $("#incUni").change(function(){
         var min = $('#valueaUni').val();
         var max = $('#valuebUni').val();
         var inc = $(this).val();

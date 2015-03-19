@@ -56,7 +56,7 @@ function formulacionXMLToHtml(xml){
 }*/
 
 //Carga todas las respuestas que posea la pregunta dinámicamente
-/*
+
 function respuestaXmlToHtml(xml){
     //Reiniciando variables
     respuestas= {};
@@ -93,7 +93,7 @@ function respuestaXmlToHtml(xml){
         }
     }
     idRespuesta = cont;
-}*/
+}
 
 
 function printHtmlrespuesta(idRespuesta, nombre,treei){
@@ -127,12 +127,11 @@ $(document).ready(function(){
      * Crud general de respuestas y errores genuinos: crear, editar, eliminar, ver
      */
 
-    //Cada vez que se presiona una tecla, 
+    //Cada vez que se presiona una tecla, se va verificando
     $(document).on("keypress",".input-res",function(event) {
         if(event.which == 13) {
             var state = "";
             var flag = false;
-            console.log("el putisimo en persona",$(this).val());
             try {
                 state = math.eval($(this).val());
             } catch(err) {
@@ -145,12 +144,13 @@ $(document).ready(function(){
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
            }
             event.preventDefault();
-
         }else if( checkChar( event.which ) ){
             console.log("paila");
             return false;
         }
     });
+
+    //Crea una respuesta
     $("#crearRespuesta").click(function(){
         inRespuesta = true;
         respactual = new Respuesta();
@@ -191,9 +191,7 @@ $(document).ready(function(){
         }
         Printer.addErrorToAnswer( $(this).data("id"), error, respactual );
         $("#content-"+error.id).html('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;"  data-id="'+respactual.id+'" id="mathjax-'+error.id+'"><math></math></div>');
-        document.getElementById("mathjax-"+error.id).innerHTML = "<math><mn>2</mn><mo>+</mo><mn>6</mn></math>";
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub,"mathjax-"+error.id]);
-
+        
         guardar();
 
         eqActuallyIdRespuestaCorrecta = respactual.id;
