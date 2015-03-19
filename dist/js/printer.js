@@ -1,5 +1,5 @@
 var Printer = {
-	htmlAnswer: function( idRespuesta, nombre,treei ) {
+	htmlAnswer: function( idRespuesta, nombre ) {
 		$("#accordion2").append("<div class='panel panel-default'>" +
 	        "<div class='panel-heading' role='tab' >" +
 	        "<span class='panel-title'>" +

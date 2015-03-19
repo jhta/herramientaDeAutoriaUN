@@ -48,42 +48,48 @@ function formulacionXMLToHtml(xml){
 
 //Carga todas las respuestas que posea la pregunta dinámicamente
 
-function respuestaXmlToHtml(xml){
-
+function respuestaXmlToHtml(xmlRespuestas){
     //Reiniciando variables
     respuestas= {};
     eqActuallyIdRespuestaCorrecta = "";
     eqactuallyres = "";
-    console.debug("este es el xml",xml);
-    var xmlrespuesta = xml;
+    console.debug("este es el xml",xmlRespuestas);
     $("#accordion2").html("");
     $('#content-drop-respuestas').html("");
     var cont = 0;
-    for (var res in xmlrespuesta) {
-        var obres = xmlrespuesta[res];
-        console.log(obres);
-        var treei = new Tree();
-        treei.tree = obres.tree;
-        treei.id= obres.id;
-        treei.cifras_decimales = obres.cifras_decimales;
-        if(obres.error_genuino.length==0){
-            treei.error_genuino = [];
-        }else{
-            treei.error_genuino = obres.error_genuino;
-        }
 
-        treei.formula = obres.formula;
-        treei.html = obres.html;
-        treei.nombre = obres.nombre;
-
-        respuestas[obres.id+""] = treei;
-        cont++;
-        printHtmlrespuesta(obres.id, obres.nombre,treei);
-        for(var i =0; i<treei.error_genuino.length;i++){
-            printHtmlerror(treei.error_genuino[i],treei.id);
-        }
+    for( var res in xmlRespuestas) {
+        var respuesta = xmlRespuestas[res];
+        printHtmlrespuesta(respuesta.id, respuesta.nombre);
+        respuesta.error_genuino.forEach(function(eg) {
+            printHtmlerror(eg, respuesta.id);
+        });
     }
-    idRespuesta = cont;
+    // for (var res in xmlRespuestas) {
+    //     var obres = xmlRespuestas[res];
+    //     console.log(obres);
+    //     var treei = new Tree();
+    //     treei.tree = obres.tree;
+    //     treei.id= obres.id;
+    //     treei.cifras_decimales = obres.cifras_decimales;
+    //     if(obres.error_genuino.length==0){
+    //         treei.error_genuino = [];
+    //     }else{
+    //         treei.error_genuino = obres.error_genuino;
+    //     }
+
+    //     treei.formula = obres.formula;
+    //     treei.html = obres.html;
+    //     treei.nombre = obres.nombre;
+
+    //     respuestas[obres.id+""] = treei;
+    //     cont++;
+    //     printHtmlrespuesta(obres.id, obres.nombre,treei);
+    //     for(var i =0; i<treei.error_genuino.length;i++){
+    //         printHtmlerror(treei.error_genuino[i],treei.id);
+    //     }
+    // }
+    // idRespuesta = cont;
 }
 
 
@@ -411,7 +417,7 @@ $(document).ready(function(){
                 xw.writeAttributeString( "respuesta_id", res.id );
                 xw.writeAttributeString( "formula", egen.nombre );
                 xw.writeAttributeString( "cifras_decimales", "0.2" );
-                xw.writeAttributeString( "retroalimentacion", "Error" );
+                xw.writeAttributeString( "retro_alimentacion", "Error" );
                 xw.writeEndElement();
             }
             xw.writeEndElement();
