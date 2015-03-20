@@ -53,7 +53,7 @@ function respuestaXmlToHtml(xmlRespuestas) {
             xmlRespuestas.respuesta.forEach(function(respuesta) {
                 respuestas[respuesta.id+""] = respuesta;
                 setNewGlobalId(getIdFromResponse(respuesta.id));
-                printHtmlrespuesta(respuesta.id, respuesta.nombre);
+                printHtmlrespuesta(respuesta.id, respuesta.nombre, respuesta.formula);
                 if(respuesta.error_genuino !== undefined ) {
                     console.log(respuesta.error_genuino);
                     printErrorGenuino(respuesta.error_genuino, respuesta.id);
@@ -66,7 +66,7 @@ function respuestaXmlToHtml(xmlRespuestas) {
                 console.log(respuesta);
                 respuestas[respuesta.id+""] = respuesta;
                 setNewGlobalId(getIdFromResponse(respuesta.id));
-                printHtmlrespuesta(respuesta.id, respuesta.nombre);
+                printHtmlrespuesta(respuesta.id, respuesta.nombre, respuesta.formula);
                 if(respuesta.error_genuino !== undefined )
                     respuesta.error_genuino.forEach(function(eg) {
                         printHtmlerror(eg, respuesta.id);
@@ -102,13 +102,14 @@ function hideInput( input, label ) {
 }
 
 function EditFormInError( error, respuesta, state ) {
-    console.log(error, respuesta);
-    console.log(respuestas[respuesta]);
-    console.log(respuestas[respuesta].error_genuino);
-    var sp = error.split("-");
+   var sp = error.split("-");
     var indexError = parseInt(sp[sp.length -1 ])
     console.log(respuestas[respuesta].error_genuino[indexError]);
     respuestas[respuesta].error_genuino[indexError].formula = state;
+}
+
+function EditFormInRes( respuesta, state ) {
+   respuestas[respuesta].formula = state;
 }
 
 $(document).ready(function(){
@@ -129,13 +130,34 @@ $(document).ready(function(){
             }
             alert(state);
             if(!flag){
-               EditFormInError( $(this).data("error"),  $(this).data("respuesta"), state);
+                if($(this).data("tipo")){
+                    console.log("si tiene ipo", $(this).data("tipo"));
+                    EditFormInRes( $(this).data("respuesta"), state);
+                } else {
+                    EditFormInError( $(this).data("error"),  $(this).data("respuesta"), state);
+                }
+               console.log($(this).attr("id"));
+               console.log($("#p-"+$(this).attr("id")));
                $("#p-"+$(this).attr("id")).text($(this).val());
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
             }
             event.preventDefault();
         }else if( checkChar( event.which ) ){
             return false;
+        }
+    });
+
+    //Funcion para mostrar el input de las respuestas
+    $("#accordion2").on("click", ".pre-equation-respuesta", function () {
+        var id = $(this).data('id');
+        var tipo = $(this).data('tipo');
+        console.log("llavecita");
+        $("#error-"+id).removeClass("hide");
+        console.log(tipo);
+        if(tipo == "correcta") {
+            console.log("es correcta", id);
+            console.log( $("#correct-"+id));
+            $("#correct-"+id).removeClass("hide");
         }
     });
 
@@ -228,14 +250,6 @@ $(document).ready(function(){
         $(this).remove();
         $("#title-"+RespuestaActual.id).html(RespuestaActual.nombre);
         respuestas[RespuestaActual.id+""]= RespuestaActual;
-    });
-
-    //Funcion para mostrar el input de las respuestas
-    $("#accordion2").on("click", ".pre-equation-respuesta", function () {
-        var id = $(this).data('id');
-        var tipo = $(this).data('tipo');
-        console.log("llavecita");
-        $("#error-"+id).removeClass("hide");
     });
 
     /*
@@ -374,7 +388,7 @@ $(document).ready(function(){
             xw.writeAttributeString( "nombre", res.nombre );
             xw.writeAttributeString( "id", res.id);
             xw.writeAttributeString( "cifras_decimales", "0.2" );
-            xw.writeAttributeString( "formula", "" );
+            xw.writeAttributeString( "formula", res.formula);
             var errores = res.error_genuino;
             if(res.error_genuino !== undefined ){
                 if(Array.isArray( res.error_genuino )) {

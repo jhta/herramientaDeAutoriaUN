@@ -1,59 +1,66 @@
 var Printer = {
-	htmlAnswer: function( idRespuesta, nombre ) {
-		$("#accordion2").append("<div class='panel panel-default'>" +
-	        "<div class='panel-heading' role='tab' >" +
-	        "<span class='panel-title'>" +
-	        "<a id='title-" + idRespuesta + "' class='collapsed' data-toggle='collapse' data-parent='#accordion2' href='#" + idRespuesta + "' aria-expanded='false' aria-controls='#" + idRespuesta + "'>" +
-	        nombre +
-	        "</a>" +
-	        "</span>" +
-	        "<div class='pull-right'>" +
-	        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
-	        "<div class='btn-group' role='group' aria-label='...'>" +
-	        "<a href='#' class='editRespuesta' data-id='" + idRespuesta + "'>" +
-	        "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
-	        "</a>" +
-	        " </div>" +
-	        "<div class='btn-group' role='group' aria-label='...'>" +
-	        "<a href='#' class='deleteRespuesta' data-id='" + idRespuesta + "'>" +
-	        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
-	        " </a>" +
+	htmlAnswer: function( idRespuesta, nombre, formula ) {
+		$("#accordion2").append(
+            "<div class='panel panel-default'>" +
+    	        "<div class='panel-heading' role='tab' >" +
+    	           "<span class='panel-title'>" +
+        	           "<a id='title-" + idRespuesta + "' class='collapsed' data-toggle='collapse' data-parent='#accordion2' href='#" + idRespuesta + "' aria-expanded='false' aria-controls='#" + idRespuesta + "'>" +
+            	           nombre +
+            	        "</a>" +
+    	           "</span>" +
+        	        "<div class='pull-right'>" +
+            	        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+                	        "<div class='btn-group' role='group' aria-label='...'>" +
+                    	        "<a href='#' class='editRespuesta' data-id='" + idRespuesta + "'>" +
+                    	           "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
+                    	        "</a>" +
+                	        " </div>" +
+        	           "<div class='btn-group' role='group' aria-label='...'>" +
+                	        "<a href='#' class='deleteRespuesta' data-id='" + idRespuesta + "'>" +
+                	           "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
+                	        " </a>" +
+            	        "</div>" +
+            	        "<div class='btn-group' role='group' aria-label='...'>" +
+                	        "<a  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
+                	           "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
+                	        "</a>" +
+            	        "</div>" +
+        	        "</div>" +
+	            "</div>" +
 	        "</div>" +
-	        "<div class='btn-group' role='group' aria-label='...'>" +
-	        "<a  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
-	        "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
-	        "</a>" +
-	        "</div>" +
-	        "</div>" +
-	        " </div>" +
-	        "</div>" +
+
 	        "<div id='" + idRespuesta + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo'>" +
-	        "<div class='panel-body'>" +
-	        "<ul class='list-group'>" +
-	        " <li class='list-group-item ' style='display: flex;'>" +
-	        "<div class='col-xs-6 p-0'>"+
-	        "<span class='glyphicon glyphicon-ok'></span>" +
-	        " <span>Respuesta correcta:</span>" +
-	        "</div>"+
-	        "<div class='pull-right col-xs-6 p-0'  style='display:table;'>" +
-	        "<div id='content-" + idRespuesta + "' style='display: table-cell' class='input-space p-0 col-xs-8'>"+
-            "<p class='label-res hide' id='p-error-"+idRespuesta+"'></p>"+
-			"<input type='text' class='input-res form-control sisas' id='error-"+idRespuesta+">"+
-	        "</div>" +
-	        "<div class='btn-toolbar col-xs-4 pull-right'  style='display: table-cell' role='toolbar' aria-label='...'>" +
-	        "<div class='btn-group' role='group' aria-label='...'>" +
-	        "<a href='#' data-id='" + idRespuesta + "' class='pre-equation-respuesta' data-tipo='correcta'>" +
-	        "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
-	        "</a>" +
-	        "</div>" +
-	        "</div>" +
-	        "</div>" +
-	        "</li>" +
-	        "</ul>" +
-	        "</div>" +
-	        "</div>" +
-	        "</div>");
+    	        "<div class='panel-body'>" +
+        	        "<ul class='list-group'>" +
+            	        this.correctAnswer( idRespuesta, nombre, formula ) +
+                    "</ul>" +
+	            "</div>" +
+	        "</div>" 
+	        );
 	},
+
+    correctAnswer: function(idRespuesta, nombre, formula) {
+        var response = "<li class='list-group-item genuine-error' >" +
+                    "<div class=' p-0'>"+
+                       "<span class='glyphicon glyphicon-ok'></span>" +
+                       " <span>Respuesta correcta:</span>" +
+                    "</div>"+
+                    "<div class='p-0 genuine-error__body'  >" +
+                        "<div id='content-" + idRespuesta + "'  class='p-0 genuine-error__body-item input'>"+
+                            "<p class='label-res ' id='p-correct-"+idRespuesta+"'>"+formula+"</p>"+
+                            "<input type='text' data-tipo='correcta' data-respuesta='"+ idRespuesta +"' class='input-res hide form-control sisas' id='correct-"+idRespuesta+"'>"+
+                        "</div>" +
+                        "<div class='btn-toolbar genuine-error__body-item' role='toolbar' aria-label='...'>" +
+                            "<div class='btn-group' role='group' aria-label='...'>" +
+                                "<a href='#' data-id='" + idRespuesta + "' class='pre-equation-respuesta' data-tipo='correcta'>" +
+                                    "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
+                                "</a>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>" +
+                "</li>" 
+        return response;
+    },
 
 	htmlError: function( error, idRes ) {
         console.debug("este es el motherfucker error que esta llegando: ", error);
