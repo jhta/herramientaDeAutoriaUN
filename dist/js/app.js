@@ -700,12 +700,19 @@ $(document).ready(function(){
      
      $("body").on("click", ".card", function(){
         if(TOGGLE_TAB_RES) {
-            console.log($(this).data("code"));
-            console.log(focusElement);
-            console.log(focusElement.caret());
-            var caret = focusElement.caret();
-            console.log("el caret es ",focusElement.caret());
-            focusElement.val(focusElement.val()).caret(caret).caret($(this).data('code')).val();
+            if($(this).data("id") == "var") {
+                 var caret = focusElement.caret();
+                console.log("el caret es ",focusElement.caret());
+                focusElement.val(focusElement.val()).caret(caret).caret($(this).data('content')).val();
+            }else {
+                console.log($(this).data("code"));
+                console.log(focusElement);
+                console.log(focusElement.caret());
+                var caret = focusElement.caret();
+                console.log("el caret es ",focusElement.caret());
+                focusElement.val(focusElement.val()).caret(caret).caret($(this).data('code')).val();
+            }
+            
         }
     });
 
