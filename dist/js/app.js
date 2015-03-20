@@ -701,7 +701,9 @@ $(document).ready(function(){
      $("body").on("click", ".card", function(){
         if(TOGGLE_TAB_RES) {
             console.log($(this).data("code"));
-            var caret=focusElement.caret();
+            console.log(focusElement);
+            console.log(focusElement.caret());
+            var caret = focusElement.caret();
             console.log("el caret es ",focusElement.caret());
             focusElement.val(focusElement.val()).caret(caret).caret($(this).data('code')).val();
         }
