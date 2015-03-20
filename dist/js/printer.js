@@ -147,7 +147,7 @@ var Printer = {
                     "<div  style='display: table-cell' class='input-space p-0 col-xs-10'>"+
                         "<p class='label-res hide' id='p-error-"+error.id+"'></p>"+
                         "<input type='text' class='hide form-control' id='text-"+error.id+"'>"+
-                        "<input type='text' class='hide input-res form-control' id='error-"+error.id+"'>"+
+                        "<input type='text' class='hide input-res form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
                     "</div>"+
                 "<div class='btn-toolbar col-xs-2 p-0 pull-right' style='display: table-cell' role='toolbar' aria-label='...'>"+
 

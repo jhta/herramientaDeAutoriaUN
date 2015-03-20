@@ -101,13 +101,22 @@ function hideInput( input, label ) {
     $(label).removeClass("hide");
 }
 
+function EditFormInError( error, respuesta, state ) {
+    console.log(error, respuesta);
+    console.log(respuestas[respuesta]);
+    console.log(respuestas[respuesta].error_genuino);
+    var sp = error.split("-");
+    var indexError = parseInt(sp[sp.length -1 ])
+    console.log(respuestas[respuesta].error_genuino[indexError]);
+    respuestas[respuesta].error_genuino[indexError].formula = state;
+}
 
 $(document).ready(function(){
     /*
      * *******************************************************************************
      * Crud general de respuestas y errores genuinos: crear, editar, eliminar, ver
      */
-    //Cada vez que se presiona una tecla, se va verificando
+    //Cuando se presione enter se debe guardar la funcion
     $(document).on("keypress",".input-res",function(event) {
         if(event.which == 13) {
             var state = "";
@@ -119,13 +128,13 @@ $(document).ready(function(){
                 flag = true;
             }
             alert(state);
-           if(!flag){
+            if(!flag){
+               EditFormInError( $(this).data("error"),  $(this).data("respuesta"), state);
                $("#p-"+$(this).attr("id")).text($(this).val());
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
-           }
+            }
             event.preventDefault();
         }else if( checkChar( event.which ) ){
-            console.log("paila");
             return false;
         }
     });
@@ -172,7 +181,6 @@ $(document).ready(function(){
         }
 
         respuestas[RespuestaActual.id+""] = RespuestaActual;
-        console.log(respuestas);
         if(!$("#"+$(this).data("id")).hasClass('in')) {
             $("#"+$(this).data("id")).addClass('in');
         }
@@ -222,16 +230,12 @@ $(document).ready(function(){
         respuestas[RespuestaActual.id+""]= RespuestaActual;
     });
 
-
-
-     //Funcion para mostrar el input de las respuestas
+    //Funcion para mostrar el input de las respuestas
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
         var id = $(this).data('id');
         var tipo = $(this).data('tipo');
         console.log("llavecita");
         $("#error-"+id).removeClass("hide");
-        
-
     });
 
     /*
@@ -255,6 +259,10 @@ $(document).ready(function(){
         this.retroalimentacion='';
     }
 
+/*
+     ***********************************************************************************
+     * Funcion generadora del XML apartir de los datos obtenidos
+     */
     $("#loadeq").click(function(){
         var resp = JSON.stringify(respuestas);
         console.debug("ESTOY EN LOADEQ, POR AQUI TODO RAY");
@@ -270,9 +278,6 @@ $(document).ready(function(){
         var variables = varToXML();
         xw.writeString(variables);
         xw.writeEndElement();
-
-
-
 
         /****************************************
          * XML de las ecuaciones
@@ -371,16 +376,31 @@ $(document).ready(function(){
             xw.writeAttributeString( "cifras_decimales", "0.2" );
             xw.writeAttributeString( "formula", "" );
             var errores = res.error_genuino;
-            for(var e=0;e<errores.length;e++){
-                var egen= errores[e];
-                xw.writeStartElement('error_genuino');
-                xw.writeAttributeString( "id", egen.id );
-                xw.writeAttributeString( "respuesta_id", res.id );
-                xw.writeAttributeString( "formula", egen.nombre );
-                xw.writeAttributeString( "cifras_decimales", "0.2" );
-                xw.writeAttributeString( "retro_alimentacion", "Error" );
-                xw.writeEndElement();
+            if(res.error_genuino !== undefined ){
+                if(Array.isArray( res.error_genuino )) {
+                    res.error_genuino.forEach(function( error ) {
+                        xw.writeStartElement('error_genuino');
+                        xw.writeAttributeString( "id", error.id );
+                        xw.writeAttributeString( "respuesta_id", error.id );
+                        xw.writeAttributeString( "formula", error.formula );
+                        xw.writeAttributeString( "cifras_decimales", "0.2" );
+                        xw.writeAttributeString( "retro_alimentacion", "Error" );
+                        xw.writeEndElement();
+                    });
+                } else {
+                   for(var e=0;e<errores.length;e++){
+                       var egen= errores[e];
+                       xw.writeStartElement('error_genuino');
+                       xw.writeAttributeString( "id", egen.id );
+                       xw.writeAttributeString( "respuesta_id", res.id );
+                       xw.writeAttributeString( "formula", egen.formula );
+                       xw.writeAttributeString( "cifras_decimales", "0.2" );
+                       xw.writeAttributeString( "retro_alimentacion", "Error" );
+                       xw.writeEndElement();
+                   } 
+                }
             }
+            
             xw.writeEndElement();
         }
         xw.writeEndElement();
