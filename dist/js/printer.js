@@ -71,9 +71,9 @@ var Printer = {
             "</div>"+
 	        "<div class='genuine-error__body'>"+
 	            "<div id='content-"+error.id+"' class='genuine-error__body-item input'>"+
-
+                    "<p class='label-res ' id='p-text-"+error.id+"'>"+ error.retro_alimentacion +"</p>"+
                     "<p class='label-res' id='p-error-"+error.id+"'>"+ error.formula +"</p>"+
-                    "<input type='text' class='hide form-control' id='text-"+error.id+"'>"+
+                    "<input type='text' class='hide input-text form-control'  data-respuesta='" + idRes + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
                     "<input type='text' class='hide input-res form-control' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
 
 
@@ -83,6 +83,12 @@ var Printer = {
                     "<div class='btn-group' role='group' aria-label='...'>"+
                         "<a href='#' data-id='"+error.id+"' data-respuestaid='"+idRes+"' class=' pre-equation-respuesta' data-tipo='correcta'>"+
                         "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
+                        "</a>"+
+                    "</div>"+
+
+                    "<div class='btn-group' role='group' aria-label='...'>"+
+                        "<a href='#' data-id='"+error.id+"' data-respuestaid='"+idRes+"' class='retro-alimentacion' >"+
+                            "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"+
                         "</a>"+
                     "</div>"+
 
@@ -158,8 +164,9 @@ var Printer = {
                 "</div>"+
                 "<div class='genuine-error__body'>"+
                     "<div class='genuine-error__body-item input'>"+
+                        "<p class='label-res hide' id='p-text-"+error.id+"'></p>"+
                         "<p class='label-res hide' id='p-error-"+error.id+"'></p>"+
-                        "<input type='text' class='hide form-control' id='text-"+error.id+"'>"+
+                        "<input type='text' class='hide input-text form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "'id='text-"+error.id+"'>"+
                         "<input type='text' class='hide input-res form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
                     "</div>"+
                 "</div>"+
@@ -170,6 +177,13 @@ var Printer = {
                         "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
                         "</a>"+
                     "</div>"+
+
+                    "<div class='btn-group' role='group' aria-label='...'>"+
+                        "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class='retro-alimentacion' >"+
+                        "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"+
+                        "</a>"+
+                    "</div>"+
+
 
                     "<div class='btn-group' role='group' aria-label='...'>"+
                         "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+respactual.id+"'>"+

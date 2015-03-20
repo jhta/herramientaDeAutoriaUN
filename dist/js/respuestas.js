@@ -112,6 +112,13 @@ function EditFormInRes( respuesta, state ) {
    respuestas[respuesta].formula = state;
 }
 
+function editRetroAlimentation( error, respuesta, state) {
+    var sp = error.split("-");
+    var indexError = parseInt(sp[sp.length -1 ])
+    console.log(respuestas[respuesta].error_genuino[indexError]);
+    respuestas[respuesta].error_genuino[indexError].retro_alimentacion = state;
+}
+
 $(document).ready(function(){
     /*
      * *******************************************************************************
@@ -147,6 +154,18 @@ $(document).ready(function(){
         }
     });
 
+    $(document).on("keypress",".input-text",function(event) {
+        if(event.which == 13) {
+            console.log("el texto este");
+            editRetroAlimentation($(this).data("error"),  $(this).data("respuesta"), $(this).val());
+           $("#p-"+$(this).attr("id")).text($(this).val());
+           hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+            event.preventDefault();
+        }
+    });
+
+
+
     //Funcion para mostrar el input de las respuestas
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
         var id = $(this).data('id');
@@ -160,6 +179,14 @@ $(document).ready(function(){
             $("#correct-"+id).removeClass("hide");
         }
     });
+
+    $("#accordion2").on("click", ".retro-alimentacion", function () {
+        var id = $(this).data('id');
+        console.log("la A grandota");
+        $("#text-"+id).removeClass("hide");
+        
+    });
+
 
     //Crea una respuesta
     $("#crearRespuesta").click(function(){
@@ -270,7 +297,7 @@ $(document).ready(function(){
         this.nombre='Error genuino';
         this.cifras_decimales = '';
         this.formula = '';
-        this.retroalimentacion='';
+        this.retro_alimentacion='';
     }
 
 /*
@@ -398,7 +425,7 @@ $(document).ready(function(){
                         xw.writeAttributeString( "respuesta_id", error.id );
                         xw.writeAttributeString( "formula", error.formula );
                         xw.writeAttributeString( "cifras_decimales", "0.2" );
-                        xw.writeAttributeString( "retro_alimentacion", "Error" );
+                        xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
                         xw.writeEndElement();
                     });
                 } else {
@@ -409,7 +436,7 @@ $(document).ready(function(){
                        xw.writeAttributeString( "respuesta_id", res.id );
                        xw.writeAttributeString( "formula", egen.formula );
                        xw.writeAttributeString( "cifras_decimales", "0.2" );
-                       xw.writeAttributeString( "retro_alimentacion", "Error" );
+                       xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
                        xw.writeEndElement();
                    } 
                 }
