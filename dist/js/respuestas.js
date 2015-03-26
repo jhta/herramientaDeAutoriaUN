@@ -462,8 +462,10 @@ $(document).ready(function(){
 
         var xml = xw.flush();
         console.debug("El puto html ressultante D: D:", xml);
-        //Este evento que llama el trigger se encuentra en restfulleditor.js al final
-        $( "#loadeq").trigger( "guardarxml", [ xml ] );
+        var xml_metadatos = getXmlMetadatos();
+
+        $( "#loadeq").trigger( "guardarxml", [ xml,xml_metadatos ] );
+
     });
 
 });
