@@ -353,8 +353,15 @@ $(document).ready(function(){
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
         function xmlToObjects(xml) {
-            var xmlDoc = xml.xml_pregunta;
+
+            var xmlDoc = xml.xml_metados;
             var json = $.xml2json(xmlDoc);
+            if (typeof json !== 'undefined') {
+                metadatosXmlToHtml(json);
+            }
+
+            xmlDoc = xml.xml_pregunta;
+            json = $.xml2json(xmlDoc);
             if (typeof json !== 'undefined') {
                 if (typeof json.respuestas !== 'undefined') {
                     respuestaXmlToHtml(json.respuestas)

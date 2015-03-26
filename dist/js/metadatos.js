@@ -37,14 +37,15 @@ $(document).ready(function(){
             $("#cespecificos").append($("<option>").attr("value", "--").text("--"));
             $('#group-ccespecificos').show();
 
-            $.each( file_json[this.value]["especificos"], function( key, val ) {
-                $("#cespecificos").append($("<option>").attr("value", val["nombre"]).text(val["nombre"]));
+                $.each(file_json[this.value]["especificos"], function (key, val) {
+                    $("#cespecificos").append($("<option>").attr("value", val["nombre"]).text(val["nombre"]));
 
-            });
-            $('.mostrar').show();
-            eleccion= file_json[this.value]["codigo"];
-            $("#codigo").text("Codigo: "+eleccion);
-            $("#descripcion").text("Descripcion: "+this.value);
+                });
+
+                $('.mostrar').show();
+                eleccion = file_json[this.value]["codigo"];
+                $("#codigo").text("Codigo: " + eleccion);
+                $("#descripcion").text("Descripcion: " + this.value);
 
         }
     });
@@ -69,18 +70,21 @@ $(document).ready(function(){
             $("#subitems").append($("<option>").attr("value", "--").text("--"));
 
             $('#group-subitems').show();
-            $.each( file_json[$('#ccabecera').val()]["especificos"], function( key, val ) {
-                if( val["nombre"]==$('#cespecificos').val()){
-                    eleccion= val["codigo"];
-                    $.each( val["subitems"], function( key2, val2 ) {
 
-                        $("#subitems").append($("<option>").attr("value", val2["nombre"]).text(val2["nombre"]));
-                    });
-                }
+                $.each(file_json[$('#ccabecera').val()]["especificos"], function (key, val) {
+                    if (val["nombre"] == $('#cespecificos').val()) {
+                        eleccion = val["codigo"];
+                        $.each(val["subitems"], function (key2, val2) {
 
-            });
-            $("#codigo").text("Codigo: "+eleccion);
-            $("#descripcion").text("Descripcion: "+$('#ccabecera').val()+" - "+$('#cespecificos').val());
+                            $("#subitems").append($("<option>").attr("value", val2["nombre"]).text(val2["nombre"]));
+                        });
+                    }
+
+                });
+
+                $("#codigo").text("Codigo: " + eleccion);
+                $("#descripcion").text("Descripcion: " + $('#ccabecera').val() + " - " + $('#cespecificos').val());
+
         }
     });
     /*
@@ -168,17 +172,18 @@ function metadatosXmlToHtml(json){
     $("#autor").val(json.autor);
 
 
-    if(json.cccabecera!=="--"){
+    if(json.cccabecera && json.cccabecera!=="--"){
         $("#codigo").text(json.code);
         $("#descripcion").text(json.description_classification);
         $("#ccabecera").val(json.ccabecera);
         $( "#ccabecera" ).trigger( "change" );
 
-        if(json.cespecificos!=="--"){
+        if(json.cespecificos && json.cespecificos!=="--"){
             $("#cespecificos").val(json.cespecificos);
             $('#cespecificos').trigger( "change" );
 
-            if(json.subitems!=="--"){
+            if(json.subitems && json.subitems!=="--"){
+                alert(json.subitems);
                 $('#subitems').trigger( "change" );
                 $("#subitems").val(json.subitems);
             }
