@@ -334,12 +334,12 @@ $(document).ready(function(){
         });
 
         //Envía la petición al backend para guardar el string xml de la pregunta que actualmente se encuentre editando
-        $("#loadeq").on( "guardarxml", function( event, xml) {
+        $("#loadeq").on( "guardarxml", function( event, xml,xml_metadatos) {
             if(typeof questionactual !== 'undefined'){
                 var id =questionactual.attr('id');
                 var $this= this;
 
-                client.question.update(id,{xml_pregunta:xml,xml_metados:''}).done(function (data) {
+                client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
                     alert("Datos cargados correctamente");
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
