@@ -469,11 +469,11 @@ $(document).ready(function(){
 
         var xml = xw.flush();
         console.log(xw.flush());
+
+        var xml_metadatos = getXmlMetadatos();
+
         //Este evento que llama el trigger se encuentra en restfulleditor.js al final
-        $( "#loadeq").trigger( "guardarxml", [ xml ] );
+        $( "#loadeq").trigger( "guardarxml", [ xml,xml_metadatos ] );
     });
-
-
-
 
 });

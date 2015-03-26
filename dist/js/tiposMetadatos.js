@@ -1,4 +1,4 @@
-{"Logica": {
+var json = {"Logica": {
     "codigo": "11",
     "especificos": [
         {

@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
 
 
@@ -11,13 +13,12 @@ $(document).ready(function(){
      la clasificación según la Nomenclatura Internacional de la Unesco
      y lo carga en el primer select
      */
-    $.getJSON( "dist/js/tipos.json", function( data ) {
-        file_json=data;
-        $.each( data, function( key, val ) {
-            $("#ccabecera").append($("<option>").attr("value", key).text(key));
 
-        });
-    });
+    file_json=json;
+    $.each(file_json, function( key, val ) {
+        $("#ccabecera").append($("<option>").attr("value", key).text(key));
+
+    });;
     /*
      Esta función se encarga de actualizar el select cespecificos cuando
      la persona elige  una de las opciones disponibles del select ccabecera
@@ -119,7 +120,68 @@ $(document).ready(function(){
 
         }
     });
-
-
-
 });
+
+function getXmlMetadatos(){
+
+    var xw = new XMLWriter('UTF-8');
+    xw.formatting = 'indented';//add indentation and newlines
+    xw.indentChar = ' ';//indent with spaces
+    xw.indentation = 2;//add 2 spaces per level
+    xw.writeStartDocument();
+    xw.writeStartElement('xml');
+
+    xw.writeElementString('title', $("#titulo").val());
+    xw.writeElementString('language', $("#lenguaje").val());
+    xw.writeElementString('description', $("#meta-descripcion").val());
+    xw.writeElementString('keyword', $("#keyword").val());
+    xw.writeElementString('date', $("#fecha").val());
+    xw.writeElementString('autor', $("#autor").val());
+    xw.writeElementString('format', 'SCORM1.2');
+    xw.writeElementString('resource', 'exercise');
+    xw.writeElementString('context', $("#contexto").val());
+    xw.writeElementString('cost', 'No');
+    xw.writeElementString('copyright', 'CC BY-NC-ND 4.0');
+    xw.writeElementString('classification','UNESCO');
+    xw.writeElementString('code',  $("#codigo").text());
+    xw.writeElementString('description-classification', $("#descripcion").text());
+    xw.writeElementString('ccabecera', $("#ccabecera").val());
+    xw.writeElementString('cespecificos', $("#cespecificos").val());
+    xw.writeElementString('subitems', $("#subitems").val());
+
+    xw.writeEndElement();
+    xw.writeEndDocument();
+
+    var xml = xw.flush();
+    return xml;
+}
+
+function metadatosXmlToHtml(json){
+    console.log(json);
+    console.log('Beatufil json');
+    $("#titulo").val(json.title);
+    $("#lenguaje").val(json.language);
+    $("#meta-descripcion").val(json.description);
+    $("#keyword").val(json.keyword);
+    $("#fecha").val(json.date);
+    $("#contexto").val(json.context);
+    $("#autor").val(json.autor);
+
+
+    if(json.cccabecera!=="--"){
+        $("#codigo").text(json.code);
+        $("#descripcion").text(json.description_classification);
+        $("#ccabecera").val(json.ccabecera);
+        $( "#ccabecera" ).trigger( "change" );
+
+        if(json.cespecificos!=="--"){
+            $("#cespecificos").val(json.cespecificos);
+            $('#cespecificos').trigger( "change" );
+
+            if(json.subitems!=="--"){
+                $('#subitems').trigger( "change" );
+                $("#subitems").val(json.subitems);
+            }
+        }
+    }
+}

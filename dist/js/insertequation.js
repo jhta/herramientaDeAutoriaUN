@@ -5,10 +5,7 @@ var equations = {};
 var idEquation = -1;
 $(document).ready(function(){
 
-        var mathml = "";
-
-
-
+    var mathml = "";
 
     $("#inserteq").click(function(){
         inRespuesta = false;
