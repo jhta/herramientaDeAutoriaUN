@@ -674,6 +674,9 @@ $(document).ready(function(){
     $("#tab-respuestas").click(function(){
         $("#panelOtros").toggleClass("hide");
         $("#panelSimbolos").toggleClass("hide");
+        $("#panelAritmetica").toggleClass("hide");
+        $("#panelTrigonometrica").toggleClass("hide");
+        $("#panelParaRespuesta").toggleClass("hide");
         TOGGLE_TAB_RES = true;
     });
 
@@ -682,6 +685,9 @@ $(document).ready(function(){
         TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
         $("#panelSimbolos").removeClass("hide");
+        $("#panelAritmetica").removeClass("hide");
+        $("#panelTrigonometrica").removeClass("hide");
+        $("#panelParaRespuesta").removeClass("hide");
     })
 
     //toogle nav superior
@@ -689,6 +695,9 @@ $(document).ready(function(){
         TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
         $("#panelSimbolos").removeClass("hide");
+        $("#panelAritmetica").removeClass("hide");
+        $("#panelTrigonometrica").removeClass("hide");
+        $("#panelParaRespuesta").removeClass("hide");
     })
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();

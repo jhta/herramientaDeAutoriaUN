@@ -144,7 +144,7 @@ $(document).ready(function(){
                 state = "error de formulacion";
                 flag = true;
             }
-            console.log("este es el state",state);
+            
             if(!flag){
                 if($(this).data("tipo")){
                     console.log("si tiene ipo", $(this).data("tipo"));
@@ -156,6 +156,8 @@ $(document).ready(function(){
                console.log($("#p-"+$(this).attr("id")));
                $("#p-"+$(this).attr("id")).text($(this).val());
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+            }else {
+                alert(state);
             }
             event.preventDefault();
         }else if( checkChar( event.which ) ){
