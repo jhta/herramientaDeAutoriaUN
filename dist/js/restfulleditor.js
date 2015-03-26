@@ -334,12 +334,12 @@ $(document).ready(function(){
         });
 
         //Envía la petición al backend para guardar el string xml de la pregunta que actualmente se encuentre editando
-        $("#loadeq").on( "guardarxml", function( event, xml,xml_metadatos) {
+        $("#loadeq").on( "guardarxml", function( event, xml) {
             if(typeof questionactual !== 'undefined'){
                 var id =questionactual.attr('id');
                 var $this= this;
 
-                client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
+                client.question.update(id,{xml_pregunta:xml,xml_metados:''}).done(function (data) {
                     alert("Datos cargados correctamente");
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
@@ -353,19 +353,12 @@ $(document).ready(function(){
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
         function xmlToObjects(xml) {
-
-            var xmlDoc = xml.xml_metados;
+            var xmlDoc = xml.xml_pregunta;
             var json = $.xml2json(xmlDoc);
             if (typeof json !== 'undefined') {
-                metadatosXmlToHtml(json);
-            }
-
-            xmlDoc = xml.xml_pregunta;
-            json = $.xml2json(xmlDoc);
-            if (typeof json !== 'undefined') {
-                if (typeof json.objetos_respuestas !== 'undefined') {
-                    respuestaXmlToHtml(json.objetos_respuestas)
-
+                if (typeof json.respuestas !== 'undefined') {
+                    respuestaXmlToHtml(json.respuestas)
+                    console.log("???????? que putas esta pasando?????");
                 }
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
@@ -377,8 +370,6 @@ $(document).ready(function(){
                     formulacionXMLToHtml(json.pregunta);
                 }
             }
-
-
         }
 
         $(window).on("beforeunload", function() {

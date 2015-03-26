@@ -105,7 +105,7 @@ body {
 
     border:1px solid #ccc;
     background-color: #eaeaea;
-    display: inline-block;
+    display: inline-flex;
     margin: 2px;
 }
 
@@ -141,8 +141,10 @@ body {
 }
 
 .spa {
-    min-height: 30px;
+    min-height: 20px;
     border: 1px dotted gray;
+    display: inline-flex
+    min-width: 10px
 }
 
 .card2 > p {
@@ -294,3 +296,25 @@ body {
     overflow auto
 .p-0
     padding: 0 !important
+
+.genuine-error
+    display: flex !important
+    flex-direction: row
+    justify-content: space-between
+    
+    &__body
+        display: flex
+        flex-direction: row
+        
+        &-item
+            margin: 5px
+            
+            &.input
+                display: flex
+                flex-direction: row
+                
+                p
+                    margin: 0 8px !important
+                    
+                
+               
