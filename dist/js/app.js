@@ -673,6 +673,7 @@ $(document).ready(function(){
     //toogle nav superior
     $("#tab-respuestas").click(function(){
         $("#panelOtros").toggleClass("hide");
+        $("#panelSimbolos").toggleClass("hide");
         TOGGLE_TAB_RES = true;
     });
 
@@ -680,12 +681,14 @@ $(document).ready(function(){
     $("#tab-formulacion").click(function(){
         TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
+        $("#panelSimbolos").removeClass("hide");
     })
 
     //toogle nav superior
     $("#tab-metadatos").click(function(){
         TOGGLE_TAB_RES = false;
         $("#panelOtros").removeClass("hide");
+        $("#panelSimbolos").removeClass("hide");
     })
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();

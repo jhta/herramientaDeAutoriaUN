@@ -1,7 +1,6 @@
 var Printer = {
 	htmlAnswer: function( idRespuesta, nombre, formula ) {
-        alert("veamos que pasa");
-		$("#accordion2").append(
+        $("#accordion2").append(
             "<div class='panel panel-default'>" +
     	        "<div class='panel-heading' role='tab' >" +
     	           "<span class='panel-title'>" +
