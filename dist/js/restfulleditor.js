@@ -1,6 +1,8 @@
 $(document).ready(function(){
-    var folderactual;
-    var questionactual;
+    var folderactual,
+        questionactual,
+        stringXmlFormulacion,
+        stringXmlMetadatos;
 
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
@@ -339,6 +341,9 @@ $(document).ready(function(){
                 var id =questionactual.attr('id');
                 var $this= this;
 
+                stringXmlFormulacion = xml;
+                stringXmlMetadatos = xml_metadatos;
+
                 client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
                     alert("Datos cargados correctamente");
                 }).fail(function () {
@@ -348,7 +353,17 @@ $(document).ready(function(){
             }else{
                 alert("Debes seleccionar primero una pregunta para poder guardar los datos");
             }
+        });
 
+        $("#exportscorm").on( "click", function( event) {
+            $.when($( "#loadeq").trigger( "click" )).then(function() {
+                var clientScorm = new $.RestClient('http://localhost:4000/api/');
+                clientScorm.add('scorm');
+                clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(data){
+                        alert(data);
+                }
+                )
+            });
         });
 
         //Transforma el string xml en objetos javascript y carga html correspondientes

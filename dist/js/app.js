@@ -769,7 +769,6 @@ $(document).ready(function(){
         }
     });
     $("#listVars").on("click", "#ag-varEspcificaEdit", function () {
-        alert("Supuestamente si");
         var name = $('#nameEspEdit').val();
         arrayValues = $('#valorEspEdit').val().split(",");
         if(!validarValoresEspecifica(arrayValues)){
