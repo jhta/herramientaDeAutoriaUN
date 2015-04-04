@@ -16,6 +16,7 @@ function formulacionXMLToHtml(xml){
     if (typeof xml.objetos !== 'undefined') {
         if (typeof xml.objetos.json !== 'undefined') {
             treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
+
         }
         if (typeof xml.objetos.html !== 'undefined') {
             html = JSON.parse(decodeURIComponent(xml.objetos.html));
@@ -27,11 +28,7 @@ function formulacionXMLToHtml(xml){
         $("#eq").html('');
         equations = {};
 
-        alert(xml.formulacion.expresion.length);
-        console.log(xml.formulacion.expresion);
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
-
-            alert(xml.formulacion.expresion[i].tipo);
 
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
 
@@ -507,8 +504,5 @@ $(document).ready(function(){
         $( "#loadeq").trigger( "guardarxml", [ xml,xml_metadatos ] );
 
     });
-
-
-
 
 });
