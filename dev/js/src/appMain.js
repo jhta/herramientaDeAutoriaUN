@@ -42,23 +42,23 @@ $(document).ready(function(){
     $("#valor").rating();
     $("#valorA").rating();
 
-     $("body").on("focus",".input-res", function(){
+    //hace foco en un input, para que lo que se escriba se asigne ahi
+    $("body").on("focus",".input-res", function(){
         console.log("fsfa");
         console.log($(this).attr("id"));
         console.log($(this).val());
         focusElement = $(this);
     });
      
-     $("body").on("click", ".card", function(){
+    //inserta el contenido de la expresion con clase card, en el caret 
+    //la evaluacion de la formulacion de este esta en el archivo respuestas
+    $("body").on("click", ".card", function(){
         if(TOGGLE_TAB_RES) {
             if($(this).data("id") == "var") {
                  var caret = focusElement.caret();
                 console.log("el caret es ",focusElement.caret());
-                focusElement.val(focusElement.val()).caret(caret).caret($(this).data('content')).val();
+                focusElement.val(focusElement.val()).caret(caret).caret("#"+$(this).data('content')+"#").val();
             }else {
-                console.log($(this).data("code"));
-                console.log(focusElement);
-                console.log(focusElement.caret());
                 var caret = focusElement.caret();
                 console.log("el caret es ",focusElement.caret());
                 focusElement.val(focusElement.val()).caret(caret).caret($(this).data('code')).val();

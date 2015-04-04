@@ -103,8 +103,12 @@ function hideInput( input, label ) {
 function EditFormInError( error, respuesta, state ) {
    var sp = error.split("-");
     var indexError = parseInt(sp[sp.length -1 ])
+    console.log(respuestas[respuesta]);
     console.log(respuestas[respuesta].error_genuino[indexError]);
-    respuestas[respuesta].error_genuino[indexError].formula = state;
+    if(respuestas[respuesta].error_genuino[indexError] == undefined)
+        respuestas[respuesta].error_genuino[indexError+1].formula = state;
+    else
+        respuestas[respuesta].error_genuino[indexError].formula = state;
 }
 
 function EditFormInRes( respuesta, state ) {
@@ -128,6 +132,22 @@ function editRetroAlimentation( error, respuesta, state) {
     respuestas[respuesta].error_genuino[indexError].retro_alimentacion = state;
 }
 
+function validateExpresion( expresion ) {
+    var str= expresion.split("#");
+    console.log(str);
+    var newExpresion = str.map(function(item, index){
+        return index % 2 == 0? item:1;
+    });
+    newExpresion = newExpresion.join().replace(/,/gi, "");
+    console.log(newExpresion);
+    return newExpresion;
+}
+
+
+function showExpresion( expresion ) {
+    return expresion.split("#").join().replace(/,/gi, "");
+}
+
 $(document).ready(function(){
     /*
      * *******************************************************************************
@@ -139,20 +159,21 @@ $(document).ready(function(){
             var state = "";
             var flag = false;
             try {
-                state = math.eval($(this).val());
+                var expresion = validateExpresion($(this).val());
+                console.log(expresion);
+                state = math.eval(expresion);
             } catch(err) {
                 state = "error de formulacion";
                 flag = true;
             }
             
-            if(!flag){
+            if(!flag) {
                 if($(this).data("tipo")){
                     console.log("si tiene ipo", $(this).data("tipo"));
                     EditFormInRes( $(this).data("respuesta"), state);
                 } else {
                     EditFormInError( $(this).data("error"),  $(this).data("respuesta"), state);
                 }
-               console.log($(this).attr("id"));
                console.log($("#p-"+$(this).attr("id")));
                $("#p-"+$(this).attr("id")).text($(this).val());
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
