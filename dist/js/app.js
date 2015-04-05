@@ -159,7 +159,7 @@ function makeTree(elementDrop, uu){
         if(typeVar == 'especifica'){
             tree.meta['value'] = metaVar;
         }
-        else if(typeVar == 'discreta' || 'categorica'){
+        else if(typeVar == 'discreta' || typeVar == 'categorica'){
             var mm = metaVar.split(',');
 
             for (var ii in mm) {
@@ -173,10 +173,10 @@ function makeTree(elementDrop, uu){
             tree.meta['inc'] = mm[5];
         }
         else if(typeVar == 'uniforme'){
-            var mm = metaVar.split(',');
-            tree.meta['inicio'] = mm[1];
-            tree.meta['fin'] = mm[3];
-            tree.meta['inc'] = mm[5];
+            var mm = metaVar;
+            tree.meta['inicio'] = mm.inicio;
+            tree.meta['fin'] = mm.fin;
+            tree.meta['inc'] = mm.inc;
         }
         else{
             var mm = metaVar.split(',');
