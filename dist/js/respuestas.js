@@ -72,7 +72,6 @@ function getIdFromResponse( idResponse ) {
     console.log(idResponse);
     var sp = idResponse.split("-");
     var newId = parseInt(sp[sp.length -1 ])
-    alert(newId);
     return newId;
 }
 //verifica si es u solo elemento o un array
@@ -156,7 +155,17 @@ function EditFormInError( error, respuesta, state ) {
 }
 
 function EditFormInRes( respuesta, state ) {
-   respuestas[respuesta].formula = state;
+    console.log(respuesta);
+    console.log(respuestas);
+    console.log(respuestas[respuesta]);
+    if(respuestas[respuesta] == undefined ){
+        console.log("es ndefined");
+        respuestas["respuesta-"+respuesta].formula = state;
+    }
+    else{
+        console.log("no es undefined");
+        respuestas[respuesta].formula = state;
+    }
 }
 
 function editRetroAlimentation( error, respuesta, state) {
@@ -182,7 +191,7 @@ $(document).ready(function(){
                 state = "error de formulacion";
                 flag = true;
             }
-            alert(state);
+            
             if(!flag){
                 if($(this).data("tipo")){
                     console.log("si tiene ipo", $(this).data("tipo"));
@@ -194,6 +203,8 @@ $(document).ready(function(){
                console.log($("#p-"+$(this).attr("id")));
                $("#p-"+$(this).attr("id")).text($(this).val());
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+            }else {
+                alert(state);
             }
             event.preventDefault();
         }else if( checkChar( event.which ) ){
@@ -242,6 +253,7 @@ $(document).ready(function(){
         var idNewRespuesta = getNewGlobalId();
         RespuestaActual.id = "respuesta-" + idNewRespuesta;
         RespuestaActual.nombre = $("#inputNuevaRespuesta").val();
+        RespuestaActual.formula = "";
         Printer.createHtmlAnswer( idNewRespuesta, RespuestaActual );
         
         $("#inputNuevaRespuesta").val('');
