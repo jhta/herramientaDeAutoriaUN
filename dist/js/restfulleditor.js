@@ -328,7 +328,6 @@ $(document).ready(function(){
                 //input de los metadatos
                 $("#titulo").val(data.titulo);
                 $("#titulo-pregunta-actual").html(" | "+data.titulo);
-                console.log(data);
                 xmlToObjects(data)
             }).fail(function () {
                 alert("Error, inténtalo de nuevo");
