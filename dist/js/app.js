@@ -781,7 +781,6 @@ $(document).ready(function(){
         }
     });
     $("#listVars").on("click", "#ag-varEspcificaEdit", function () {
-        alert("Supuestamente si");
         var name = $('#nameEspEdit').val();
         arrayValues = $('#valorEspEdit').val().split(",");
         if(!validarValoresEspecifica(arrayValues)){
@@ -1311,17 +1310,6 @@ function agregarvariableHTML(v,isnew){
 
 }
 function saveVarUniform(name,max,min,inc,isnew){
-    var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
-    //alert(rand);
-    rand = RoundInc(parseFloat(rand),parseFloat(inc),parseFloat(min),parseFloat(max));
-    // rand=  rand + parseFloat(min);
-    /* if(rand> parseFloat(max)) {
-     alert("Es mayor");
-     rand -= parseFloat(inc);
-     }
-     */
-    alert(rand);
-    /*
     flag=true;
 
 
@@ -1379,19 +1367,8 @@ function saveVarUniform(name,max,min,inc,isnew){
             $("#err-varUniforme").html("");
             $("#vals-varUniforme").html("");
 
-            var rand = getRandomArbitrary(parseFloat(min),parseFloat(max));
-            //alert(rand);
-            rand = RoundInc(parseFloat(rand),parseFloat(inc));
-            // rand=  rand + parseFloat(min);
-            /* if(rand> parseFloat(max)) {
-             alert("Es mayor");
-             rand -= parseFloat(inc);
-             }
-
-           // alert(rand);
-
         }
-    }*/
+    }
 }
 function limpiar(){
     varn = new Variable();

@@ -1,6 +1,9 @@
 $(document).ready(function(){
-    var folderactual;
-    var questionactual;
+    var folderactual,
+        questionactual,
+        stringXmlFormulacion,
+        stringXmlMetadatos,
+        unloadactive=true;
 
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
@@ -339,6 +342,9 @@ $(document).ready(function(){
                 var id =questionactual.attr('id');
                 var $this= this;
 
+                stringXmlFormulacion = xml;
+                stringXmlMetadatos = xml_metadatos;
+
                 client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
                     alert("Datos cargados correctamente");
                 }).fail(function () {
@@ -348,14 +354,27 @@ $(document).ready(function(){
             }else{
                 alert("Debes seleccionar primero una pregunta para poder guardar los datos");
             }
+        });
 
+        $("#exportscorm").on( "click", function( event) {
+            $.when($( "#loadeq").trigger( "click" )).then(function(event) {
+                var clientScorm = new $.RestClient('http://localhost:4000/api/');
+                clientScorm.add('scorm');
+                clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
+                    unloadactive = false;
+                    window.location = 'http://localhost:4000/api/scorm/download';
+                });
+            });
         });
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
         function xmlToObjects(xml) {
 
             var xmlDoc = xml.xml_metados;
+
             var json = $.xml2json(xmlDoc);
+
+
             if (typeof json !== 'undefined') {
                 metadatosXmlToHtml(json);
             }
@@ -374,13 +393,18 @@ $(document).ready(function(){
                     XMLToVar(xml.xml_pregunta);
                 }
                 if (typeof json.pregunta !== 'undefined') {
+
                     formulacionXMLToHtml(json.pregunta);
                 }
             }
         }
 
         $(window).on("beforeunload", function() {
-            return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
+            if (unloadactive)
+                return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
+            else
+                unloadactive = true;
+
         })
 
 
