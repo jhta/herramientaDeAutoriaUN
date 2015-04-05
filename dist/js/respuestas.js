@@ -339,7 +339,6 @@ $(document).ready(function(){
      */
     $("#loadeq").click(function(){
         var resp = JSON.stringify(respuestas);
-        console.debug("ESTOY EN LOADEQ, POR AQUI TODO RAY");
         var xw = new XMLWriter('UTF-8');
         xw.formatting = 'indented';//add indentation and newlines
         xw.indentChar = ' ';//indent with spaces
@@ -458,7 +457,8 @@ $(document).ready(function(){
                         xw.writeAttributeString( "respuesta_id", error.id );
                         xw.writeAttributeString( "formula", error.formula );
                         xw.writeAttributeString( "cifras_decimales", "0.2" );
-                        xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
+                        if(error.retro_alimentacion != undefined && error.retro_alimentacion != null)
+                            xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
                         xw.writeEndElement();
                     });
                 } else {
@@ -469,7 +469,8 @@ $(document).ready(function(){
                        xw.writeAttributeString( "respuesta_id", res.id );
                        xw.writeAttributeString( "formula", egen.formula );
                        xw.writeAttributeString( "cifras_decimales", "0.2" );
-                       xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
+                       if(egen.retro_alimentacion != undefined && error.retro_alimentacion != null)
+                            xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
                        xw.writeEndElement();
                    } 
                 }
