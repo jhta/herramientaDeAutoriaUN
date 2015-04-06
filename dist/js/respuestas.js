@@ -24,7 +24,7 @@ function formulacionXMLToHtml(xml){
         }
     }
 
-    if (typeof xml.formulacion !== 'undefined') {
+    if (typeof xml.formulacion !== 'undefined' && typeof xml.formulacion.expresion !== 'undefined') {
         $("#eq").html('');
         equations = {};
 
