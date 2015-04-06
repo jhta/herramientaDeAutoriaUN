@@ -42,7 +42,6 @@ var Printer = {
     correctAnswer: function(idRespuesta, nombre, formula) {
         var response = "<li class='list-group-item genuine-error' >" +
                     "<div class=' p-0'>"+
-                       "<span class='glyphicon glyphicon-ok'></span>" +
                        " <span>Respuesta correcta:</span>" +
                     "</div>"+
                     "<div class='p-0 genuine-error__body'  >" +
@@ -66,7 +65,6 @@ var Printer = {
         console.debug("este es el motherfucker error que esta llegando: ", error);
 		 $("#"+idRes).find(".list-group").append(" <li class='list-group-item genuine-error' id='"+error.id+"' data-respuestaid='"+idRes+"'>"+
 	        "<div>"+
-                "<span class='glyphicon glyphicon-remove'></span>"+
     	        " <span>Error genuino:</span>"+
             "</div>"+
 	        "<div class='genuine-error__body'>"+
@@ -146,7 +144,6 @@ var Printer = {
         $("#"+data).find(".list-group").append(
             " <li class='list-group-item genuine-error' id='"+error.id+"' data-respuestaid='"+respactual.id+"'>"+
                 "<div class=' p-0'>"+
-                    "<span class='glyphicon glyphicon-remove'></span>"+
                     " <span> Error genuino:</span>"+
                 "</div>"+
                 "<div class='genuine-error__body'>"+

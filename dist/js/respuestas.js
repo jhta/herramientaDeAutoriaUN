@@ -11,42 +11,30 @@ var _newId = null;
 function formulacionXMLToHtml(xml){
     console.log(xml);
     //Reiniciando variables
-
     var conteq = -1;
     if (typeof xml.objetos !== 'undefined') {
         if (typeof xml.objetos.json !== 'undefined') {
             treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
-
         }
         if (typeof xml.objetos.html !== 'undefined') {
             html = JSON.parse(decodeURIComponent(xml.objetos.html));
-
         }
     }
-
     if (typeof xml.formulacion !== 'undefined') {
         $("#eq").html('');
         equations = {};
-
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
-
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
-
                 var preid =xml.formulacion.expresion[i].texto;
                 var idEq = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
                 $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
                 treeActual = treeActivos[idEq];
-
                 var jsn = makeString(treeActual);
-
                 document.getElementById(preid).innerHTML = "<math>" + jsn + "</math>";
-
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
                 equations[preid] = idEq;
-
                 eqactually = preid;
                 conteq++;
-
             }else{
                 alert(xml.formulacion.expresion[i].texto)
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
