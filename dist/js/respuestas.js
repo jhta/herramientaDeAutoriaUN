@@ -11,42 +11,31 @@ var _newId = null;
 function formulacionXMLToHtml(xml){
     console.log(xml);
     //Reiniciando variables
-
     var conteq = -1;
     if (typeof xml.objetos !== 'undefined') {
         if (typeof xml.objetos.json !== 'undefined') {
             treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
-
         }
         if (typeof xml.objetos.html !== 'undefined') {
             html = JSON.parse(decodeURIComponent(xml.objetos.html));
-
         }
     }
 
     if (typeof xml.formulacion !== 'undefined' && typeof xml.formulacion.expresion !== 'undefined') {
         $("#eq").html('');
         equations = {};
-
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
-
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
-
                 var preid =xml.formulacion.expresion[i].texto;
                 var idEq = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
                 $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
                 treeActual = treeActivos[idEq];
-
                 var jsn = makeString(treeActual);
-
                 document.getElementById(preid).innerHTML = "<math>" + jsn + "</math>";
-
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
                 equations[preid] = idEq;
-
                 eqactually = preid;
                 conteq++;
-
             }else{
                 alert(xml.formulacion.expresion[i].texto)
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
@@ -322,25 +311,32 @@ $(document).ready(function(){
 
     //Eliminar el error genunio de su respectiva respuesta asociada
     $("#accordion2").on("click",".deleteErrorGenuino",function(){
-        var $this = this;
-        var res =  respuestas[$(this).data("respuestaid")+""];
-        $("#"+$(this).data("id")).remove();
-        $.each( res.error_genuino, function( index, value ) {
-            if (typeof value != 'undefined') {
-                if ((value.id).localeCompare($($this).data('id')) == 0) {
-                    delete res.error_genuino[index]
+        var ok = confirm("esta seguro que quiere eliminar esto?");
+        if(ok) {
+            var $this = this;
+            var res =  respuestas[$(this).data("respuestaid")+""];
+            $("#"+$(this).data("id")).remove();
+            $.each( res.error_genuino, function( index, value ) {
+                if (typeof value != 'undefined') {
+                    if ((value.id).localeCompare($($this).data('id')) == 0) {
+                        delete res.error_genuino[index]
+                    }
+                    ;
                 }
-                ;
-            }
-        });
+            });
+        }
+        
     });
 
     //Elimina una respuesta tanto desde la vista html como del array
     // respuestas que aloja la información de todas las respuestas creadas por el cliente
     $("#accordion2").on("click",".deleteRespuesta",function() {
-        $("#"+$(this).data("id")).parent().remove();
-        delete respuestas[$(this).data("id")+""];
-
+        var ok = confirm("esta seguro que quiere eliminar esto?");
+        if(ok) {
+            $("#"+$(this).data("id")).parent().remove();
+            delete respuestas[$(this).data("id")+""];    
+        }
+        
     });
 
     //editar el nombre de la respuesta
@@ -386,7 +382,6 @@ $(document).ready(function(){
      */
     $("#loadeq").click(function(){
         var resp = JSON.stringify(respuestas);
-        console.debug("ESTOY EN LOADEQ, POR AQUI TODO RAY");
         var xw = new XMLWriter('UTF-8');
         xw.formatting = 'indented';//add indentation and newlines
         xw.indentChar = ' ';//indent with spaces
@@ -505,7 +500,8 @@ $(document).ready(function(){
                         xw.writeAttributeString( "respuesta_id", error.id );
                         xw.writeAttributeString( "formula", error.formula );
                         xw.writeAttributeString( "cifras_decimales", "0.2" );
-                        xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
+                        if(error.retro_alimentacion != undefined && error.retro_alimentacion != null)
+                            xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
                         xw.writeEndElement();
                     });
                 } else {
@@ -516,7 +512,8 @@ $(document).ready(function(){
                        xw.writeAttributeString( "respuesta_id", res.id );
                        xw.writeAttributeString( "formula", egen.formula );
                        xw.writeAttributeString( "cifras_decimales", "0.2" );
-                       xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
+                       if(egen.retro_alimentacion != undefined && error.retro_alimentacion != null)
+                            xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
                        xw.writeEndElement();
                    } 
                 }

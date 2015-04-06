@@ -20,14 +20,14 @@ $(function() {
 });
 
 $(function() {
-    $("#droppable-out").droppable(funcDroppableOut);
+    $("#div-iner").droppable(funcDroppableOut);
     //$('.drop').droppable(funcDroppableDrop);
 });
 
 var funcDroppableOut = {
     tolerance: "intersect",
     accept: ".card2",
-    drop: function( event, ui ) {
+    out: function( event, ui ) {
         var elementDrop = $(ui.draggable);
 
         if(elementDrop.hasClass("first")){
@@ -958,16 +958,20 @@ $(document).ready(function(){
     });
 
     $("#listVars").on("click", ".deleteVar", function () {
-        var nameVar = $(this).data("content");
-        delete hashVariables[nameVar];
-        for(var index in conjuntoVariables){
-            var x = conjuntoVariables[index];
-            if(x.name == nameVar){
-                conjuntoVariables.splice(index,1);
-                break;
+        var ok = confirm("esta seguro que desea eliminar esta variable?");
+        if(ok) {
+            var nameVar = $(this).data("content");
+            delete hashVariables[nameVar];
+            for(var index in conjuntoVariables){
+                var x = conjuntoVariables[index];
+                if(x.name == nameVar){
+                    conjuntoVariables.splice(index,1);
+                    break;
+                }
             }
+            $(this).parent().parent().parent().parent().parent().remove();    
         }
-        $(this).parent().parent().parent().parent().parent().remove();
+        
     });
 
     $("#listVars").on("click", ".editVar", function () {
