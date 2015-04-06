@@ -20,14 +20,14 @@ $(function() {
 });
 
 $(function() {
-    $("#droppable-out").droppable(funcDroppableOut);
+    $("#div-iner").droppable(funcDroppableOut);
     //$('.drop').droppable(funcDroppableDrop);
 });
 
 var funcDroppableOut = {
     tolerance: "intersect",
     accept: ".card2",
-    drop: function( event, ui ) {
+    out: function( event, ui ) {
         var elementDrop = $(ui.draggable);
 
         if(elementDrop.hasClass("first")){
