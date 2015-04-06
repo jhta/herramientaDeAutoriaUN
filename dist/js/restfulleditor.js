@@ -122,7 +122,7 @@ $(document).ready(function(){
                 client.question.read("all/"+val._id).done(function (data) {
                     jQuery.each( data.Folder.questions, function( i, val ) {
                         $("#body-" + idFolder).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
-                            "<span data-title='"+ val.titulo +"'>" + val.titulo + "</span>" +
+                            "<a href='#' class='LoadQuestion' data-id="+ val._id+" data-title='"+ val.titulo +"'>" + val.titulo + "</a>" +
                             "<div class='pull-right'>" +
                             " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
 
@@ -136,13 +136,6 @@ $(document).ready(function(){
                             "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
                             "</a>" +
                             "</div>" +
-
-                            "<div class='btn-group' role='group' aria-label='...'>" +
-                            "<a href='#' class='LoadQuestion' data-id="+ val._id+">" +
-                            "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
-                            "</a>" +
-                            "</div>" +
-
                             "</div>" +
                             " </div>" +
                             " </li>");
@@ -233,7 +226,7 @@ $(document).ready(function(){
             client.question.create({folderid:$(this).data('id'),titulo:$(this).parent().next().val(),xml_pregunta:'',xml_metados:''}).done(function (val) {
                 $($this).parent().next().val('');
                 $("#body-" + $($this).data('id')).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
-                    "<span data-title='"+ val.titulo +"'>" + val.titulo + "</span>" +
+                "<a href='#' class='LoadQuestion' data-id="+ val._id+" data-title='"+ val.titulo +"'>" + val.titulo + "</a>" +
                     "<div class='pull-right'>" +
                     " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
                     "<div class='btn-group' role='group' aria-label='...'>" +
@@ -244,11 +237,6 @@ $(document).ready(function(){
                     "<div class='btn-group' role='group' aria-label='...'>" +
                     "<a href='#' class='deleteQuestion' data-id="+ val._id+">" +
                     "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
-                    "</a>" +
-                    "</div>" +
-                    "<div class='btn-group' role='group' aria-label='...'>" +
-                    "<a href='#' class='LoadQuestion' data-id="+ val._id+">" +
-                    "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
                     "</a>" +
                     "</div>" +
                     "</div>" +
@@ -346,16 +334,26 @@ $(document).ready(function(){
 
         });
 
-        function changeBackground(color){
-            $(questionactual).css('background-color',color);
-            $(folderactual).css('background-color',color);
-        }
-
         function comeBack(){
+            //Clean all vars, arrays, others.
             $("#carpetas").fadeIn();
             $("#rootWizard").fadeOut();
             $("#titulo-pregunta-actual").html("");
-            changeBackground("");
+            $("#listVars").html("");
+            $("#eq").html("");
+            $(".panel-2").html("");
+            varn = null;
+            hashVariables = [];
+            arrayValues = [];
+            jsonValues = {};
+            conjuntoVariables = [];
+            eqActuallyIdRespuestaCorrecta = null;
+            $('#content-drop-respuestas').html("");
+            $('#accordion2').html("");
+            respuestas = {};
+            eqactuallyres = null;
+            RespuestaActual = null;
+
         }
         //Boton volver
         $("#btnVolver").on("click", function(){
@@ -372,16 +370,17 @@ $(document).ready(function(){
         $("#accordion").on("click",".LoadQuestion",function(){
             $("#carpetas").fadeOut();
             $("#rootWizard").fadeIn();
-            if(typeof folderactual !== 'undefined') changeBackground("");
 
             questionactual =  $("#accordion").find("#"+$(this).data('id'));
             folderactual = questionactual.parent().parent().parent().parent().find(":first");
-            changeBackground("yellow");
             var id =questionactual.attr('id');
             client.question.read(id).done(function (data) {
                 //input de los metadatos
-                $("#titulo").val(data.titulo);
                 $("#titulo-pregunta-actual").html(" | "+data.titulo);
+
+                //Filling metadata
+                $("#titulo").val(data.titulo);
+                $("#autor").val($("#nameUser").html());
                 xmlToObjects(data)
             }).fail(function () {
                 alert("Error, inténtalo de nuevo");

@@ -136,22 +136,43 @@ function getXmlMetadatos(){
     xw.writeStartElement('xml');
 
     xw.writeElementString('title', $("#titulo").val());
-    xw.writeElementString('language', $("#lenguaje").val());
-    xw.writeElementString('description', $("#meta-descripcion").val());
-    xw.writeElementString('keyword', $("#keyword").val());
-    xw.writeElementString('date', $("#fecha").val());
+    xw.writeElementString('language', $("#lenguaje").val() || "");
+
+    xw.writeElementString('description', $("#meta-descripcion").val() || "");
+    xw.writeElementString('keyword', $("#keyword").val() || "");
+
+    var newdate;
+
+    if(!$("#fecha").val()){
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        if(month/ 10 < 1) month = "0"+month;
+        var day = dateObj.getUTCDate();
+        if(day/ 10 < 1) day = "0"+day;
+
+    var year = dateObj.getUTCFullYear();
+    newdate = year + "-" + month + "-" + day ;
+    }
+
+    xw.writeElementString('date', $("#fecha").val() || newdate);
+
     xw.writeElementString('autor', $("#autor").val());
     xw.writeElementString('format', 'SCORM1.2');
     xw.writeElementString('resource', 'exercise');
-    xw.writeElementString('context', $("#contexto").val());
+    xw.writeElementString('context', $("#contexto").val() || "");
+
     xw.writeElementString('cost', 'No');
     xw.writeElementString('copyright', 'CC BY-NC-ND 4.0');
     xw.writeElementString('classification','UNESCO');
-    xw.writeElementString('code',  $("#codigo").text());
-    xw.writeElementString('description-classification', $("#descripcion").text());
-    xw.writeElementString('ccabecera', $("#ccabecera").val());
-    xw.writeElementString('cespecificos', $("#cespecificos").val());
-    xw.writeElementString('subitems', $("#subitems").val());
+
+    if($("#codigo").text()) {
+
+        xw.writeElementString('code', $("#codigo").text());
+        xw.writeElementString('description-classification', $("#descripcion").text());
+        xw.writeElementString('ccabecera', $("#ccabecera").val() );
+        xw.writeElementString('cespecificos', $("#cespecificos").val());
+        xw.writeElementString('subitems', $("#subitems").val());
+    }
 
     xw.writeEndElement();
     xw.writeEndDocument();
@@ -161,14 +182,14 @@ function getXmlMetadatos(){
 }
 
 function metadatosXmlToHtml(json){
-    //$("#titulo").val(json.title);
     $("#lenguaje").val(json.language);
     $("#meta-descripcion").val(json.description);
     $("#keyword").val(json.keyword);
     $("#fecha").val(json.date);
+    console.log("Mira esta fechaaaaaa");
+    console.log(json.date);
     $("#contexto").val(json.context);
-    $("#autor").val(json.autor);
-
+    $("#autor").val(json.autor || $("#autor").val() );
 
     if(json.cccabecera && json.cccabecera!=="--"){
         $("#codigo").text(json.code);

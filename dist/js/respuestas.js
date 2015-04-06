@@ -20,7 +20,8 @@ function formulacionXMLToHtml(xml){
             html = JSON.parse(decodeURIComponent(xml.objetos.html));
         }
     }
-    if (typeof xml.formulacion !== 'undefined') {
+
+    if (typeof xml.formulacion !== 'undefined' && typeof xml.formulacion.expresion !== 'undefined') {
         $("#eq").html('');
         equations = {};
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
