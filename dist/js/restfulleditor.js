@@ -1,3 +1,58 @@
+var client = new $.RestClient('http://104.236.247.200:4000/api/');
+        
+function createFolder(that) {
+    var $this = that;
+            client.folder.create({name:$("#create-folder").val(),userid:sessionStorage.getItem('id')}).done(function (data) {
+                $("#create-folder").val('');
+                var val = data;
+                $("#accordion").append("<div class='panel panel-default'>" +
+                        "<div class='panel-heading' role='tab' id='header-"+val._id+"'>" +
+                        "<span class='panel-title' data-title='"+val.name+"'>" +
+                        "<a data-toggle='collapse' data-parent='#accordion' href='#body-"+val._id+"' aria-expanded='true' aria-controls='body-"+val._id+"'>" +
+                        "<span class='glyphicon glyphicon-folder-open'></span>" +
+                        "  "+val.name+
+                        "</a>" +
+                        "</span>" +
+                        "<div class='pull-right'>" +
+                        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+                        "<div class='btn-group' role='group' aria-label='...'>" +
+                        "<a href='#' class='editFolder' data-id='"+val._id+"'>" +
+                        "<span class='glyphicon glyphicon-pencil'  aria-hidden='true'></span>" +
+                        "</a>" +
+                        "</div>" +
+                        "<div class='btn-group' role='group' aria-label='...'>" +
+                        "<a href='#' class='deleteFolder' data-id='"+val._id+"'>" +
+                        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
+                        "</a>" +
+                        "</div>" +
+
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "<div id='body-"+val._id+"' class='panel-collapse collapse ' role='tabpanel' aria-labelledby='headingOne'>" +
+                        "<div class='panel-body'>" +
+                        "<ul class='list-group'>" +
+                        "<li class='list-group-item'>" +
+                        "<div class='input-group'>" +
+                        "<span class='input-group-btn'>" +
+                        "<button class='btn btn-default addQuestion' type='button' data-id='"+val._id+"'> " +
+                        "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
+                        "</button>" +
+                        "</span>" +
+                        "<input type='text' class='add-question' data-id='"+ val._id +"' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control'>" +
+                        "</div>" + "<!-- /input-group -->"+
+                        "</li>" +
+                        "</ul>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>"
+                );
+
+            }).fail(function () {
+                alert("Error, inténtalo de nuevo");
+            });
+}
+
 $(document).ready(function(){
     var folderactual,
         questionactual,
@@ -7,7 +62,6 @@ $(document).ready(function(){
 
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
-        var client = new $.RestClient('http://104.236.247.200:4000/api/');
         client.add('user');
         client.add('folder');
         client.add('question');
@@ -108,58 +162,15 @@ $(document).ready(function(){
         /*
         Agregar una nueva carpeta
         */
-
+        //Dando click en el boton
         $("#basic-addon1").click(function(){
-            var $this = this;
-            client.folder.create({name:$(this).next().val(),userid:sessionStorage.getItem('id')}).done(function (data) {
-                $($this).next().val('');
-                var val = data;
-                $("#accordion").append("<div class='panel panel-default'>" +
-                        "<div class='panel-heading' role='tab' id='header-"+val._id+"'>" +
-                        "<span class='panel-title' data-title='"+val.name+"'>" +
-                        "<a data-toggle='collapse' data-parent='#accordion' href='#body-"+val._id+"' aria-expanded='true' aria-controls='body-"+val._id+"'>" +
-                        "<span class='glyphicon glyphicon-folder-open'></span>" +
-                        "  "+val.name+
-                        "</a>" +
-                        "</span>" +
-                        "<div class='pull-right'>" +
-                        "<div class='btn-toolbar' role='toolbar' aria-label='...'>" +
-                        "<div class='btn-group' role='group' aria-label='...'>" +
-                        "<a href='#' class='editFolder' data-id='"+val._id+"'>" +
-                        "<span class='glyphicon glyphicon-pencil'  aria-hidden='true'></span>" +
-                        "</a>" +
-                        "</div>" +
-                        "<div class='btn-group' role='group' aria-label='...'>" +
-                        "<a href='#' class='deleteFolder' data-id='"+val._id+"'>" +
-                        "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
-                        "</a>" +
-                        "</div>" +
-
-                        "</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "<div id='body-"+val._id+"' class='panel-collapse collapse ' role='tabpanel' aria-labelledby='headingOne'>" +
-                        "<div class='panel-body'>" +
-                        "<ul class='list-group'>" +
-                        "<li class='list-group-item'>" +
-                        "<div class='input-group'>" +
-                        "<span class='input-group-btn'>" +
-                        "<button class='btn btn-default addQuestion' type='button' data-id='"+val._id+"'> " +
-                        "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
-                        "</button>" +
-                        "</span>" +
-                        "<input type='text' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control'>" +
-                        "</div>" + "<!-- /input-group -->"+
-                        "</li>" +
-                        "</ul>" +
-                        "</div>" +
-                        "</div>" +
-                        "</div>"
-                );
-
-            }).fail(function () {
-                alert("Error, inténtalo de nuevo");
-            });
+            createFolder(this);
+        });
+        //Con enter
+        $("#create-folder").keyup(function(event){
+            if(event.keyCode == 13){
+                createFolder(this);
+            }
         });
 
         /*
@@ -250,8 +261,44 @@ $(document).ready(function(){
                 alert("Error, inténtalo de nuevo");
             });
 
-            });
+        });
+        
+        $("#add-question").keyup(function(event){
+            if(event.keyCode == 13){
+               var $this = this;
+               client.question.create({folderid:$(this).data('id'),titulo:$(this).val(),xml_pregunta:'',xml_metados:''}).done(function (val) {
+                   $($this).val('');
+                   $("#body-" + $($this).data('id')).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
+                       "<span data-title='"+ val.titulo +"'>" + val.titulo + "</span>" +
+                       "<div class='pull-right'>" +
+                       " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
+                       "<div class='btn-group' role='group' aria-label='...'>" +
+                       "<a href='#' class='editQuestion' data-id='"+ val._id+"'>" +
+                       "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
+                       "</a>" +
+                       "</div>" +
+                       "<div class='btn-group' role='group' aria-label='...'>" +
+                       "<a href='#' class='deleteQuestion' data-id="+ val._id+">" +
+                       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
+                       "</a>" +
+                       "</div>" +
+                       "<div class='btn-group' role='group' aria-label='...'>" +
+                       "<a href='#' class='LoadQuestion' data-id="+ val._id+">" +
+                       "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
+                       "</a>" +
+                       "</div>" +
+                       "</div>" +
+                       " </div>" +
+                       " </li>");
 
+                   $("#accordion").find("#"+val._id).find(".LoadQuestion").trigger( "click" );
+
+               }).fail(function () {
+                   alert("Error, inténtalo de nuevo");
+               });
+ 
+            }
+        });
         /*
         Eliminar una pregunta de una carpeta
          */

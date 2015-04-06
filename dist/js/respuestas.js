@@ -231,7 +231,12 @@ $(document).ready(function(){
         }
     });
 
-
+    
+    $("#inputNuevaRespuesta").keyup(function(event){
+        if(event.keyCode == 13){
+           $("#crearRespuesta").click();
+        }
+    });
 
     //Funcion para mostrar el input de las respuestas
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
