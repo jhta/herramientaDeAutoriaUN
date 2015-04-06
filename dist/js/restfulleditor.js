@@ -149,7 +149,7 @@ $(document).ready(function(){
                         "</button>" +
                         "</span>" +
                         "<input type='text' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control'>" +
-                        "</div>" + <!-- /input-group -->
+                        "</div>" + "<!-- /input-group -->"+
                         "</li>" +
                         "</ul>" +
                         "</div>" +
@@ -166,12 +166,16 @@ $(document).ready(function(){
         Eliminar una carpeta de un usuario
          */
         $("#accordion").on("click",".deleteFolder",function(){
-            var $this= this;
-            client.folder.del($(this).data('id')).done(function (data) {
-                $("#header-"+$($this).data('id')).parent().remove();
-            }).fail(function () {
-                alert("Error, inténtalo de nuevo");
-            });
+            var ok = confirm("esta seguro que quiere borrar esta carpeta?");
+            if(ok) {
+                var $this= this;
+                client.folder.del($(this).data('id')).done(function (data) {
+                    $("#header-"+$($this).data('id')).parent().remove();
+                }).fail(function () {
+                    alert("Error, inténtalo de nuevo");
+                });    
+            }
+            
         });
 
         /*
@@ -253,12 +257,15 @@ $(document).ready(function(){
          */
 
         $("#accordion").on("click",".deleteQuestion",function(){
-            var $this= this;
-            client.question.del($(this).data('id')).done(function (data) {
-                $("#"+$($this).data('id')).remove();
-            }).fail(function () {
-                alert("Error, inténtalo de nuevo");
-            });
+            var ok = confirm("esta seguro que quiere borrar esta pregunta?");
+            if(ok) {
+                var $this= this;
+                client.question.del($(this).data('id')).done(function (data) {
+                    $("#"+$($this).data('id')).remove();
+                }).fail(function () {
+                    alert("Error, inténtalo de nuevo");
+                });    
+            }
         });
 
         /*
@@ -328,7 +335,6 @@ $(document).ready(function(){
                 //input de los metadatos
                 $("#titulo").val(data.titulo);
                 $("#titulo-pregunta-actual").html(" | "+data.titulo);
-                console.log(data);
                 xmlToObjects(data)
             }).fail(function () {
                 alert("Error, inténtalo de nuevo");

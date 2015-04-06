@@ -161,9 +161,7 @@ function getXmlMetadatos(){
 }
 
 function metadatosXmlToHtml(json){
-    console.log(json);
-    console.log('Beatufil json');
-    $("#titulo").val(json.title);
+    //$("#titulo").val(json.title);
     $("#lenguaje").val(json.language);
     $("#meta-descripcion").val(json.description);
     $("#keyword").val(json.keyword);

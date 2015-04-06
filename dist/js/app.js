@@ -159,7 +159,7 @@ function makeTree(elementDrop, uu){
         if(typeVar == 'especifica'){
             tree.meta['value'] = metaVar;
         }
-        else if(typeVar == 'discreta' || 'categorica'){
+        else if(typeVar == 'discreta' || typeVar == 'categorica'){
             var mm = metaVar.split(',');
 
             for (var ii in mm) {
@@ -173,10 +173,10 @@ function makeTree(elementDrop, uu){
             tree.meta['inc'] = mm[5];
         }
         else if(typeVar == 'uniforme'){
-            var mm = metaVar.split(',');
-            tree.meta['inicio'] = mm[1];
-            tree.meta['fin'] = mm[3];
-            tree.meta['inc'] = mm[5];
+            var mm = metaVar;
+            tree.meta['inicio'] = mm.inicio;
+            tree.meta['fin'] = mm.fin;
+            tree.meta['inc'] = mm.inc;
         }
         else{
             var mm = metaVar.split(',');
@@ -958,16 +958,20 @@ $(document).ready(function(){
     });
 
     $("#listVars").on("click", ".deleteVar", function () {
-        var nameVar = $(this).data("content");
-        delete hashVariables[nameVar];
-        for(var index in conjuntoVariables){
-            var x = conjuntoVariables[index];
-            if(x.name == nameVar){
-                conjuntoVariables.splice(index,1);
-                break;
+        var ok = confirm("esta seguro que desea eliminar esta variable?");
+        if(ok) {
+            var nameVar = $(this).data("content");
+            delete hashVariables[nameVar];
+            for(var index in conjuntoVariables){
+                var x = conjuntoVariables[index];
+                if(x.name == nameVar){
+                    conjuntoVariables.splice(index,1);
+                    break;
+                }
             }
+            $(this).parent().parent().parent().parent().parent().remove();    
         }
-        $(this).parent().parent().parent().parent().parent().remove();
+        
     });
 
     $("#listVars").on("click", ".editVar", function () {

@@ -310,25 +310,32 @@ $(document).ready(function(){
 
     //Eliminar el error genunio de su respectiva respuesta asociada
     $("#accordion2").on("click",".deleteErrorGenuino",function(){
-        var $this = this;
-        var res =  respuestas[$(this).data("respuestaid")+""];
-        $("#"+$(this).data("id")).remove();
-        $.each( res.error_genuino, function( index, value ) {
-            if (typeof value != 'undefined') {
-                if ((value.id).localeCompare($($this).data('id')) == 0) {
-                    delete res.error_genuino[index]
+        var ok = confirm("esta seguro que quiere eliminar esto?");
+        if(ok) {
+            var $this = this;
+            var res =  respuestas[$(this).data("respuestaid")+""];
+            $("#"+$(this).data("id")).remove();
+            $.each( res.error_genuino, function( index, value ) {
+                if (typeof value != 'undefined') {
+                    if ((value.id).localeCompare($($this).data('id')) == 0) {
+                        delete res.error_genuino[index]
+                    }
+                    ;
                 }
-                ;
-            }
-        });
+            });
+        }
+        
     });
 
     //Elimina una respuesta tanto desde la vista html como del array
     // respuestas que aloja la información de todas las respuestas creadas por el cliente
     $("#accordion2").on("click",".deleteRespuesta",function() {
-        $("#"+$(this).data("id")).parent().remove();
-        delete respuestas[$(this).data("id")+""];
-
+        var ok = confirm("esta seguro que quiere eliminar esto?");
+        if(ok) {
+            $("#"+$(this).data("id")).parent().remove();
+            delete respuestas[$(this).data("id")+""];    
+        }
+        
     });
 
     //editar el nombre de la respuesta
