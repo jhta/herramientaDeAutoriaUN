@@ -67,6 +67,14 @@ $(document).ready(function(){
         }
     });
 
+    $("#exportScorm").click(function(){
+        $("#exportscorm").click();
+    });
+
+    $("#saveData").click(function(){
+        $("#loadeq").click();
+    });
+
     $("#varEspecifica").click(function(){
         limpiar();
         $("#formEspecifica").fadeIn();

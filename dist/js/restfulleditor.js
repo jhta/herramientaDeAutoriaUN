@@ -118,11 +118,11 @@ $(document).ready(function(){
                         "</div>"
                 );
                 var idFolder = val._id;
-
+                var nameFolder = val.name;
                 client.question.read("all/"+val._id).done(function (data) {
                     jQuery.each( data.Folder.questions, function( i, val ) {
-                        $("#body-" + idFolder).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
-                            "<a href='#' class='LoadQuestion' data-id="+ val._id+" data-title='"+ val.titulo +"'>" + val.titulo + "</a>" +
+                        $("#body-" + idFolder).find("ul").append(" <li id='"+ val._id+"' data-name='" + nameFolder + "' class='list-group-item'>" +
+                            "<a href='#' class='LoadQuestion' data-name='"+ nameFolder +"' data-id="+ val._id+" data-title='"+ val.titulo +"'>" + val.titulo + "</a>" +
                             "<div class='pull-right'>" +
                             " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
 
@@ -376,8 +376,10 @@ $(document).ready(function(){
             var id =questionactual.attr('id');
             client.question.read(id).done(function (data) {
                 //input de los metadatos
-                $("#titulo-pregunta-actual").html(" | "+data.titulo);
-
+                if(questionactual.data('name'))
+                    $("#titulo-pregunta-actual").html(questionactual.data('name')+" | "+data.titulo);
+                else
+                    $("#titulo-pregunta-actual").html(data.titulo);
                 //Filling metadata
                 $("#titulo").val(data.titulo);
                 $("#autor").val($("#nameUser").html());
