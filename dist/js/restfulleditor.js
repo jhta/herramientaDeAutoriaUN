@@ -412,11 +412,11 @@ $(document).ready(function(){
 
         $("#exportscorm").on( "click", function( event) {
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://localhost:4000/api/');
+                var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
                     unloadactive = false;
-                    window.location = 'http://localhost:4000/api/scorm/download';
+                    window.location = 'http://104.236.247.200:4001/api/scorm/download';
                 });
             });
         });
@@ -438,7 +438,6 @@ $(document).ready(function(){
             if (typeof json !== 'undefined') {
                 if (typeof json.respuestas !== 'undefined') {
                     respuestaXmlToHtml(json.respuestas)
-                    console.log("???????? que putas esta pasando?????");
                 }
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);

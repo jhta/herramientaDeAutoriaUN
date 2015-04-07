@@ -908,6 +908,7 @@ $(document).ready(function(){
         var min = $('#valueaUni').val();
         var max = $('#valuebUni').val();
         var inc = $('#incUni').val();
+
         saveVarUniform(name,max,min,inc,true);
     });
 
@@ -916,8 +917,12 @@ $(document).ready(function(){
         var min = $('#valueaUniEdit').val();
         var max = $('#valuebUniEdit').val();
         var inc = $('#incUniEdit').val();
-        saveVarUniform(name,max,min,inc,false);
+
+        saveVarUniform(name, max, min, inc, false);
+
     });
+
+
 
 
     $("#incUni").change(function(){
@@ -1324,13 +1329,13 @@ function agregarvariableHTML(v,isnew){
 function saveVarUniform(name,max,min,inc,isnew){
     flag=true;
 
-
-    if(parseFloat(inc)==0) {
-        if(isnew)
-            $("#err-varUniforme").html("Error, el incremento no puede ser cero");
-        else
-            $("#err-varUniformeEdit").html("Error, el incremento no puede ser cero");
-
+    if(!inc || !max || !min ){
+        if(isnew) $("#err-varUniforme").html("Error, alguno de los números ingresados no es válido");
+        else $("#err-varUniformeEdit").html("Error, alguno de los números ingresados no es válido");
+        flag = false;
+    }else if(parseFloat(inc)==0 ) {
+        if(isnew) $("#err-varUniforme").html("Error, el incremento no puede ser cero");
+        else $("#err-varUniformeEdit").html("Error, el incremento no puede ser cero");
 
         flag=false;
     }
@@ -1400,4 +1405,8 @@ function limpiar(){
     $('#outFormNormal').text('');
     $('#outFormUniforme').text('');
     $('#outFormExponencial').text('');
+}
+
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
 }

@@ -24,6 +24,23 @@ function formulacionXMLToHtml(xml){
     if (typeof xml.formulacion !== 'undefined' && typeof xml.formulacion.expresion !== 'undefined') {
         $("#eq").html('');
         equations = {};
+
+        if(!xml.formulacion.expresion.length){
+            if(xml.formulacion.expresion.tipo.localeCompare("expresion")==0){
+                var preid =xml.formulacion.expresion.texto;
+                var idEq = xml.formulacion.expresion.texto.substring(9, xml.formulacion.expresion.texto.length);
+                $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+                treeActual = treeActivos[idEq];
+                var jsn = makeString(treeActual);
+                document.getElementById(preid).innerHTML = "<math>" + jsn + "</math>";
+                MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
+                equations[preid] = idEq;
+                eqactually = preid;
+                conteq++;
+            }else
+                $("#eq").append(xml.formulacion.expresion.texto+" ");
+
+        }
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
                 var preid =xml.formulacion.expresion[i].texto;
@@ -37,7 +54,6 @@ function formulacionXMLToHtml(xml){
                 eqactually = preid;
                 conteq++;
             }else{
-                alert(xml.formulacion.expresion[i].texto)
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
             }
         }
