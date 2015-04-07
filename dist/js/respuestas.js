@@ -157,10 +157,12 @@ function EditFormInError( error, respuesta, state ) {
     var indexError = parseInt(sp[sp.length -1 ])
     console.log(respuestas[respuesta]);
     console.log(respuestas[respuesta].error_genuino[indexError]);
-    if(respuestas[respuesta].error_genuino[indexError] == undefined)
+    if(respuestas[respuesta].error_genuino[indexError] == undefined) {
+        respuestas[respuesta].error_genuino[indexError] = "";
         respuestas[respuesta].error_genuino[indexError+1].formula = state;
-    else
+    } else {
         respuestas[respuesta].error_genuino[indexError].formula = state;
+    }
 }
 
 function EditFormInRes( respuesta, state ) {
@@ -180,8 +182,13 @@ function EditFormInRes( respuesta, state ) {
 function editRetroAlimentation( error, respuesta, state) {
     var sp = error.split("-");
     var indexError = parseInt(sp[sp.length -1 ])
-    console.log(respuestas[respuesta].error_genuino[indexError]);
-    respuestas[respuesta].error_genuino[indexError].retro_alimentacion = state;
+    if(respuestas[respuesta].error_genuino[indexError] == undefined){
+        console.log(respuestas[respuesta].error_genuino[indexError+1]);
+        respuestas[respuesta].error_genuino[indexError] = "";
+        respuestas[respuesta].error_genuino[indexError+1].retro_alimentacion = state;
+    } else
+        respuestas[respuesta].error_genuino[indexError].retro_alimentacion = state;
+    
 }
 
 function validateExpresion( expresion ) {
@@ -498,6 +505,7 @@ $(document).ready(function(){
 
         var resp = JSON.stringify(respuestas);
         var x2js = new X2JS();
+        console.log("l respuesta", respuestas);
         var resp = x2js.json2xml_str(respuestas);
 
         xw.writeStartElement('respuestas');
@@ -516,26 +524,33 @@ $(document).ready(function(){
             if(res.error_genuino !== undefined ){
                 if(Array.isArray( res.error_genuino )) {
                     res.error_genuino.forEach(function( error ) {
-                        xw.writeStartElement('error_genuino');
-                        xw.writeAttributeString( "id", error.id );
-                        xw.writeAttributeString( "respuesta_id", error.id );
-                        xw.writeAttributeString( "formula", error.formula );
-                        xw.writeAttributeString( "cifras_decimales", "0.2" );
-                        if(error.retro_alimentacion != undefined && error.retro_alimentacion != null)
-                            xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
-                        xw.writeEndElement();
+                        if(error != undefined && error != null && error != "") {
+                            xw.writeStartElement('error_genuino');
+                            xw.writeAttributeString( "id", error.id );
+                            xw.writeAttributeString( "respuesta_id", error.id );
+                            xw.writeAttributeString( "formula", error.formula );
+                            xw.writeAttributeString( "cifras_decimales", "0.2" );
+                            if(error.retro_alimentacion != undefined && error.retro_alimentacion != null)
+                                xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
+                            xw.writeEndElement();
+                        }
+                        
                     });
                 } else {
+
                    for(var e=0;e<errores.length;e++){
                        var egen= errores[e];
-                       xw.writeStartElement('error_genuino');
-                       xw.writeAttributeString( "id", egen.id );
-                       xw.writeAttributeString( "respuesta_id", res.id );
-                       xw.writeAttributeString( "formula", egen.formula );
-                       xw.writeAttributeString( "cifras_decimales", "0.2" );
-                       if(egen.retro_alimentacion != undefined && error.retro_alimentacion != null)
-                            xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
-                       xw.writeEndElement();
+                       if(egen != null && egen != undefined && egen != "") {
+                            xw.writeStartElement('error_genuino');
+                            xw.writeAttributeString( "id", egen.id );
+                            xw.writeAttributeString( "respuesta_id", res.id );
+                            xw.writeAttributeString( "formula", egen.formula );
+                            xw.writeAttributeString( "cifras_decimales", "0.2" );
+                            if(egen.retro_alimentacion != undefined && error.retro_alimentacion != null)
+                                 xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
+                            xw.writeEndElement();
+                       }
+                       
                    } 
                 }
             }
