@@ -436,7 +436,6 @@ $(document).ready(function(){
             if (typeof json !== 'undefined') {
                 if (typeof json.respuestas !== 'undefined') {
                     respuestaXmlToHtml(json.respuestas)
-                    console.log("???????? que putas esta pasando?????");
                 }
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
