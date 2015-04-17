@@ -5,6 +5,10 @@ var first = true,
 
 var treeActual = new Tree();
 
+$(document).ready(function(){
+    $(".image-card").children().hide();
+});
+
 
 $(function() {
     $(".card").draggable({
@@ -57,7 +61,7 @@ var funcDroppableOut = {
         elementDrop.remove();            
     }
 }
-
+//Object dropable ...
 var funcDroppableDrop = {
     tolerance: "intersect",
     accept: ".card",
@@ -65,18 +69,12 @@ var funcDroppableDrop = {
     hoverClass: "drop-p",
     drop: function( event, ui ) {
         var elementDrop = $(ui.draggable).clone()
+        elementDrop.removeClass("image-card");
+        elementDrop.children().show();
         makeTree(elementDrop, $(this));
-        
         $(this).append(elementDrop);
         var jsn = makeString(treeActual);
-
         UpdateMath("<math>" + jsn + "</math>");
-
-        console.log('mathml:');
-        console.log(jsn);
-        console.log('tree:');
-        console.log(treeActual);
-
         if(first){
             first = false;
             elementDrop.addClass("first");
@@ -96,16 +94,15 @@ var funcDroppable = {
     },
    drop: function (event, ui) {
         var elementDrop = $(ui.draggable).clone();
+        elementDrop.removeClass("image-card");
+        elementDrop.children().show();
+        
         makeTree(elementDrop, $(this));
        
        $(this).append(elementDrop);
         var jsn = makeString(treeActual);
         UpdateMath("<math>" + jsn + "</math>");
         
-       console.log('mathml:');
-       console.log(jsn);
-       console.log('tree:');
-       console.log(treeActual);
     }
 };
 

@@ -738,13 +738,7 @@
                                         </div>
                                         <div id="collapseAritmeticas" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingAritmeticas">
                                             <div class="panel-body">
-                                                <div class="card" data-id="parentesis" data-code="()">
-                                                    <p>(<code class="spa"> </code>)</p>
-                                                </div>
-                                                <div class="card" data-id="corchetes" data-code="[]">
-                                                    <p>[<code class="spa"> </code>]</p>
 
-                                                </div>
                                                 <div class="card" data-id="llaves">
                                                     <p>{<div class="spa code"> </div>}</p>
                                                 </div>
@@ -752,38 +746,89 @@
                                                     <p>(<div class="spa code"> </div>)!</p>
                                                 </div>
 
-                                                <div class="card" data-id="suma" data-content="+" data-code="()+()">
-                                                    <p>&nbsp;<div class="spa code"> </div>+<div class="spa code"> </div>&nbsp;</p>
+                                                <div class="card image-card  parentesis " data-id="parentesis" data-code="()">
+                                                    <div>
+                                                        <span>(</span>
+                                                        <div class="code spa"> </div>
+                                                        <span>)</span>
+                                                    </div>
                                                 </div>
-                                                <div class="card" data-id="resta" data-content="-" data-code="()-()">
-                                                    <p>&nbsp;<div class="spa code"> </div>-<div class="spa code"> </div>&nbsp;</p>
+
+                                                <div class="card image-card llaves" data-id="corchetes" data-code="[]">
+                                                    <div>
+                                                        <span>[</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>]</span>
+                                                    </div>
                                                 </div>
-                                                <div class="card" data-id="mult" data-content="*" data-code="()*()">
-                                                    <p>&nbsp;<div class="spa code">  </div>*<div class="spa code">  </div> &nbsp;</p>
+
+                                                <div class="card  image-card add" data-id="suma" data-content="+" data-code="()+()">
+                                                    <p>
+                                                        <span class="symbol">&nbsp;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span class="symbol">+</span>
+                                                        <div class="spa code"> </div>
+                                                        <span class="symbol">&nbsp;</span>
+                                                    </p>
                                                 </div>
-                                                <div class="card" data-id="igual" data-content="=" >
-                                                    <p>&nbsp;<div class="spa code"> </div>=<div class="spa"> </div>&nbsp;</p>
+                                                <div class="card image-card sub" data-id="resta" data-content="-" data-code="()-()">
+                                                    <p>
+                                                        <span>&nbsp;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>-</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>&nbsp;</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card image-card mult" data-id="mult" data-content="*" data-code="()*()">
+                                                    <p>
+                                                        <span>&nbsp;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>x</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>&nbsp;</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card image-card eq" data-id="igual" data-content="=" >
+                                                    <p>
+                                                        <span>&nbsp;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>=</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>&nbsp;</span>
+                                                    </p>
                                                 </div>
 
 
-                                                <div class="card tree" data-id="division" data-code="()/()">
-                                                    <span class="division">(</span>
-                                                    <div class="indices indice-division">
-                                                        <div class="spa subindice"></div>
-                                                        <hr id="line-hr"></hr>
-                                                        <div class="spa subindice"></div>
-                                                    </div>&nbsp;
-                                                    <span class="division">)</span>
-
+                                                <div class="card  image-card div" data-id="division" data-code="()/()">
+                                                    <p>
+                                                        <span>&nbsp;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>/</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>&nbsp;</span>
+                                                    </p>
                                                 </div>
 
 
-                                                <div class="card" data-id="raiz" data-code="sqrt()">
-                                                    <p><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
+                                                <div class="card image-card sqrt" data-id="raiz" data-code="sqrt()">
+                                                    <div>
+                                                        <span style="font-size: 25px;">&#8730;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>&nbsp;</span>
+                                                    </div>
                                                 </div>
-                                                <div class="card" data-id="raiz-n" data-code="sqrt()">
-                                                    <p>&nbsp;<code class="spa potencia-exponente"> </code><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
+
+                                                <div class="card image-card sqrtRoot" data-id="raiz-n" data-code="sqrt()">
+                                                    <div>
+                                                        <span>&nbsp;</span>
+                                                        <div class="spa potencia-exponente code"> </div>
+                                                        <span style="font-size: 25px;">&#8730;</span>
+                                                        <div class="spa code"> </div>
+                                                        <span>&nbsp;</span>
+                                                    </div>
                                                 </div>
+
                                                 <div class="card" data-id="log" data-content="log"  data-code="log((),())">
                                                     <p>log &nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-iexponente">             </code>&nbsp;</p>
                                                 </div>

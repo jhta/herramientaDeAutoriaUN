@@ -4,17 +4,18 @@ var html = {};
 var equations = {};
 var idEquation = -1;
 $(document).ready(function(){
-
+    $("#div-iner").hide();
     var mathml = "";
 
     $("#inserteq").click(function(){
+        $("#div-iner").fadeIn("slow");
         inRespuesta = false;
         document.getElementById('eq').focus();
         var preid ="equation-"+ (++idEquation);
 
         $("#"+eqactually).css('background-color', '#ccc');
 
-        pasteHtmlAtCaret('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#F0F514; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+        pasteHtmlAtCaret('<div class="pre-equation mathBlock" id='+preid+'><math></math></div>');
         document.getElementById(preid).innerHTML = "<math></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
 

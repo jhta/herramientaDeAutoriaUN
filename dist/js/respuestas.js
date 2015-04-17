@@ -181,7 +181,7 @@ function EditFormInRes( respuesta, state ) {
 
 function editRetroAlimentation( error, respuesta, state) {
     var sp = error.split("-");
-    var indexError = parseInt(sp[sp.length -1 ])
+    var indexError = parseInt(sp[sp.length -1 ])su
     if(respuestas[respuesta].error_genuino[indexError] == undefined){
         console.log(respuestas[respuesta].error_genuino[indexError+1]);
         respuestas[respuesta].error_genuino[indexError] = "";
