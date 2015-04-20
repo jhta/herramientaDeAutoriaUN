@@ -113,6 +113,11 @@
                     border-radius: 4px;
                     background-color: #5cb85c;
                 "><span class="glyphicon glyphicon-save"> </span></a></li>
+                <li id="previewer" ><a href="#" class="tab-li btn btn-success" data-toggle="tab" style="
+                    padding: 7px 16px;
+                    border-radius: 4px;
+                    background-color: #5cb85c;
+"><span class="glyphicon glyphicon-eye-open"> </span></a></li>
             </ul>
             <div id="my-tab-content" style="height: 100%; overflow: auto;" class=" panel panel-default tab-content">
                 <!--Tab 1: Formulacion -->
@@ -133,7 +138,7 @@
                         <div class="row">
                             <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:15px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
 
-                            <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
+                            <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar expresión</button>
                            
                             <input type="file" id="inputfiles" name="files[]" />
                         </div>
@@ -1071,6 +1076,28 @@
             </div>
         </div>
         <!--FIN: Seccion izquierda-->
+
+
+        <!-- Modales -->
+        <div class="modal fade" id="modal-previewer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Pregunta</h4>
+                    </div>
+                    <div id="modal-previewer-body" class="modal-body">
+                        <iframe id="iframe-preview" style="width: 850px;height: 400px;" src=""></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Fin modales -->
     </article>
 </section>
 
