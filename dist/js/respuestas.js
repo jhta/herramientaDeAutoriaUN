@@ -45,7 +45,7 @@ function formulacionXMLToHtml(xml){
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
                 var preid =xml.formulacion.expresion[i].texto;
                 var idEq = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
-                $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+                $("#eq").append('<div  class="pre-equation mathBlock" id='+preid+'><math></math></div>&nbsp;');
                 treeActual = treeActivos[idEq];
                 var jsn = makeString(treeActual);
                 document.getElementById(preid).innerHTML = "<math>" + jsn + "</math>";

@@ -15,7 +15,7 @@ $(document).ready(function(){
 
         $("#"+eqactually).css('background-color', '#ccc');
 
-        pasteHtmlAtCaret('<div class="pre-equation mathBlock" id='+preid+'><math></math></div>');
+        pasteHtmlAtCaret('<div class="pre-equation mathBlock" id='+preid+'><math></math></div>&nbsp;');
         document.getElementById(preid).innerHTML = "<math></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
 
