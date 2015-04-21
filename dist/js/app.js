@@ -667,13 +667,19 @@ var focusElement = null;
 var conjuntoVariables = [];
 $(document).ready(function(){
 
+    //popovers
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+    
     //toogle nav superior
     $("#tab-respuestas").click(function(){
         $("#panelOtros").toggleClass("hide");
         $("#panelSimbolos").toggleClass("hide");
         $("#panelAritmetica").toggleClass("hide");
         $("#panelTrigonometrica").toggleClass("hide");
-        $("#panelParaRespuesta").toggleClass("hide");
+        $("#panelParaRespuesta").removeClass("hide");
+        $(".left-expresiones").fadeIn();
         TOGGLE_TAB_RES = true;
     });
 
@@ -684,7 +690,9 @@ $(document).ready(function(){
         $("#panelSimbolos").removeClass("hide");
         $("#panelAritmetica").removeClass("hide");
         $("#panelTrigonometrica").removeClass("hide");
-        $("#panelParaRespuesta").removeClass("hide");
+        $("#panelParaRespuesta").addClass("hide");
+        $(".left-expresiones").fadeIn();
+
     })
 
     //toogle nav superior
@@ -694,7 +702,9 @@ $(document).ready(function(){
         $("#panelSimbolos").removeClass("hide");
         $("#panelAritmetica").removeClass("hide");
         $("#panelTrigonometrica").removeClass("hide");
-        $("#panelParaRespuesta").removeClass("hide");
+        $("#panelParaRespuesta").addClass("hide");
+        $(".left-expresiones").fadeOut();
+
     })
     $('#rootwizard').bootstrapWizard();
     $("#valor").rating();

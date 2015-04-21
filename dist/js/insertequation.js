@@ -9,6 +9,7 @@ $(document).ready(function(){
 
     $("#inserteq").click(function(){
         $("#div-iner").fadeIn("slow");
+        $("#DeleteEquation").fadeIn();
         inRespuesta = false;
         document.getElementById('eq').focus();
         var preid ="equation-"+ (++idEquation);
