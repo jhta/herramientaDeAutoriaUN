@@ -142,7 +142,7 @@ function printHtmlerror(error,idRes){
 
 //funcion para checkear que e el caracter solo sea numero y/o operacion matematica
 function checkChar( c ) {
-    return ( ( c >= 58  ) || ( c <= 39 ) || ( c == 44 ));
+    return ( c == 8 )? false : ( ( c >= 58  ) || ( c <= 39 ) || ( c == 44 ) );
 }
 
 //funcion para esconder el input de la formula de la respuesta
@@ -227,7 +227,9 @@ $(document).ready(function(){
             }
             
             if(!flag) {
+
                 if($(this).data("tipo")){
+                    $("#p-correct-"+$(this).data("respuesta")).removeClass("hide");
                     console.log("si tiene ipo", $(this).data("tipo"));
                     EditFormInRes( $(this).data("respuesta"), state);
                 } else {
@@ -245,6 +247,7 @@ $(document).ready(function(){
         }
     });
 
+    //editar retro-alimentacion
     $(document).on("keypress",".input-text",function(event) {
         if(event.which == 13) {
             console.log("el texto este");
@@ -266,20 +269,23 @@ $(document).ready(function(){
     $("#accordion2").on("click", ".pre-equation-respuesta", function () {
         var id = $(this).data('id');
         var tipo = $(this).data('tipo');
-        console.log("llavecita");
         $("#error-"+id).removeClass("hide");
+        $("#p-error-"+id).addClass("hide");
+        $("#error-"+id).val($("#p-error-"+id).text());
         console.log(tipo);
         if(tipo == "correcta") {
-            console.log("es correcta", id);
-            console.log( $("#correct-"+id));
             $("#correct-"+id).removeClass("hide");
+            $("#correct-"+id).val($("#p-correct-"+id).text());
+            $("#p-correct-"+id).addClass("hide");
         }
     });
 
+    //Agregar retroalimentacion a una respuesta
     $("#accordion2").on("click", ".retro-alimentacion", function () {
         var id = $(this).data('id');
-        console.log("la A grandota");
         $("#text-"+id).removeClass("hide");
+        $("#p-text-"+id).addClass("hide");
+        $("#text-"+id).val($("#p-text-"+id).text());
         
     });
 

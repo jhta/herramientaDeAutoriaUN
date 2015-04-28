@@ -4,7 +4,7 @@ var Printer = {
             "<div class='panel panel-default'>" +
     	        "<div class='panel-heading' role='tab' >" +
     	           "<span class='panel-title'>" +
-        	           "<a id='title-" + idRespuesta + "' class='collapsed' data-toggle='collapse' data-parent='#accordion2' href='#" + idRespuesta + "' aria-expanded='false' aria-controls='#" + idRespuesta + "'>" +
+        	           "<a id='title-" + idRespuesta + "' class='collapsed in' data-toggle='collapse' data-parent='#accordion2' href='#" + idRespuesta + "' aria-expanded='false' aria-controls='#" + idRespuesta + "'>" +
             	           nombre +
             	        "</a>" +
     	           "</span>" +
@@ -20,20 +20,21 @@ var Printer = {
                 	           "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
                 	        " </a>" +
             	        "</div>" +
-            	        "<div class='btn-group' role='group' aria-label='...'>" +
+            	        "<!--<div class='btn-group' role='group' aria-label='...'>" +
                 	        "<a  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
                 	           "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
                 	        "</a>" +
-            	        "</div>" +
+            	        "</div>-->" +
         	        "</div>" +
 	            "</div>" +
 	        "</div>" +
 
 	        "<div id='" + idRespuesta + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo'>" +
-    	        "<div class='panel-body'>" +
-        	        "<ul class='list-group'>" +
+    	        "<div class='panel-body p-0'>" +
+        	        "<ul class='list-group p-0'>" +
             	        this.correctAnswer( idRespuesta, nombre, formula ) +
                     "</ul>" +
+                    "<a href='#' data-id='" + idRespuesta + "' style='margin:10px' class='addErrorGenuino btn btn-success'>Agregar Error</a>"+
 	            "</div>" +
 	        "</div>" 
 	        );
@@ -46,13 +47,13 @@ var Printer = {
                     "</div>"+
                     "<div class='p-0 genuine-error__body'  >" +
                         "<div id='content-" + idRespuesta + "'  class='p-0 genuine-error__body-item input'>"+
-                            "<p class='label-res ' id='p-correct-"+idRespuesta+"'>"+formula+"</p>"+
-                            "<input type='text' data-tipo='correcta' data-respuesta='"+ idRespuesta +"' class='input-res hide form-control sisas' id='correct-"+idRespuesta+"'>"+
+                            "<p class='label-res pre-equation-respuesta' data-id='" + idRespuesta + "' data-tipo='correcta' id='p-correct-"+idRespuesta+"'>"+formula+"</p>"+
+                            "<input type='text' data-tipo='correcta' data-respuesta='"+ idRespuesta +"' class='input-res hide form-control ' id='correct-"+idRespuesta+"'>"+
                         "</div>" +
                         "<div class='btn-toolbar genuine-error__body-item' role='toolbar' aria-label='...'>" +
                             "<div class='btn-group' role='group' aria-label='...'>" +
                                 "<a href='#' data-id='" + idRespuesta + "' class='pre-equation-respuesta' data-tipo='correcta'>" +
-                                    "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
+                                    "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
                                 "</a>" +
                             "</div>" +
                         "</div>" +
@@ -69,10 +70,14 @@ var Printer = {
             "</div>"+
 	        "<div class='genuine-error__body'>"+
 	            "<div id='content-"+error.id+"' class='genuine-error__body-item input'>"+
-                    "<p class='label-res ' id='p-text-"+error.id+"'>"+ error.retro_alimentacion +"</p>"+
-                    "<p class='label-res' id='p-error-"+error.id+"'>"+ error.formula +"</p>"+
-                    "<input type='text' class='hide input-text form-control'  data-respuesta='" + idRes + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
-                    "<input type='text' class='hide input-res form-control' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+                    "<div class='item'>"+
+                        "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+idRes+"' id='p-text-"+error.id+"'>"+ error.retro_alimentacion +"</p>"+
+                        "<input type='text' class='hide input-text form-control'  data-respuesta='" + idRes + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
+                    "</div>"+
+                    "<div class='item'>"+
+                        "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+idRes+"'>"+ error.formula +"</p>"+
+                        "<input type='text' class='hide input-res form-control' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+                    "</div>"+
                 "</div>"+
 	            "<div class='btn-toolbar  genuine-error__body-item'  role='toolbar' aria-label='...'>"+
 
@@ -105,7 +110,7 @@ var Printer = {
             "<div class='panel panel-default'>"+
                 "<div class='panel-heading' role='tab' >"+
                     "<span class='panel-title'>"+
-                        "<a id='title-respuesta-"+idRespuesta+"' class='collapsed' data-toggle='collapse' data-parent='#accordion2' href='#respuesta-"+idRespuesta+"' aria-expanded='false' aria-controls='#respuesta-"+idRespuesta+"'>"+
+                        "<a id='title-respuesta-"+idRespuesta+"' class='collapsed in' data-toggle='collapse' data-parent='#accordion2' href='#respuesta-"+idRespuesta+"' aria-expanded='false' aria-controls='#respuesta-"+idRespuesta+"'>"+
                         respactual.nombre+
                         "</a>"+
                     "</span>"+
@@ -148,31 +153,36 @@ var Printer = {
                 "</div>"+
                 "<div class='genuine-error__body'>"+
                     "<div class='genuine-error__body-item input'>"+
-                        "<p class='label-res hide' id='p-text-"+error.id+"'></p>"+
-                        "<p class='label-res hide' id='p-error-"+error.id+"'></p>"+
-                        "<input type='text' class='hide input-text form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "'id='text-"+error.id+"'>"+
-                        "<input type='text' class='hide input-res form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+                        
+                        "<div class='item'>"+
+                            "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' id='p-text-"+error.id+"'></p>"+
+                            "<input type='text' class='hide input-text form-control'  data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
+                        "</div>"+
+                        "<div class='item'>"+
+                            "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"'></p>"+
+                            "<input type='text' class='hide input-res form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+                        "</div>"+
                     "</div>"+
-                "</div>"+
-                "<div class='btn-toolbar genuine-error__body-item'  role='toolbar' aria-label='...'>"+
+                    "<div class='btn-toolbar genuine-error__body-item'  role='toolbar' aria-label='...'>"+
 
-                    "<div class='btn-group' role='group' aria-label='...'>"+
-                        "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class=' pre-equation-respuesta' data-tipo='correcta'>"+
-                        "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
-                        "</a>"+
-                    "</div>"+
+                        "<div class='btn-group' role='group' aria-label='...'>"+
+                            "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class=' pre-equation-respuesta' data-tipo='correcta'>"+
+                            "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
+                            "</a>"+
+                        "</div>"+
 
-                    "<div class='btn-group' role='group' aria-label='...'>"+
-                        "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class='retro-alimentacion' >"+
-                        "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"+
-                        "</a>"+
-                    "</div>"+
+                        "<div class='btn-group' role='group' aria-label='...'>"+
+                            "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class='retro-alimentacion' >"+
+                            "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"+
+                            "</a>"+
+                        "</div>"+
 
 
-                    "<div class='btn-group' role='group' aria-label='...'>"+
-                        "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+respactual.id+"'>"+
-                            "<span class='glyphicon glyphicon-remove'   aria-hidden='true'></span>"+
-                        " </a>"+
+                        "<div class='btn-group' role='group' aria-label='...'>"+
+                            "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+respactual.id+"'>"+
+                                "<span class='glyphicon glyphicon-remove'   aria-hidden='true'></span>"+
+                            " </a>"+
+                        "</div>"+
                     "</div>"+
                 "</div>"+
             "</li>");
