@@ -241,7 +241,7 @@ $(document).ready(function(){
                     console.log("si tiene ipo", $(this).data("tipo"));
                     EditFormInRes( $(this).data("respuesta"), realExpresion);
                 } else {
-                    EditFormInError( $(this).data("error"),  $(this).data("respuesta"), state);
+                    EditFormInError( $(this).data("error"),  $(this).data("respuesta"), realExpresion);
                 }
                console.log($("#p-"+$(this).attr("id")));
                $("#p-"+$(this).attr("id")).text(textExpresion);
