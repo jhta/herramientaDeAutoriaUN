@@ -21,7 +21,7 @@ $(document).ready(function(){
         $("#panelAritmetica").toggleClass("hide");
         $("#panelTrigonometrica").toggleClass("hide");
         $("#panelParaRespuesta").removeClass("hide");
-        $(".left-expresiones").fadeIn();
+         $(".panel-left-expresiones").removeClass("hide");
         TOGGLE_TAB_RES = true;
     });
 
@@ -33,7 +33,8 @@ $(document).ready(function(){
         $("#panelAritmetica").removeClass("hide");
         $("#panelTrigonometrica").removeClass("hide");
         $("#panelParaRespuesta").addClass("hide");
-        $(".left-expresiones").fadeIn();
+        
+        $(".panel-left-expresiones").removeClass("hide");
 
     })
 
@@ -45,7 +46,7 @@ $(document).ready(function(){
         $("#panelAritmetica").removeClass("hide");
         $("#panelTrigonometrica").removeClass("hide");
         $("#panelParaRespuesta").addClass("hide");
-        $(".left-expresiones").fadeOut();
+        $(".panel-left-expresiones").addClass("hide");
 
     })
     $('#rootwizard').bootstrapWizard();
