@@ -202,6 +202,9 @@ function validateExpresion( expresion ) {
     return newExpresion;
 }
 
+function getTextExpresion( expresion ) {
+    return expresion.split("#").join().replace(/,/gi, "");
+}
 
 function showExpresion( expresion ) {
     return expresion.split("#").join().replace(/,/gi, "");
@@ -217,7 +220,10 @@ $(document).ready(function(){
         if(event.which == 13) {
             var state = "";
             var flag = false;
+            var textExpresion;
+            var realExpresion = $(this).val();
             try {
+                textExpresion = getTextExpresion($(this).val());
                 var expresion = validateExpresion($(this).val());
                 console.log(expresion);
                 state = math.eval(expresion);
@@ -230,13 +236,16 @@ $(document).ready(function(){
 
                 if($(this).data("tipo")){
                     $("#p-correct-"+$(this).data("respuesta")).removeClass("hide");
+                    $("#p-correct-"+$(this).data("respuesta")).data("real",realExpresion);
+                    
                     console.log("si tiene ipo", $(this).data("tipo"));
-                    EditFormInRes( $(this).data("respuesta"), state);
+                    EditFormInRes( $(this).data("respuesta"), realExpresion);
                 } else {
                     EditFormInError( $(this).data("error"),  $(this).data("respuesta"), state);
                 }
                console.log($("#p-"+$(this).attr("id")));
-               $("#p-"+$(this).attr("id")).text($(this).val());
+               $("#p-"+$(this).attr("id")).text(textExpresion);
+               $("#p-"+$(this).attr("id")).data('real',realExpresion);
                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
             }else {
                 alert(state);
@@ -271,11 +280,13 @@ $(document).ready(function(){
         var tipo = $(this).data('tipo');
         $("#error-"+id).removeClass("hide");
         $("#p-error-"+id).addClass("hide");
-        $("#error-"+id).val($("#p-error-"+id).text());
+        if($("#p-error-"+id).data('real'))
+            $("#error-"+id).val($("#p-error-"+id).data('real'));
         console.log(tipo);
         if(tipo == "correcta") {
             $("#correct-"+id).removeClass("hide");
-            $("#correct-"+id).val($("#p-correct-"+id).text());
+            if($("#p-correct-"+id).data('real'))
+            $("#correct-"+id).val($("#p-correct-"+id).data('real'));
             $("#p-correct-"+id).addClass("hide");
         }
     });
