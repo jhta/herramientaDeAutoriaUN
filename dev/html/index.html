@@ -21,7 +21,7 @@
     </script>
     <!-- <script type="text/javascript" src="dist/libs/js/jquery.min.js"></script> -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="dist/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="dist/js/jquery-ui.min.js"></script> 
     <script type="text/javascript" src="dist/libs/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="dist/libs/js/bootstrap-wizard.min.js"></script>
     <script type="text/javascript" src="dist/libs/js/star-rating.min.js"></script>
@@ -90,7 +90,7 @@
             <a   id="btnVolver" class="btn pull-left"><span class=" glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             <h3 class="pull-left contenedor-title" id="titulo-pregunta-actual"></h3>
 
-            <button style="margin-right: 15px; display: none" id="loadeq" type="button" class="pull-right btn btn-default btn-success"type="button" >Guardar datos</button>
+            <button style="margin-right: 15px; display:none" id="loadeq" type="button" class="pull-right btn btn-default btn-success"type="button" >Guardar datos</button>
 
             <button style="margin-right: 15px; display: none" id="exportscorm" type="button" class="pull-right btn btn-default btn-success"type="button" >Exportar Scorm1.2</button>
 
@@ -102,19 +102,22 @@
                 <li id="tab-formulacion" class="active"><a href="#formulacion" class="tab-li" data-toggle="tab">Formulacíon</a></li>
                 <li id="tab-respuestas"><a href="#respuestas" class="tab-li" data-toggle="tab">Respuestas</a></li>
                 <li id="tab-metadatos"><a href="#metadatos" class="tab-li" data-toggle="tab">Metadatos</a></li>
-                <li id="exportScorm" class="pull-right" data-toggle="tooltip" data-placement="bottom" title="Exportar a Scorm">
-                <a href="#" class=" btn btn-success" data-toggle="tab" style="
+                <li id="exportScorm" ><a href="#" class="tab-li btn btn-success" data-toggle="tab" style="
                     padding: 7px 16px;
                     border-radius: 4px;
                     background-color: #5cb85c;
-                "><span class="glyphicon glyphicon-download-alt"> </span></a></li>
+                "><span class="glyphicon glyphicon-export"> </span></a></li>
 
-                <li id="saveData" class="pull-right" data-toggle="tooltip" data-placement="bottom" title="Guardar">
-                <a href="#" class="btn btn-success" data-toggle="tab" style="
+                <li id="saveData" ><a href="#" class="tab-li btn btn-success" data-toggle="tab" style="
                     padding: 7px 16px;
                     border-radius: 4px;
                     background-color: #5cb85c;
-                "><span class="glyphicon glyphicon-floppy-saved"> </span></a></li>
+                "><span class="glyphicon glyphicon-save"> </span></a></li>
+                <li id="previewer" ><a href="#" class="tab-li btn btn-success" data-toggle="tab" style="
+                    padding: 7px 16px;
+                    border-radius: 4px;
+                    background-color: #5cb85c;
+"><span class="glyphicon glyphicon-eye-open"> </span></a></li>
             </ul>
             <div id="my-tab-content" style="height: 100%; overflow: auto;" class=" panel panel-default tab-content">
                 <!--Tab 1: Formulacion -->
@@ -133,13 +136,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:15px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;"contenteditable></div>
+                            <div class="equation-previsualizador panel panel-default" id="eq" style="font: 9.5pt serif; ; margin:15px; min-height: 100px ; padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; outline: none"contenteditable></div>
 
-                            <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar Ecuación</button>
-
-
-                            <button style="margin-top: 10px; margin-left: 15px; display:none;" id="DeleteEquation"  type="button" class="btn btn-default btn-success"type="button" >Eliminar</button>
-
+                            <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar expresión</button>
+                           
                             <input type="file" id="inputfiles" name="files[]" />
                         </div>
 
@@ -274,10 +274,9 @@
                             </ul>
                             -->
                             <h4>Respuestas</h4>
-                            <input type="checkbox" /> Incluir Etiquetas
-                            <input type="number"/> Decimales
-                            <hr/>
-                            <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">                              
+                            <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+
+
 
                             </div>
 
@@ -327,7 +326,7 @@
                     </div>
                 </div>
                 <div class="panel-body variables__body">
-
+                    
                     <div>
 
                         <div id="formEspecifica" class='panel panel-default u-no_display' style="margin-top: 10px">
@@ -863,7 +862,7 @@
                                                 <div class="card" data-id="trig" data-content="sin" data-code="sin()">
                                                     <p>sin &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="tan" data-code="tan()">
+                                                <div class="card" data-id="trig" data-content="tan" data-code="tan()">  
                                                     <p>tan &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
                                                 <div class="card" data-id="trig" data-content="csc" data-code="csc()">
@@ -999,10 +998,16 @@
                                     </div>
 
                                      <!--PANEL PARA PRESPUESTAS -->
-                                    <div class=" hide" id="panelParaRespuesta">
-
-                                        <div >
-                                            <div >
+                                    <div class="panel panel-default hide" id="panelParaRespuesta">
+                                        <div class="panel-heading" role="tab" id="headingTrigonometrica">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#expresiones" href="#collapseTrigonometrica" aria-expanded="true" aria-controls="collapseTrigonometrica">
+                                                    A implementar
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTrigonometrica" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingTrigonometrica">
+                                            <div class="panel-body">
 
                                                  <div class="card" data-id="raiz" data-code="sqrt()">
                                                     <p><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
@@ -1023,7 +1028,7 @@
                                                 <div class="card" data-id="trig" data-content="sin" data-code="sin()">
                                                     <p>sin &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="tan" data-code="tan()">
+                                                <div class="card" data-id="trig" data-content="tan" data-code="tan()">  
                                                     <p>tan &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
                                                 <div class="card" data-id="trig" data-content="csc" data-code="csc()">
@@ -1035,7 +1040,7 @@
                                                 <div class="card" data-id="trig" data-content="cot" data-code="cot()">
                                                     <p>cot &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-
+                                                
                                                 <div class="card" data-id="trig" data-content="cosh" data-code="cosh()">
                                                     <p>cosh &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
@@ -1071,8 +1076,32 @@
             </div>
         </div>
         <!--FIN: Seccion izquierda-->
+
+
+        <!-- Modales -->
+        <div class="modal fade" id="modal-previewer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Pregunta</h4>
+                    </div>
+                    <div id="modal-previewer-body" class="modal-body">
+                        <iframe id="iframe-preview" style="width: 850px;height: 400px;" src=""></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Fin modales -->
     </article>
 </section>
 
 </body>
 </html>
+  
+  

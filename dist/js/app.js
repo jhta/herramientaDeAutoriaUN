@@ -784,7 +784,6 @@ $(document).ready(function(){
             console.debug("hash: ", hashVariables)
 
             var rand = getRandomInt(0,arrayValues.length-1);
-            alert(arrayValues[rand]);
 
             agregarvariableHTML(varn,true);
             limpiar();
@@ -792,7 +791,6 @@ $(document).ready(function(){
             $('#nameEsp').val("");
             $("#err-varEspcifica").html("");
             $("#vals-varEspcifica").html("");
-
 
         }
     });
@@ -809,8 +807,6 @@ $(document).ready(function(){
             console.debug("hash: ", hashVariables)
 
             var rand = getRandomInt(0,arrayValues.length-1);
-            alert(arrayValues[rand]);
-
             $("#ag-varEspcificaEdit").parent().parent().parent().parent().remove();
 
 
@@ -822,7 +818,6 @@ $(document).ready(function(){
             $("#vals-varEspcifica").html("");
         }
     });
-
 
     $("#valorEsp").change(function(){
         var array = $('#valorEsp').val().split(",");
@@ -855,7 +850,6 @@ $(document).ready(function(){
             varn.type = 'categorica';
 
             var rand = getRandomInt(0,arrayValues.length-1);
-            alert(arrayValues[rand]);
 
             agregarvariableHTML(varn,true);
             limpiar();
@@ -1220,7 +1214,7 @@ $(document).ready(function(){
 
 
 function agregarvariableHTML(v,isnew){
-    var metadatos,tipo;
+    var metadatos,tipo,stringpre;
     v.value = jsonValues;
     v.numb = arrayValues
 
@@ -1242,11 +1236,13 @@ function agregarvariableHTML(v,isnew){
             }
         }
         result= result + ' ]';
+        stringpre = result;
         tipo = "especifica";
         metadatos = result;
     }
     else if(v.type == 'discreta'){
         var result = '';
+
         for (var ii in arrayValues) {
             result = result + arrayValues[ii] +",";
         };
@@ -1267,7 +1263,7 @@ function agregarvariableHTML(v,isnew){
             }
         }
         result= result + ' ]';
-
+        stringpre=result;
         tipo = "categorica";
         metadatos = result;
     }
@@ -1284,17 +1280,21 @@ function agregarvariableHTML(v,isnew){
         var result = JSON.stringify(array)//"inicio: " + jsonValues['inicio'] + " fin: " + jsonValues['fin'] + " inc: " + v.inc;
         tipo = "uniforme";
         metadatos = result;
+        stringpre = posiblesValores(array.inicio,array.fin,array.inc);
     }
     else{
         var result = "lamda," + jsonValues['lamda'];
         htmlVar = htmlVar + ' data-type="exponencial" data-metadatos="' + result + ",inc," + v.inc + '">';
     }
 
+    if(stringpre.length>36) stringpre = stringpre.substring(0, 30)+"... ]";
+
     var htmlVar = "<div  class='panel panel-default' style='margin-top: 10px'>"+
         "<div class='panel-heading' role='tab' id=''>"+
         "<span class='panel-title'>" +
         "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo+"' data-metadatos='"+metadatos+"'> <span class='var'>" + v.name + "</span></div>"+
         "</span>" +
+        "<div>"+stringpre+"</div>"+
         "<div class='pull-right hide-tools'>"+
         "<div class='btn-toolbar' role='toolbar' aria-label='...'>"+
         "<div class='btn-group' role='group' aria-label='...'>"+

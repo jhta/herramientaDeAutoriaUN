@@ -39,7 +39,7 @@ function createFolder(that) {
                         "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
                         "</button>" +
                         "</span>" +
-                        "<input type='text' class='add-question' data-id='"+ val._id +"' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control'>" +
+                        "<input type='text' class='add-question' data-id='"+ val._id +"' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control inputAddQuestion'>" +
                         "</div>" + "<!-- /input-group -->"+
                         "</li>" +
                         "</ul>" +
@@ -58,7 +58,8 @@ $(document).ready(function(){
         questionactual,
         stringXmlFormulacion,
         stringXmlMetadatos,
-        unloadactive=true;
+        unloadactive=true,
+        messagesaved = true;
 
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
@@ -109,7 +110,7 @@ $(document).ready(function(){
                         "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
                         "</button>" +
                         "</span>" +
-                        "<input type='text' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control'>" +
+                        "<input type='text' placeholder='Nombre de la pregunta-> ejemplo: Casos de factorización'class='form-control inputAddQuestion'>" +
                         "</div>" + <!-- /input-group -->
                         "</li>" +
                         "</ul>" +
@@ -215,27 +216,41 @@ $(document).ready(function(){
 
         });
 
-
-
         /*
-        Agregar una nueva pregunta a una carpeta
+         Agregar una nueva pregunta a una carpeta
          */
 
         $("#accordion").on("click",".addQuestion",function(){
-            var $this = this;
-            client.question.create({folderid:$(this).data('id'),titulo:$(this).parent().next().val(),xml_pregunta:'',xml_metados:''}).done(function (val) {
-                $($this).parent().next().val('');
-                $("#body-" + $($this).data('id')).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
-                "<a href='#' class='LoadQuestion' data-id="+ val._id+" data-title='"+ val.titulo +"'>" + val.titulo + "</a>" +
+            addQuestion(this)
+        });
+
+        $("#accordion").on("keyup",".inputAddQuestion",function(){
+            if(event.keyCode == 13) {
+                $(this).parent().find(".addQuestion").trigger("click");
+            }
+        });
+
+
+        function addQuestion($this){
+            if($($this).parent().next().val()) {
+                client.question.create({
+                    folderid: $($this).data('id'),
+                    titulo: $($this).parent().next().val(),
+                    xml_pregunta: '',
+                    xml_metados: ''
+                }).done(function (val) {
+                    $($this).parent().next().val('');
+                    $("#body-" + $($this).data('id')).find("ul").append(" <li id='" + val._id + "'class='list-group-item'>" +
+                    "<a href='#' class='LoadQuestion' data-id=" + val._id + " data-title='" + val.titulo + "'>" + val.titulo + "</a>" +
                     "<div class='pull-right'>" +
                     " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
                     "<div class='btn-group' role='group' aria-label='...'>" +
-                    "<a href='#' class='editQuestion' data-id='"+ val._id+"'>" +
+                    "<a href='#' class='editQuestion' data-id='" + val._id + "'>" +
                     "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
                     "</a>" +
                     "</div>" +
                     "<div class='btn-group' role='group' aria-label='...'>" +
-                    "<a href='#' class='deleteQuestion' data-id="+ val._id+">" +
+                    "<a href='#' class='deleteQuestion' data-id=" + val._id + ">" +
                     "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
                     "</a>" +
                     "</div>" +
@@ -243,50 +258,14 @@ $(document).ready(function(){
                     " </div>" +
                     " </li>");
 
-                $("#accordion").find("#"+val._id).find(".LoadQuestion").trigger( "click" );
+                    $("#accordion").find("#" + val._id).find(".LoadQuestion").trigger("click");
 
-            }).fail(function () {
-                alert("Error, inténtalo de nuevo");
-            });
-
-        });
-        
-        $("#add-question").keyup(function(event){
-            if(event.keyCode == 13){
-               var $this = this;
-               client.question.create({folderid:$(this).data('id'),titulo:$(this).val(),xml_pregunta:'',xml_metados:''}).done(function (val) {
-                   $($this).val('');
-                   $("#body-" + $($this).data('id')).find("ul").append(" <li id='"+ val._id+"'class='list-group-item'>" +
-                       "<span data-title='"+ val.titulo +"'>" + val.titulo + "</span>" +
-                       "<div class='pull-right'>" +
-                       " <div class='btn-toolbar' role='toolbar' aria-label='...'>" +
-                       "<div class='btn-group' role='group' aria-label='...'>" +
-                       "<a href='#' class='editQuestion' data-id='"+ val._id+"'>" +
-                       "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
-                       "</a>" +
-                       "</div>" +
-                       "<div class='btn-group' role='group' aria-label='...'>" +
-                       "<a href='#' class='deleteQuestion' data-id="+ val._id+">" +
-                       "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
-                       "</a>" +
-                       "</div>" +
-                       "<div class='btn-group' role='group' aria-label='...'>" +
-                       "<a href='#' class='LoadQuestion' data-id="+ val._id+">" +
-                       "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>" +
-                       "</a>" +
-                       "</div>" +
-                       "</div>" +
-                       " </div>" +
-                       " </li>");
-
-                   $("#accordion").find("#"+val._id).find(".LoadQuestion").trigger( "click" );
-
-               }).fail(function () {
-                   alert("Error, inténtalo de nuevo");
-               });
- 
+                }).fail(function () {
+                    alert("Error, inténtalo de nuevo");
+                });
             }
-        });
+        }
+
         /*
         Eliminar una pregunta de una carpeta
          */
@@ -307,7 +286,7 @@ $(document).ready(function(){
          Actualizar una pregunta
          */
         $("#accordion").on("click",".editQuestion",function(){
-            var title =  $("#"+$(this).data('id')+" span:first-child");
+            var title =  $("#"+$(this).data('id')+" a:first-child");
             title.text("");
             $("#"+$(this).data('id')).prepend("<input id='inputEditQuestion' data-id='"+$(this).data('id')+"' type='text' value='"+title.data('title')+"'>");
             $("#inputEditQuestion").focus();
@@ -321,17 +300,31 @@ $(document).ready(function(){
             var $this= this;
 
             client.question.update($(this).data('id'),{titulo:$(this).val()}).done(function (data) {
-                var title =  $("#"+$($this).data('id')+" span:nth-child(2)");
+                var title =  $("#"+$($this).data('id')+" a:nth-child(2)");
                 title.data('title',$($this).val());
                 title.text($($this).val());
                 $($this).remove();
             }).fail(function () {
-                var title =  $("#"+$($this).data('id')+" span:nth-child(2)");
+                var title =  $("#"+$($this).data('id')+" a:nth-child(2)");
                 title.text( title.data('title'));
                 $($this).remove();
                 alert("Error, inténtalo de nuevo");
             });
+        });
 
+        $("#previewer").on( "click", function( event) {
+            messagesaved = false;
+            $.when($( "#loadeq").trigger( "click" )).then(function(event) {
+                var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
+                clientScorm.add('scorm');
+                clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
+                    $("#iframe-preview").attr("src","http://104.236.247.200/gen-scorm1.2-api/scorm-template/launch.html");
+                    $('#modal-previewer').modal('show');
+                }).fail(function () {
+                    $("#iframe-preview").attr("src","http://104.236.247.200/gen-scorm1.2-api/scorm-template/launch.html");
+                    $('#modal-previewer').modal('show');
+                });
+            });
         });
 
         function comeBack(){
@@ -400,7 +393,10 @@ $(document).ready(function(){
                 stringXmlMetadatos = xml_metadatos;
 
                 client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
+                    if(messagesaved)
                     alert("Datos cargados correctamente");
+                    else
+                        messagesaved = true;
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
                 });
@@ -411,11 +407,14 @@ $(document).ready(function(){
         });
 
         $("#exportscorm").on( "click", function( event) {
+            unloadactive = false;
+            messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
                 var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
-                    unloadactive = false;
+                    window.location = 'http://104.236.247.200:4001/api/scorm/download';
+                }).fail(function () {
                     window.location = 'http://104.236.247.200:4001/api/scorm/download';
                 });
             });
@@ -423,32 +422,27 @@ $(document).ready(function(){
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
         function xmlToObjects(xml) {
+            var xmlDoc = xml.xml_metados,
+                json = $.xml2json(xmlDoc);
 
-            var xmlDoc = xml.xml_metados;
-
-            var json = $.xml2json(xmlDoc);
-
-
-            if (typeof json !== 'undefined') {
+            if (typeof json !== 'undefined')
                 metadatosXmlToHtml(json);
-            }
 
             xmlDoc = xml.xml_pregunta;
             json = $.xml2json(xmlDoc);
             if (typeof json !== 'undefined') {
-                if (typeof json.respuestas !== 'undefined') {
-                    respuestaXmlToHtml(json.respuestas)
-                }
+                if (typeof json.respuestas !== 'undefined')
+                    respuestaXmlToHtml(json.respuestas);
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
                     console.log("xml");
                     console.log(json);
                     XMLToVar(xml.xml_pregunta);
                 }
-                if (typeof json.pregunta !== 'undefined') {
-
+                if (typeof json.pregunta !== 'undefined')
                     formulacionXMLToHtml(json.pregunta);
-                }
+                else
+                    cleanFormulationVars();
             }
         }
 
@@ -457,9 +451,7 @@ $(document).ready(function(){
                 return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
             else
                 unloadactive = true;
-
         })
-
 
         }else{
         $(location).attr('href','login.html');
