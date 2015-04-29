@@ -422,32 +422,27 @@ $(document).ready(function(){
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
         function xmlToObjects(xml) {
+            var xmlDoc = xml.xml_metados,
+                json = $.xml2json(xmlDoc);
 
-            var xmlDoc = xml.xml_metados;
-
-            var json = $.xml2json(xmlDoc);
-
-
-            if (typeof json !== 'undefined') {
+            if (typeof json !== 'undefined')
                 metadatosXmlToHtml(json);
-            }
 
             xmlDoc = xml.xml_pregunta;
             json = $.xml2json(xmlDoc);
             if (typeof json !== 'undefined') {
-                if (typeof json.respuestas !== 'undefined') {
-                    respuestaXmlToHtml(json.respuestas)
-                }
+                if (typeof json.respuestas !== 'undefined')
+                    respuestaXmlToHtml(json.respuestas);
                 if (typeof json.variables !== 'undefined') {
                     console.log(xml);
                     console.log("xml");
                     console.log(json);
                     XMLToVar(xml.xml_pregunta);
                 }
-                if (typeof json.pregunta !== 'undefined') {
-
+                if (typeof json.pregunta !== 'undefined')
                     formulacionXMLToHtml(json.pregunta);
-                }
+                else
+                    cleanFormulationVars();
             }
         }
 

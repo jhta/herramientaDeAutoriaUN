@@ -15,7 +15,7 @@ $(document).ready(function(){
 
         $("#"+eqactually).css('background-color', '#ccc');
 
-        pasteHtmlAtCaret('<div class="pre-equation mathBlock" id='+preid+'><math></math></div>&nbsp;');
+        pasteHtmlAtCaret('<div class="pre-equation mathBlock" id='+preid+' contenteditable="false"><math></math></div>&nbsp;');
         document.getElementById(preid).innerHTML = "<math></math>";
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
 
@@ -97,7 +97,7 @@ $(document).ready(function(){
         }
     }
 
-    $("#eq").on("click", ".pre-equation", function () {
+        $("#eq").on("click", ".pre-equation", function () {
         inRespuesta = false;
         var idpre = $(this).attr('id');
         var idsplit = idpre.split('-')[1];
@@ -158,7 +158,8 @@ $(document).ready(function(){
 
             idEquations.push($(this).attr('id'));
             $(this).html("<123456789>");
-        })
+        });
+
         var texto = $("#eq").text();
 
         while(texto.length>0){
@@ -187,7 +188,6 @@ $(document).ready(function(){
                     texto="";
                 }
             }
-
         }
 
         $("#eq").html(objecto);
@@ -222,3 +222,11 @@ $(document).ready(function(){
         return xw.flush();
     };
 });
+
+function cleanFormulationVars(){
+    eqactually = "";
+    treeActivos = [];
+    html = {};
+    equations = {};
+    idEquation = -1;
+}

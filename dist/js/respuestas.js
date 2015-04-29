@@ -9,16 +9,14 @@ var _newId = null;
 
 //Cargar toda la formulación
 function formulacionXMLToHtml(xml){
-    console.log(xml);
     //Reiniciando variables
     var conteq = -1;
     if (typeof xml.objetos !== 'undefined') {
-        if (typeof xml.objetos.json !== 'undefined') {
+        if (typeof xml.objetos.json !== 'undefined')
             treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
-        }
-        if (typeof xml.objetos.html !== 'undefined') {
+
+        if (typeof xml.objetos.html !== 'undefined')
             html = JSON.parse(decodeURIComponent(xml.objetos.html));
-        }
     }
 
     if (typeof xml.formulacion !== 'undefined' && typeof xml.formulacion.expresion !== 'undefined') {
@@ -27,32 +25,31 @@ function formulacionXMLToHtml(xml){
 
         if(!xml.formulacion.expresion.length){
             if(xml.formulacion.expresion.tipo.localeCompare("expresion")==0){
-                var preid =xml.formulacion.expresion.texto;
+                var preid = xml.formulacion.expresion.texto;
                 var idEq = xml.formulacion.expresion.texto.substring(9, xml.formulacion.expresion.texto.length);
-                $("#eq").append('<div style="border-style: solid; border-width: 1px;  font-family:inherit;font-size:inherit;font-weight:inherit;background:#ccc; border:1px solid #999; border-radius: 5px; padding: 2px 4px;display:inline-block;" class="pre-equation" id='+preid+'><math></math></div>');
+                $("#eq").append('<div class="pre-equation mathBlock" id='+preid+' contenteditable="false"><math></math></div>');
                 treeActual = treeActivos[idEq];
                 var jsn = makeString(treeActual);
                 document.getElementById(preid).innerHTML = "<math>" + jsn + "</math>";
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
                 equations[preid] = idEq;
                 eqactually = preid;
-                conteq++;
+                conteq = conteq < idEq ? idEq: conteq;
             }else
                 $("#eq").append(xml.formulacion.expresion.texto+" ");
-
         }
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
                 var preid =xml.formulacion.expresion[i].texto;
                 var idEq = xml.formulacion.expresion[i].texto.substring(9, xml.formulacion.expresion[i].texto.length);
-                $("#eq").append('<div  class="pre-equation mathBlock" id='+preid+'><math></math></div>&nbsp;');
+                $("#eq").append('<div  class="pre-equation mathBlock" id='+preid+' contenteditable="false"><math></math></div>&nbsp;');
                 treeActual = treeActivos[idEq];
                 var jsn = makeString(treeActual);
                 document.getElementById(preid).innerHTML = "<math>" + jsn + "</math>";
                 MathJax.Hub.Queue(["Typeset",MathJax.Hub,preid]);
                 equations[preid] = idEq;
                 eqactually = preid;
-                conteq++;
+                conteq = conteq < idEq ? idEq: conteq;
             }else{
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
             }
@@ -467,7 +464,6 @@ $(document).ready(function(){
                     texto="";
                 }
             }
-
         }
 
         $("#eq").html(objecto);
@@ -490,6 +486,13 @@ $(document).ready(function(){
                 xw.writeEndElement();
             }
         }
+
+        //Vamos a limpiar las expresiones que fueron borradas del frontend
+        $.each(treeActivos, function( index, value ) {
+            if($("#equation-"+index).length==0){
+                treeActivos[index] = "";
+            }
+        });
 
         xw.writeEndElement();
         xw.writeStartElement('objetos');
