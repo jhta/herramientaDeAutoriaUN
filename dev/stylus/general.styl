@@ -1,4 +1,8 @@
 @import 'utilidades.styl'
+
+back-image($url)
+  background: url("../images/symbols/"+$url) no-repeat scroll 50% 50% transparent
+
 body
     /*background url('http://www.abstractartistgallery.org/wp-content/uploads/2013/02/Abstract-Art-Painting-Mirza-Zuplijanin.jpg') no-repeat center center fixed
     -webkit-background-size: cover;
@@ -10,21 +14,21 @@ body
     .navbar
         box-shadow: 0 4px 5px -1px rgb(187, 184, 184)
         line-height: 50px
-    
+
     #accordion
         .panel-body
             padding: 0
-        
+
             .list-group
                 margin-bottom: 0px
-    
+
 p
     margin: 0px !important
 .contenedor
     padding:30px
     padding-top 0
     display none
-    
+
     &-title
         color: #777
         margin: 0px
@@ -35,25 +39,25 @@ p
         padding: 0px;
         margin: 8px;
         text-align: center;
-    
+
     &-input--increment
         width: 40px !important;
         padding: 0px;
         margin: 8px;
         text-align: center;
         background rgba(46, 121, 46, 0.43);
-        
+
     .panel-body
         max-height: 141px
         overflow-y: auto
-                
+
 .contenedor-panel-input
     margin-top 30px
     height  120px !important
-    
+
 .contenedor-panel-prev
     border none
-    
+
 .step.active
     background: #5cb85c !important;
     border: #ddd solid 3px !important;
@@ -73,24 +77,17 @@ ul
     text-decoration: none;
     background-color: rgba(238, 238, 238, 0.79);
     border-radius 4px 4px 0 0
-    
+
 .tab-content
     border-radius 0px 4px 4px 4px !important
 .nav-tabs>li.active
     bottom -1px
 
 .view-variable
-    padding: 3px 5px;
-    background-color: #D84E4E;
-    border-radius: 7px;
-    -webkit-border-radius: 7px;
-    -moz-border-radius: 7px;
+    padding: 0 5px;
     cursor pointer
-    color white
-.view-variable:hover
-    box-shadow: 0px 0px 5px red;
-    -webkit-box-shadow: 0px 0px 5px red;
-    -moz-box-shadow: 0px 0px 5px red;
+    color black
+
 .panel-variable-item
     margin 5px
 .contenedor-panel-prev-img:hover
@@ -118,13 +115,19 @@ body {
     border: 1px solid #eaeaea;
     color: black;
 }
-.card {
+.card
+  border:1px solid #ccc;
+  background-color: white;
+  display: inline-flex;
+  margin: 2px;
 
-    border:1px solid #ccc;
-    background-color: #eaeaea;
-    display: inline-flex;
-    margin: 2px;
-}
+.var-box
+  font-size: 22px
+  line-height: 40px
+  padding-left: 14px
+  width: 50px
+  height: 40px
+  color: black !important
 
 .card2 {
     margin: 0 6px;
@@ -189,9 +192,7 @@ body {
     margin: 10px 0px 0px 0px;
     border: solid 2px red;
 }
-.var {
-    color: green;
-}
+
 .in {
     padding:0;
     margin:0;
@@ -269,7 +270,7 @@ body {
     height: 100%;
     margin-top: 20px;
 }
-#line-hr { 
+#line-hr {
   background-color: black;
   height: 3px;
   width: 15px;
@@ -293,15 +294,15 @@ body {
     width: 55px
 .operations.trigonometric
     width: 77px
-.subindices 
+.subindices
     height: 40px
     padding-top: 4px
-    
+
 .subindice-superior
     margin-top: 5px
     margin-bottom: 8px
     border-bottom: 1px solid black
-    
+
 #inputfiles
     display: none
 .right-content
@@ -316,25 +317,25 @@ body {
     display: flex !important
     flex-direction: row
     justify-content: space-between
-    
+
     &__body
         display: flex
         flex-direction: row
-        
+
         &-item
             margin: 5px
-            
+
             &.input
                 margin: 0 5px;
                 line-height: 30px;
                 min-width: 130px;
-                
-                .item 
+
+                .item
                     background: #E7E7E7;
                     margin-bottom: 2px;
                 p
                     margin: 0 8px !important
-                    
+
 .panel-left-expresiones
     padding-right: 0px
     position: fixed
@@ -342,61 +343,153 @@ body {
     max-height: 80%
     overflow: auto
     right: 15px
-    overflow-y: hidden        
-    
+    overflow-y: hidden
+
     .panel-heading
         display: flex;
         justify-content: space-between;
-        align-items: center  
-        
+        align-items: center
+
         .btn
-            color: white        
-        
+            color: white
+
 .variables
     &__body
         padding-top: 0px
-    
+
     &__list
         .panel
+            margin-top: 8px !important
             margin-bottom: 0 !important
-            
+
             &-heading
-                padding: 5px
-                
+                padding: 2px 10px
+
 
 .mathBlock
-    border:1px dotted #999  
+    border:1px dotted #999
     padding: 2px 4px
     display:inline-block
     font-size: 15px;
 
+
 .image-card
     height: 40px
     width: 50px
-    
+
     &.add
         background: url("../images/symbols/add.png") no-repeat scroll 50% 50% transparent
-        
+
     &.sub
         background: url("../images/symbols/sub.png") no-repeat scroll 50% 50% transparent
-        
+
     &.mult
         background: url("../images/symbols/mult.png") no-repeat scroll 50% 50% transparent
-    
+
     &.div
         background: url("../images/symbols/div.png") no-repeat scroll 50% 50% transparent
-        
+
     &.eq
         background: url("../images/symbols/eq.png") no-repeat scroll 50% 50% transparent
-        
+
     &.sqrt
         background: url("../images/symbols/sqrt.png") no-repeat scroll 50% 50% transparent
-        
+
     &.sqrtRoot
         background: url("../images/symbols/sqrtRoot.png") no-repeat scroll 50% 50% transparent
-        
+
     &.llaves
         background: url("../images/symbols/llaves.png") no-repeat scroll 50% 50% transparent
-        
+
     &.parentesis
         background: url("../images/symbols/parentesis.png") no-repeat scroll 50% 50% transparent
+
+    &.keys
+        back-image("keys.png")
+
+    &.fact
+      back-image("fact.png")
+
+    &.log
+      back-image("log.png")
+
+    &.ln
+      back-image("ln.png")
+
+    &.pown
+      back-image("pown.png")
+
+    &.sin
+      back-image("sin.png")
+
+    &.cos
+      back-image("cos.png")
+
+    &.tan
+      back-image("tan.png")
+
+    &.cot
+      back-image("cot.png")
+
+    &.csc
+      back-image("csc.png")
+
+    &.sec
+      back-image("sec.png")
+
+    &.arsin
+      back-image("arsin.png")
+
+    &.arcos
+      back-image("arcos.png")
+
+    &.artan
+      back-image("arcot.png")
+
+    &.arcot
+      back-image("arcot.png")
+
+    &.arcsc
+      back-image("arcsc.png")
+
+    &.arsec
+      back-image("arsec.png")
+
+    &.sinh
+      back-image("sinh.png")
+
+    &.cosh
+      back-image("cosh.png")
+
+    &.tanh
+      back-image("tanh.png")
+
+    &.coth
+      back-image("coth.png")
+
+    &.csch
+      back-image("csch.png")
+
+    &.sech
+      back-image("sech.png")
+
+    &.comb
+      back-image("ser.png")
+
+    &.intg
+      back-image("intg.png")
+
+    &.sum
+      back-image("sum.png")
+
+    &.vect2
+      back-image("vec2.png")
+
+    &.vect3
+      back-image("vec3.png")
+
+    &.vect4
+      back-image("vec4.png")
+
+    &.vect5
+      back-image("vec5.png")
