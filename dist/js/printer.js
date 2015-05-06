@@ -36,7 +36,7 @@ var Printer = {
                     "</ul>" +
                     "<a href='#' data-id='" + idRespuesta + "' style='margin:10px' class='addErrorGenuino btn btn-success'>Agregar Error</a>"+
 	            "</div>" +
-	        "</div>" 
+	        "</div>"
 	        );
 	},
 
@@ -58,7 +58,7 @@ var Printer = {
                             "</div>" +
                         "</div>" +
                     "</div>" +
-                "</li>" 
+                "</li>"
         return response;
     },
 
@@ -81,24 +81,12 @@ var Printer = {
                 "</div>"+
 	            "<div class='btn-toolbar  genuine-error__body-item'  role='toolbar' aria-label='...'>"+
 
-                    "<div class='btn-group' role='group' aria-label='...'>"+
-                        "<a href='#' data-id='"+error.id+"' data-respuestaid='"+idRes+"' class=' pre-equation-respuesta' data-tipo='correcta'>"+
-                        "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
-                        "</a>"+
-                    "</div>"+
-
-                    "<div class='btn-group' role='group' aria-label='...'>"+
-                        "<a href='#' data-id='"+error.id+"' data-respuestaid='"+idRes+"' class='retro-alimentacion' >"+
-                            "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"+
-                        "</a>"+
-                    "</div>"+
-
     	            "<div class='btn-group' role='group' aria-label='...'>"+
                         "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+idRes+"'>"+
                             "<span class='glyphicon glyphicon-remove'   aria-hidden='true'></span>"+
                         " </a>"+
     	            "</div>"+
-                    
+
 	           "</div>"+
 	        "</div>"+
 	        "</li>");
@@ -153,7 +141,7 @@ var Printer = {
                 "</div>"+
                 "<div class='genuine-error__body'>"+
                     "<div class='genuine-error__body-item input'>"+
-                        
+
                         "<div class='item'>"+
                             "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' id='p-text-"+error.id+"'></p>"+
                             "<input type='text' class='hide input-text form-control'  data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
