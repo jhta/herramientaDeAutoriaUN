@@ -44,20 +44,15 @@ var funcDroppableOut = {
             elemtParent.addClass('ultimo-e');
             var idFather = elemtParent.data("father");
             var position = elemtParent.data("pos");
-            var elementFather = $('div').find('[data-id='+ idFather+']');
-            //console.log(elementFather);
-            
-            var elementSpa = elementFather.find('.spa');
-            elementSpa.addClass('drop2');
-            elementSpa.droppable(funcDroppable);
+
+            elemtParent.addClass('drop2');
+            elemtParent.droppable(funcDroppable);
 
             removeNode(treeActual, idFather, position);
             var jsn = makeString(treeActual);
-
             
             UpdateMath("<math>" + jsn + "</math>");
         }
-
         elementDrop.remove();            
     }
 }
@@ -397,7 +392,7 @@ function makeTree(elementDrop, uu){
             var child = elementDrop.find(text);
             
             child.attr("data-id", ++idCode);
-            child.attr("data-pos", 0);
+            child.attr("data-pos", i);
             child.attr('data-father', idElement);
             child.addClass('ultimo-e');
 
@@ -410,7 +405,6 @@ function makeTree(elementDrop, uu){
     }
 
     addNode(treeActual,idFather, tree, position);
-    
     
     var elementSpa = elementDrop.find('.spa');
     elementSpa.addClass('drop2');

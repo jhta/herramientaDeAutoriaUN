@@ -149,10 +149,9 @@ $(document).ready(function(){
             console.debug("hash: ", hashVariables)
 
             var rand = getRandomInt(0,arrayValues.length-1);
-            $("#ag-varEspcificaEdit").parent().parent().parent().parent().remove();
+           var container = $("#ag-varEspcificaEdit").parent().parent().parent();
 
-
-            agregarvariableHTML(varn,false);
+            agregarvariableHTML(varn,false,container);
             limpiar();
             $('#valorEsp').val("");
             $('#nameEsp').val("");
@@ -165,17 +164,6 @@ $(document).ready(function(){
         var array = $('#valorEsp').val().split(",");
         var string = posiblesValoresCategorica(array);
         $("#vals-varEspcifica").html(string);
-    });
-
-    $("#ag-varDiscreta").click(function(){
-
-        var name = $('#nameDis').val();
-        arrayValues.splice(arrayValues.length, 0,  [$('#valorDis').val()] );
-        varn.name = name;
-        varn.type = 'discreta';
-        agregarvariableHTML(varn);
-        limpiar();
-
     });
 
     $("#ag-varCategorica").click(function(){
@@ -214,11 +202,10 @@ $(document).ready(function(){
             varn.type = 'categorica';
 
             var rand = getRandomInt(0,arrayValues.length-1);
-            alert(arrayValues[rand]);
 
-            $("#ag-varCategoricaEdit").parent().parent().parent().parent().remove();
+            var container = $("#ag-varCategoricaEdit").parent().parent().parent();
 
-            agregarvariableHTML(varn,false);
+            agregarvariableHTML(varn,false,container);
             limpiar();
         }
     });
@@ -227,24 +214,6 @@ $(document).ready(function(){
         var array = $('#valorCat').val().split(",");
         var string = posiblesValoresCategorica(array);
         $("#vals-varCategorica").html(string);
-    });
-
-    $("#ag-varNormal").click(function(){
-        var name = $('#nameNor').val();
-        var norm = $('#normalNor').val();
-        var desv = $('#desviacionNor').val();
-        var inc = $('#incNor').val();
-
-        varn.name = name;
-        varn.type = 'normal';
-        varn.inc = inc;
-
-        jsonValues['media'] = norm;
-        jsonValues['desviacion'] = desv;
-
-        agregarvariableHTML(varn);
-        limpiar();
-
     });
 
     $("#ag-varUniforme").click(function() {
@@ -298,44 +267,70 @@ $(document).ready(function(){
         }
     });
 
-    $("#ag-varExponencial").click(function(){
-
-        var name = $('#nameExp').val();
-        var exp = $('#valueExp').val();
-        var inc = $('#incExp').val();
-
-        varn.name = name;
-        varn.type = 'exponencial';
-        varn.inc = inc;
-
-        jsonValues['lamda'] = exp;
-
-        agregarvariableHTML(varn);
-        limpiar();
-    });
-
     $("#listVars").on("click", ".deleteVar", function () {
-        var ok = confirm("esta seguro que desea eliminar esta variable?");
-        if(ok) {
-            var nameVar = $(this).data("content");
-            delete hashVariables[nameVar];
-            for(var index in conjuntoVariables){
-                var x = conjuntoVariables[index];
-                if(x.name == nameVar){
-                    conjuntoVariables.splice(index,1);
-                    break;
-                }
+        var treeString,
+            nameVar = $(this).data("content"),
+            isUsed = false;
+
+        $.each(treeActivos, function (index, tree) {
+            treeString = makeString(tree);
+            if($("#equation-"+index).length==0)
+                treeActivos[index] = "";
+            else {
+                var n = treeString.indexOf("<mn>" + nameVar + "</mn>");
+                if (n != -1)
+                    isUsed = true;
             }
-            $(this).parent().parent().parent().parent().parent().remove();    
+        });
+
+        treeString = makeString( treeActual);
+        if($("#equation-"+equations[eqactually]).length==0)
+            treeActivos[index] = "";
+        else {
+            var n = treeString.indexOf("<mn>" + nameVar + "</mn>");
+            if (n != -1)
+                isUsed = true;
         }
-        
+
+        $.each(respuestas, function (key, res) {
+            var n = res.formula.indexOf("#" + nameVar + "#");
+            if (n != -1)
+                isUsed = true;
+
+            $.each(res.error_genuino, function (key, error_gen) {
+                console.log(error_gen);
+                if(error_gen && error_gen.formula) {
+                    var n = error_gen.formula.indexOf("#" + nameVar + "#");
+                    if (n != -1)
+                        isUsed = true;
+                }
+            });
+        });
+
+        if(isUsed)
+            alert("No puedes borrar esta variable, actualmente es usada en la formulación o en las respuestas");
+        else {
+            var ok = confirm("Estás seguro que desea eliminar la variable?");
+            if (ok) {
+
+                delete hashVariables[nameVar];
+                for (var index in conjuntoVariables) {
+                    var x = conjuntoVariables[index];
+                    if (x.name == nameVar) {
+                        conjuntoVariables.splice(index, 1);
+                        break;
+                    }
+                }
+                $(this).parent().parent().parent().parent().parent().remove();
+            }
+        }
     });
 
     $("#listVars").on("click", ".editVar", function () {
         if($(this).data("type").localeCompare("uniforme")==0){
             var json = $(this).data("metadatos");
-            var htmlVar = '<div id="formUniformeEdit" class="panel panel-default" style="margin-top: 10px">' +
-                '<div class="panel-heading" role="tab">' +
+            var htmlVar = '<div class="panel-heading" role="tab">' +
+                '<div id="formUniformeEdit" class="panel panel-default" style="margin-top: 10px">' +
                 '<span class="panel-title" data-title="">' +
                 '<input id="nameUniEdit"  style="width: 20px !important" type="text" class="contenedor-variables-input" size="3" placeholder="x" value="'+$(this).data("content")+'" disabled>' +
                 '<input id="valueaUniEdit" style="width: 50px !important" class="contenedor-variables-input" type="number" step="any" placeholder="min"  value="'+json.inicio+'" required>' +
@@ -354,8 +349,8 @@ $(document).ready(function(){
         }else if($(this).data("type").localeCompare("especifica")==0){
             var array = $(this).data("metadatos");
 
-            var htmlVar = '<div id="formEspecificaEdit" class="panel panel-default" style="margin-top: 10px">'+
-                '<div class="panel-heading" role="tab">'+
+            var htmlVar = '<div class="panel-heading" role="tab">'+
+                '<div id="formEspecificaEdit" class="panel panel-default" style="margin-top: 10px">'+
                 '<span class="panel-title" data-title="">'+
                 '<input id="nameEspEdit"  style="width: 20px !important" type="text" class=" contenedor-variables-input" size="3" placeholder="x" value="'+$(this).data("content")+'" disabled>'+
                 '<input id="valorEspEdit" style="width: 200px !important;" placeholder="1, 5, 10, 12, 17, 25, 30, 33, 34, 45, 70"  class="contenedor-variables-input" value="'+array.toString()+'" required>'+
@@ -372,8 +367,8 @@ $(document).ready(function(){
         }else if($(this).data("type").localeCompare("categorica")==0){
             var array = $(this).data("metadatos");
 
-            var htmlVar = '<div id="formCategoricaEdit" class="panel panel-default" style="margin-top: 10px">'+
-                '<div class="panel-heading" role="tab]">'+
+            var htmlVar = '<div class="panel-heading" role="tab]">'+
+                '<div id="formCategoricaEdit" class="panel panel-default" style="margin-top: 10px">'+
                 '<span class="panel-title" data-title="">'+
                 '<input id="nameCatEdit"  style="width: 20px !important" type="text" class="contenedor-variables-input" size="3" placeholder="y" value="'+$(this).data("content")+'" disabled>'+
                 '<input id="valorCatEdit" type="text" style="width: 200px !important;"class="contenedor-variables-input" placeholder="manzana, pera, banano, lulo"  value="'+array.substring(1, array.length-1)+'" required>'+
@@ -555,7 +550,7 @@ $(document).ready(function(){
 
 
 
-function agregarvariableHTML(v,isnew){
+function agregarvariableHTML(v,isnew,container){
     var metadatos,tipo,stringpre;
     v.value = jsonValues;
     v.numb = arrayValues
@@ -631,9 +626,7 @@ function agregarvariableHTML(v,isnew){
 
     if(stringpre.length>36) stringpre = stringpre.substring(0, 30)+"... ]";
 
-    var htmlVar = "<div  class='panel panel-default' style='margin-top: 10px'>"+
-        "<div class='panel-heading' role='tab' id=''>"+
-        "<span class='panel-title'>" +
+    var htmlVar = "<span class='panel-title'>" +
         "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo+"' data-metadatos='"+metadatos+"'> <span class='var'>" + v.name + "</span></div>"+
         "</span>" +
         "<div>"+stringpre+"</div>"+
@@ -651,10 +644,15 @@ function agregarvariableHTML(v,isnew){
         "</div>"+
         "</div>"+
         "</div>"+
-        "</div>"+
         "</div>";
 
-    $("#listVars").append(htmlVar);
+    if(container)
+        container.html(htmlVar);
+    else{
+        htmlVar = "<div  class='panel panel-default' style='margin-top: 10px'> <div class='panel-heading' role='tab' id=''>" + htmlVar + "</div> </div>";
+        $("#listVars").append(htmlVar);
+    }
+
     $('.view-variable').draggable({
         appendTo: "body",
         cursor: "move",
@@ -670,10 +668,8 @@ function agregarvariableHTML(v,isnew){
                 break;
             }
         }
-    }else{
+    }else
         conjuntoVariables.splice(conjuntoVariables.length, 0, v);
-
-    }
 
 }
 function saveVarUniform(name,max,min,inc,isnew){
@@ -721,9 +717,10 @@ function saveVarUniform(name,max,min,inc,isnew){
             jsonValues['inicio'] = min;
             jsonValues['fin'] = max;
 
-            if(!isnew)
-                $("#ag-varUniformeEdit").parent().parent().parent().parent().remove();
-
+            if(!isnew) {
+                var container = $("#ag-varUniformeEdit").parent().parent().parent();
+                agregarvariableHTML(varn,isnew,container);
+            }else
             agregarvariableHTML(varn,isnew);
 
             limpiar();
