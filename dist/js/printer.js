@@ -40,7 +40,7 @@ var Printer = {
 	        );
 	},
 
-    correctAnswer: function(idRespuesta, nombre, formula) {
+  correctAnswer: function(idRespuesta, nombre, formula) {
         var response = "<li class='list-group-item genuine-error' >" +
                     "<div class=' p-0'>"+
                        " <span>Respuesta correcta:</span>" +
@@ -71,12 +71,14 @@ var Printer = {
 	        "<div class='genuine-error__body'>"+
 	            "<div id='content-"+error.id+"' class='genuine-error__body-item input'>"+
                     "<div class='item'>"+
-                        "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+idRes+"' id='p-text-"+error.id+"'>"+ error.retro_alimentacion +"</p>"+
-                        "<input type='text' class='hide input-text form-control'  data-respuesta='" + idRes + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
+												"<span>Respuesta: </span>"+
+                        "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+idRes+"'> "+ error.formula +" </p>"+
+                        "<input type='text' class='hide input-res form-control' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
                     "</div>"+
                     "<div class='item'>"+
-                        "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+idRes+"'>"+ error.formula +"</p>"+
-                        "<input type='text' class='hide input-res form-control' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+												"<span>RetroAliementacion</span>"+
+                        "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+idRes+"' id='p-text-"+error.id+"'> "+ error.retro_alimentacion +" </p>"+
+                        "<input type='text' class='hide input-text form-control'  data-respuesta='" + idRes + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
                     "</div>"+
                 "</div>"+
 	            "<div class='btn-toolbar  genuine-error__body-item'  role='toolbar' aria-label='...'>"+
@@ -143,28 +145,17 @@ var Printer = {
                     "<div class='genuine-error__body-item input'>"+
 
                         "<div class='item'>"+
-                            "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' id='p-text-"+error.id+"'></p>"+
-                            "<input type='text' class='hide input-text form-control'  data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
+														"<span> Respuesta </span>"+
+                            "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"'>respuesta</p>"+
+                            "<input type='text' class='hide input-res form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
                         "</div>"+
                         "<div class='item'>"+
-                            "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"'></p>"+
-                            "<input type='text' class='hide input-res form-control' data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+														"<span> RetroAliementacion: </span>"+
+                            "<p class='label-res retro-alimentacion ' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' id='p-text-"+error.id+"'>retroalimentacion</p>"+
+                            "<input type='text' class='hide input-text form-control'  data-respuesta='" + respactual.id + "' data-error='" + error.id + "' id='text-"+error.id+"'>"+
                         "</div>"+
                     "</div>"+
                     "<div class='btn-toolbar genuine-error__body-item'  role='toolbar' aria-label='...'>"+
-
-                        "<div class='btn-group' role='group' aria-label='...'>"+
-                            "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class=' pre-equation-respuesta' data-tipo='correcta'>"+
-                            "<span class='glyphicon glyphicon-wrench' aria-hidden='true'></span>"+
-                            "</a>"+
-                        "</div>"+
-
-                        "<div class='btn-group' role='group' aria-label='...'>"+
-                            "<a href='#' data-id='"+error.id+"' data-respuestaid='"+respactual.id+"' class='retro-alimentacion' >"+
-                            "<span class='glyphicon glyphicon-font' aria-hidden='true'></span>"+
-                            "</a>"+
-                        "</div>"+
-
 
                         "<div class='btn-group' role='group' aria-label='...'>"+
                             "<a href='#' class='deleteErrorGenuino' data-id='"+error.id+"'  data-respuestaid='"+respactual.id+"'>"+

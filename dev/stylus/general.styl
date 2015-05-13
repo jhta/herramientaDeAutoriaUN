@@ -83,6 +83,11 @@ ul
 .nav-tabs>li.active
     bottom -1px
 
+.respuestas-top
+  margin: 10px
+
+  input
+    width: 50px
 .view-variable
     padding: 0 5px;
     cursor pointer
@@ -120,6 +125,7 @@ body {
   background-color: white;
   display: inline-flex;
   margin: 2px;
+  cursor: grab;
 
 .var-box
   font-size: 22px
@@ -333,10 +339,18 @@ body {
                 flex-direction: row
 
                 .item
-                    background: #E7E7E7;
                     margin: 2px 5px;
-                p
-                    margin: 0 8px !important
+                    display: flex;
+
+                    p
+                        padding: 0 10px;
+                        cursor: text;
+                        margin: 0 8px !important
+                        background: #E7E7E7;
+                        color: #999;
+
+                        &:hover
+                          background: rgb(245,245,245)
 
 .panel-left-expresiones
     padding-right: 0px

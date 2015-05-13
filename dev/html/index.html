@@ -261,23 +261,12 @@
                 <div class="tab-pane" id="respuestas" >
                     <div class=" contenedor-panel tab-pane " id="tab2">
                         <div class="panel-body">
-                            <!--
-                            <ul class="respuestas">
-                              <li class="" ng-repeat="respuesta in respuestas">
-                                <div  role="alert" class="alert  respuesta alert-{{colors[respuesta.valor]}}">
-                                  <strong>{{respuesta.respuesta}}</strong>  {{respuesta.texto}}
-                                  <span ng-click="eliminarRespuesta($index)" class="glyphicon glyphicon-remove pull-right respuesta-icon"></span>
-
-                                  <span data-toggle="modal" data-target="#myModalA" class="glyphicon glyphicon-pencil pull-right respuesta-icon"></span>
-                                </div>
-                              </li>
-                            </ul>
-                            -->
-                            <h4>Respuestas</h4>
+                          <h4>Respuestas</h4>
+                            <div class="respuestas-top">
+                              <span>Cifras decimales: </span>
+                              <input type="number" min="0" max="10"/>
+                            </div>
                             <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-
-
-
                             </div>
 
                             <div class="input-group">
@@ -641,7 +630,7 @@
                                                 <div class="card  var-box" data-id="cons" data-content="&#8804"><!-- PI -->
                                                     <span class="var">&#8804;</span>
                                                 </div>
-                                                
+
                                                 <div class="card  var-box" data-id="cons" data-content="&#62"><!-- PI -->
                                                     <span class="var">&#62;</span>
                                                 </div>
