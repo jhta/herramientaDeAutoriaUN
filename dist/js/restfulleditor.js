@@ -315,13 +315,13 @@ $(document).ready(function(){
         $("#previewer").on( "click", function( event) {
             messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
+                var clientScorm = new $.RestClient('http://localhost:4000/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
-                    $("#iframe-preview").attr("src","http://104.236.247.200/gen-scorm1.2-api/scorm-template/launch.html");
+                    $("#iframe-preview").attr("src","http://localhost/gen-scorm1.2-api/scorm-template/launch.html");
                     $('#modal-previewer').modal('show');
                 }).fail(function () {
-                    $("#iframe-preview").attr("src","http://104.236.247.200/gen-scorm1.2-api/scorm-template/launch.html");
+                    $("#iframe-preview").attr("src","http://localhost/gen-scorm1.2-api/scorm-template/launch.html");
                     $('#modal-previewer').modal('show');
                 });
             });
@@ -394,10 +394,12 @@ $(document).ready(function(){
                 stringXmlMetadatos = xml_metadatos;
 
                 client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
-                    if(messagesaved)
-                    alert("Datos cargados correctamente");
-                    else
+                    if(messagesaved) {
+                        alert("Datos cargados correctamente");
+                        uploadFiles();
+                    }else {
                         messagesaved = true;
+                    }
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
                 });
@@ -411,12 +413,12 @@ $(document).ready(function(){
             unloadactive = false;
             messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
+                var clientScorm = new $.RestClient('http://localhost:4000/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
-                    window.location = 'http://104.236.247.200:4001/api/scorm/download';
+                    window.location = 'http://localhost:4000/api/scorm/download';
                 }).fail(function () {
-                    window.location = 'http://104.236.247.200:4001/api/scorm/download';
+                    window.location = 'http://localhost:4000/api/scorm/download';
                 });
             });
         });

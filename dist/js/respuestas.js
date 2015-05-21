@@ -12,11 +12,14 @@ function formulacionXMLToHtml(xml){
     //Reiniciando variables
     var conteq = -1;
     if (typeof xml.objetos !== 'undefined') {
-        if (typeof xml.objetos.json !== 'undefined')
-            treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
 
-        if (typeof xml.objetos.html !== 'undefined')
+        if (typeof xml.objetos.json !== 'undefined') {
+            treeActivos = JSON.parse(decodeURIComponent(xml.objetos.json));
+        }
+
+        if (typeof xml.objetos.html !== 'undefined') {
             html = JSON.parse(decodeURIComponent(xml.objetos.html));
+        }
     }
 
     if (typeof xml.formulacion !== 'undefined' && typeof xml.formulacion.expresion !== 'undefined') {
@@ -24,6 +27,7 @@ function formulacionXMLToHtml(xml){
         equations = {};
 
         if(!xml.formulacion.expresion.length){
+
             if(xml.formulacion.expresion.tipo.localeCompare("expresion")==0){
                 var preid = xml.formulacion.expresion.texto;
                 var idEq = xml.formulacion.expresion.texto.substring(9, xml.formulacion.expresion.texto.length);
@@ -35,8 +39,14 @@ function formulacionXMLToHtml(xml){
                 equations[preid] = idEq;
                 eqactually = preid;
                 conteq = conteq < idEq ? idEq: conteq;
-            }else
-                $("#eq").append(xml.formulacion.expresion.texto+" ");
+
+            }else if(xml.formulacion.expresion.tipo.localeCompare("imagen")==0){
+                $("#eq").append('<img class="mathBlock" id="'+ xml.formulacion.expresion.texto +'" style="height: 30px; width: 30px" src="dist/images/picture.png" />');
+
+            } else {
+                $("#eq").append(xml.formulacion.expresion.texto + " ");
+
+            }
         }
         for (var i=0; i<  xml.formulacion.expresion.length;i++ ) {
             if(xml.formulacion.expresion[i].tipo.localeCompare("expresion")==0){
@@ -50,7 +60,11 @@ function formulacionXMLToHtml(xml){
                 equations[preid] = idEq;
                 eqactually = preid;
                 conteq = conteq < idEq ? idEq: conteq;
-            }else{
+
+            } else if(xml.formulacion.expresion[i].tipo.localeCompare("imagen")==0){
+            $("#eq").append('<img class="mathBlock" id="'+ xml.formulacion.expresion[i].texto +'" style="height: 30px; width: 30px" src="dist/images/picture.png" />');
+
+            } else {
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
             }
         }
@@ -97,21 +111,18 @@ function respuestaXmlToHtml(xmlRespuestas) {
     var cont = 0;
     if(xmlRespuestas !== undefined)
         if(Array.isArray(xmlRespuestas.respuesta)) {
-            console.log("is Array");
             xmlRespuestas.respuesta.forEach(function(respuesta) {
                 respuestas[respuesta.id+""] = respuesta;
                 setNewGlobalId(getIdFromResponse(respuesta.id));
                 printHtmlrespuesta(respuesta.id, respuesta.nombre, respuesta.formula);
                 if(respuesta.error_genuino !== undefined ) {
-                    console.log(respuesta.error_genuino);
                     printErrorGenuino(respuesta.error_genuino, respuesta.id);
-                } 
-                    
+                }
+
             });
         } else {
             for( var res in xmlRespuestas) {
                 var respuesta = xmlRespuestas[res];
-                console.log(respuesta);
                 respuestas[respuesta.id+""] = respuesta;
                 setNewGlobalId(getIdFromResponse(respuesta.id));
                 printHtmlrespuesta(respuesta.id, respuesta.nombre, respuesta.formula);
@@ -119,9 +130,9 @@ function respuestaXmlToHtml(xmlRespuestas) {
                     respuesta.error_genuino.forEach(function(eg) {
                         printHtmlerror(eg, respuesta.id);
                     });
-            }    
+            }
         }
-        
+
     //No se esto pa que putas???
     idRespuesta = getNewGlobalId();
 }
@@ -134,7 +145,7 @@ function printHtmlrespuesta(idRespuesta, nombre,treei){
 
 //funcion para iprimir el error en el html
 function printHtmlerror(error,idRes){
-   Printer.htmlError(error,idRes);
+    Printer.htmlError(error,idRes);
 }
 
 //funcion para checkear que e el caracter solo sea numero y/o operacion matematica
@@ -150,7 +161,7 @@ function hideInput( input, label ) {
 }
 
 function EditFormInError( error, respuesta, state ) {
-   var sp = error.split("-");
+    var sp = error.split("-");
     var indexError = parseInt(sp[sp.length -1 ])
     console.log(respuestas[respuesta]);
     console.log(respuestas[respuesta].error_genuino[indexError]);
@@ -185,7 +196,7 @@ function editRetroAlimentation( error, respuesta, state) {
         respuestas[respuesta].error_genuino[indexError+1].retro_alimentacion = state;
     } else
         respuestas[respuesta].error_genuino[indexError].retro_alimentacion = state;
-    
+
 }
 
 function validateExpresion( expresion ) {
@@ -228,22 +239,22 @@ $(document).ready(function(){
                 state = "error de formulacion";
                 flag = true;
             }
-            
+
             if(!flag) {
 
                 if($(this).data("tipo")){
                     $("#p-correct-"+$(this).data("respuesta")).removeClass("hide");
                     $("#p-correct-"+$(this).data("respuesta")).data("real",realExpresion);
-                    
+
                     console.log("si tiene ipo", $(this).data("tipo"));
                     EditFormInRes( $(this).data("respuesta"), realExpresion);
                 } else {
                     EditFormInError( $(this).data("error"),  $(this).data("respuesta"), realExpresion);
                 }
-               console.log($("#p-"+$(this).attr("id")));
-               $("#p-"+$(this).attr("id")).text(textExpresion);
-               $("#p-"+$(this).attr("id")).data('real',realExpresion);
-               hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+                console.log($("#p-"+$(this).attr("id")));
+                $("#p-"+$(this).attr("id")).text(textExpresion);
+                $("#p-"+$(this).attr("id")).data('real',realExpresion);
+                hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
             }else {
                 alert(state);
             }
@@ -258,16 +269,16 @@ $(document).ready(function(){
         if(event.which == 13) {
             console.log("el texto este");
             editRetroAlimentation($(this).data("error"),  $(this).data("respuesta"), $(this).val());
-           $("#p-"+$(this).attr("id")).text($(this).val());
-           hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+            $("#p-"+$(this).attr("id")).text($(this).val());
+            hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
             event.preventDefault();
         }
     });
 
-    
+
     $("#inputNuevaRespuesta").keyup(function(event){
         if(event.keyCode == 13){
-           $("#crearRespuesta").click();
+            $("#crearRespuesta").click();
         }
     });
 
@@ -283,7 +294,7 @@ $(document).ready(function(){
         if(tipo == "correcta") {
             $("#correct-"+id).removeClass("hide");
             if($("#p-correct-"+id).data('real'))
-            $("#correct-"+id).val($("#p-correct-"+id).data('real'));
+                $("#correct-"+id).val($("#p-correct-"+id).data('real'));
             $("#p-correct-"+id).addClass("hide");
         }
     });
@@ -294,7 +305,7 @@ $(document).ready(function(){
         $("#text-"+id).removeClass("hide");
         $("#p-text-"+id).addClass("hide");
         $("#text-"+id).val($("#p-text-"+id).text());
-        
+
     });
 
 
@@ -307,10 +318,10 @@ $(document).ready(function(){
         RespuestaActual.nombre = $("#inputNuevaRespuesta").val();
         RespuestaActual.formula = "";
         Printer.createHtmlAnswer( idNewRespuesta, RespuestaActual );
-        
+
         $("#inputNuevaRespuesta").val('');
         console.log(respuestas);
-        
+
         ////??? que monda es esto????? 
         eqActuallyIdRespuestaCorrecta = "";
         $('#content-drop-respuestas').html("");
@@ -331,7 +342,7 @@ $(document).ready(function(){
         if(Array.isArray( RespuestaActual.error_genuino )) {
             error.id = RespuestaActual.id+ "-" + RespuestaActual.error_genuino.length;
             RespuestaActual.error_genuino.push(error);
-            
+
         }else {
             error.id = RespuestaActual.id+ "-" + 0;
             var aux = RespuestaActual.error_genuino;
@@ -345,7 +356,7 @@ $(document).ready(function(){
             $("#"+$(this).data("id")).addClass('in');
         }
         Printer.addErrorToAnswer( $(this).data("id"), error, RespuestaActual );
-        
+
         eqActuallyIdRespuestaCorrecta = RespuestaActual.id;
         $('#content-drop-respuestas').html("");
         eqactuallyres = error.id;
@@ -367,7 +378,7 @@ $(document).ready(function(){
                 }
             });
         }
-        
+
     });
 
     //Elimina una respuesta tanto desde la vista html como del array
@@ -376,9 +387,9 @@ $(document).ready(function(){
         var ok = confirm("esta seguro que quiere eliminar esto?");
         if(ok) {
             $("#"+$(this).data("id")).parent().remove();
-            delete respuestas[$(this).data("id")+""];    
+            delete respuestas[$(this).data("id")+""];
         }
-        
+
     });
 
     //editar el nombre de la respuesta
@@ -418,7 +429,7 @@ $(document).ready(function(){
         this.retro_alimentacion='';
     }
 
-/*
+    /*
      ***********************************************************************************
      * Funcion generadora del XML apartir de los datos obtenidos
      */
@@ -443,42 +454,90 @@ $(document).ready(function(){
 
         var array = [];
         var idEquations = [];
+        var imagesIds = [];
         var bools = [];
 
         //Esto se hace, porque no se tiene la certeza de que la última ecuacion
         // que se ha creado ya esten guardados sus datos en los json globables
         treeActivos[equations[eqactually]] = treeActual;
         html[eqactually+""] = $('.drop').html();
-        var i=0;
+        var i = 0,e = 0;
         var objecto = $("#eq").html();
-        $("#eq").children().each (function() {
+        $("#eq").children("div").each (function() {
             idEquations.push($(this).attr('id'));
             $(this).html("<123456789>");
-        })
+        });
+        $("#eq").children("img").each (function() {
+            imagesIds.push($(this).attr('id'));
+            $(this).html("#987654321#");
+        });
         var texto = $("#eq").text();
-        while(texto.length>0){
-            var n = texto.indexOf("<123456789>");
+
+        while(texto.length > 0){
+
+            var n = texto.indexOf("<123456789>"),
+                n2 = texto.indexOf("#987654321#");
+
             if(n==-1){
-                str = texto.replace(/\s+/g, '');
-                if(str.length>0) {
-                    array.push(texto);
-                    bools.push(false);
-                }
-                texto="";
-            }else{
-                var res = texto.substring(0, n);
-                str = res.replace(/\s+/g, '');
-                if(str.length>0) {
-                    array.push(res);
-                    bools.push(false);
-                }
-                array.push(idEquations[i]);
-                bools.push(true);
-                i++;
-                if( texto.substring(n+10, texto.length).length>1) {
-                    texto = texto.substring(n + 11, texto.length);
+
+                if(n2 == -1) {
+
+                    str = texto.replace(/\s+/g, '');
+                    if (str.length > 0) {
+                        array.push(texto);
+                        bools.push(0);
+                    }
+                    texto = "";
                 }else{
-                    texto="";
+                    n = n2;
+                    var res = texto.substring(0, n);
+                    str = res.replace(/\s+/g, '');
+                    if(str.length > 0) {
+                        array.push(res);
+                        bools.push(0);
+                    }
+                    array.push(imagesIds[e]);
+                    bools.push(2);
+                    e++;
+                    if( texto.substring(n+10, texto.length).length > 1) {
+                        texto = texto.substring(n + 11, texto.length);
+                    }else{
+                        texto="";
+                    }
+                }
+            }else{
+                if(n < n2 || n2 == -1) {
+
+                    var res = texto.substring(0, n);
+                    str = res.replace(/\s+/g, '');
+                    if (str.length > 0) {
+                        array.push(res);
+                        bools.push(0);
+                    }
+                    array.push(idEquations[i]);
+                    bools.push(1);
+                    i++;
+                    if (texto.substring(n + 10, texto.length).length > 1) {
+                        texto = texto.substring(n + 11, texto.length);
+                    } else {
+                        texto = "";
+                    }
+                }else{
+                    n = n2;
+                    var res = texto.substring(0, n);
+                    str = res.replace(/\s+/g, '');
+                    if(str.length > 0) {
+                        array.push(res);
+                        bools.push(0);
+                    }
+                    array.push(imagesIds[e]);
+                    bools.push(2);
+                    e++;
+                    if( texto.substring(n+10, texto.length).length > 1) {
+                        texto = texto.substring(n + 11, texto.length);
+                    }else{
+                        texto="";
+                    }
                 }
             }
         }
@@ -486,19 +545,24 @@ $(document).ready(function(){
         $("#eq").html(objecto);
         $("#eq").children().each (function() {
             MathJax.Hub.Queue(["Typeset",MathJax.Hub, $(this).attr('id')]);
-        })
+        });
 
         xw.writeStartElement('pregunta');
         xw.writeStartElement('formulacion');
         for(var i=0;i<array.length;i++){
-            if(bools[i]){
+            if(bools[i] == 0){
+                xw.writeStartElement('expresion');
+                xw.writeAttributeString( "tipo", "texto" );
+                xw.writeAttributeString( "texto", array[i] );
+                xw.writeEndElement();
+            }else if(bools[i] == 1){
                 xw.writeStartElement('expresion');
                 xw.writeAttributeString( "tipo", "expresion" );
                 xw.writeAttributeString( "texto", array[i] );
                 xw.writeEndElement();
             }else{
                 xw.writeStartElement('expresion');
-                xw.writeAttributeString( "tipo", "texto" );
+                xw.writeAttributeString( "tipo", "imagen" );
                 xw.writeAttributeString( "texto", array[i] );
                 xw.writeEndElement();
             }
@@ -554,38 +618,36 @@ $(document).ready(function(){
                                 xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
                             xw.writeEndElement();
                         }
-                        
+
                     });
                 } else {
 
-                   for(var e=0;e<errores.length;e++){
-                       var egen= errores[e];
-                       if(egen != null && egen != undefined && egen != "") {
+                    for(var e=0;e<errores.length;e++){
+                        var egen= errores[e];
+                        if(egen != null && egen != undefined && egen != "") {
                             xw.writeStartElement('error_genuino');
                             xw.writeAttributeString( "id", egen.id );
                             xw.writeAttributeString( "respuesta_id", res.id );
                             xw.writeAttributeString( "formula", egen.formula );
                             xw.writeAttributeString( "cifras_decimales", "0.2" );
                             if(egen.retro_alimentacion != undefined && error.retro_alimentacion != null)
-                                 xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
+                                xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
                             xw.writeEndElement();
-                       }
-                       
-                   } 
+                        }
+                    }
                 }
             }
-            
+
             xw.writeEndElement();
         }
         xw.writeEndElement();
-        
         xw.writeEndElement();
         xw.writeEndDocument();
 
-
         var xml = xw.flush();
-        console.debug("El puto html ressultante D: D:", xml);
         var xml_metadatos = getXmlMetadatos();
+
+        console.log(xml);
 
         $( "#loadeq").trigger( "guardarxml", [ xml,xml_metadatos ] );
 
