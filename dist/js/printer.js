@@ -1,5 +1,5 @@
 var Printer = {
-	htmlAnswer: function( idRespuesta, nombre, formula ) {
+	htmlAnswer: function( idRespuesta, nombre, formula, formulaLimpia ) {
         $("#accordion2").append(
             "<div class='panel panel-default'>" +
     	        "<div class='panel-heading' role='tab' >" +
@@ -15,24 +15,24 @@ var Printer = {
                     	           "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>" +
                     	        "</a>" +
                 	        " </div>" +
-        	           "<div class='btn-group' role='group' aria-label='...'>" +
-                	        "<a href='#' class='deleteRespuesta' data-id='" + idRespuesta + "'>" +
-                	           "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
-                	        " </a>" +
-            	        "</div>" +
-            	        "<!--<div class='btn-group' role='group' aria-label='...'>" +
-                	        "<a  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
-                	           "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
-                	        "</a>" +
-            	        "</div>-->" +
-        	        "</div>" +
-	            "</div>" +
+			        	           "<div class='btn-group' role='group' aria-label='...'>" +
+			                	        "<a href='#' class='deleteRespuesta' data-id='" + idRespuesta + "'>" +
+			                	           "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
+			                	        " </a>" +
+			            	        "</div>" +
+			            	        "<!--<div class='btn-group' role='group' aria-label='...'>" +
+			                	        "<a  class='addErrorGenuino' data-id='" + idRespuesta + "'>" +
+			                	           "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>" +
+			                	        "</a>" +
+			            	        "</div>-->" +
+        	        		"</div>" +
+	            		"</div>" +
 	        "</div>" +
 
 	        "<div id='" + idRespuesta + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingTwo'>" +
     	        "<div class='panel-body p-0'>" +
         	        "<ul class='list-group p-0'>" +
-            	        this.correctAnswer( idRespuesta, nombre, formula ) +
+            	        this.correctAnswer( idRespuesta, nombre, formula, formulaLimpia ) +
                     "</ul>" +
                     "<a href='#' data-id='" + idRespuesta + "' style='margin:10px' class='addErrorGenuino btn btn-success'>Agregar Error</a>"+
 	            "</div>" +
@@ -40,15 +40,15 @@ var Printer = {
 	        );
 	},
 
-  correctAnswer: function(idRespuesta, nombre, formula) {
+  correctAnswer: function(idRespuesta, nombre, formula, formulaLimpia) {
         var response = "<li class='list-group-item genuine-error' >" +
                     "<div class=' p-0'>"+
                        " <span>Respuesta correcta:</span>" +
                     "</div>"+
                     "<div class='p-0 genuine-error__body'  >" +
                         "<div id='content-" + idRespuesta + "'  class='p-0 genuine-error__body-item input'>"+
-                            "<p class='label-res pre-equation-respuesta' data-id='" + idRespuesta + "' data-tipo='correcta' id='p-correct-"+idRespuesta+"'>"+formula+"</p>"+
-                            "<input type='text' data-tipo='correcta' data-respuesta='"+ idRespuesta +"' class='input-res hide form-control ' id='correct-"+idRespuesta+"'>"+
+                            "<p class='label-res data-real='"+formula+"' pre-equation-respuesta' data-id='" + idRespuesta + "' data-tipo='correcta' id='p-correct-"+idRespuesta+"'>"+formulaLimpia+"</p>"+
+                            "<input type='text' data-real='"+formula+"' value='"+formula+"' data-tipo='correcta' data-respuesta='"+ idRespuesta +"' class='input-res hide form-control ' id='correct-"+idRespuesta+"'>"+
                         "</div>" +
                         "<div class='btn-toolbar genuine-error__body-item' role='toolbar' aria-label='...'>" +
                             "<div class='btn-group' role='group' aria-label='...'>" +
@@ -62,7 +62,7 @@ var Printer = {
         return response;
     },
 
-	htmlError: function( error, idRes ) {
+	htmlError: function( error, idRes, formulaLimpia ) {
         console.debug("este es el motherfucker error que esta llegando: ", error);
 		 $("#"+idRes).find(".list-group").append(" <li class='list-group-item genuine-error' id='"+error.id+"' data-respuestaid='"+idRes+"'>"+
 	        "<div>"+
@@ -72,8 +72,8 @@ var Printer = {
 	            "<div id='content-"+error.id+"' class='genuine-error__body-item input'>"+
                     "<div class='item'>"+
 												"<span>Respuesta: </span>"+
-                        "<p class='label-res pre-equation-respuesta' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+idRes+"'> "+ error.formula +" </p>"+
-                        "<input type='text' class='hide input-res form-control' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
+                        "<p class='label-res pre-equation-respuesta' data-real='"+error.formula+"' id='p-error-"+error.id+"' data-id='"+error.id+"' data-respuestaid='"+idRes+"'> "+ formulaLimpia +" </p>"+
+                        "<input type='text' class='hide input-res form-control' data-real='"+error.formula+"' value='"+error.formula+"' data-respuesta='" + idRes + "' data-error='" + error.id + "' id='error-"+error.id+"'>"+
                     "</div>"+
                     "<div class='item'>"+
 												"<span>RetroAliementacion</span>"+

@@ -9,9 +9,11 @@ var focusElement = null;
 var conjuntoVariables = [];
 $(document).ready(function(){
 
-    //popovers
-    $('[data-toggle="tooltip"]').tooltip()
 
+    //popovers
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+    
     //toogle nav superior
     $("#tab-respuestas").click(function(){
         $("#meta-panel").addClass("hide");

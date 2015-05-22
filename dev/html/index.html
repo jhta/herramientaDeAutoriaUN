@@ -45,12 +45,11 @@
     <script type="text/javascript" src="dist/js/insertequation.js"></script>
     <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
     <script type="text/javascript" src="dist/js/respuestas.js"></script>
+    <script type="text/javascript" src="dist/js/images.js"></script>
     <script type="text/javascript" src="dist/js/restfulleditor.js"></script>
     <script type="text/javascript" src="dist/libs/js/jquery.rest.js"></script>
     <script type="text/javascript" src="dist/js/jquery.xml2json.js"></script>
     <script type="text/javascript" src="dist/js/xml2json.min.js"></script>
-
-
 
 </head>
 <body ng-app>
@@ -142,6 +141,8 @@
                             <button style="margin-top: 10px; margin-left: 15px;" id="inserteq" type="button" class="btn btn-default btn-success"type="button" >Insertar expresión</button>
 
                             <input type="file" id="inputfiles" name="files[]" />
+                            <input type="file"  id="insertimage"  name="files[]"  multiple/>
+                            <div id="contenedorimagenes"></div>
                         </div>
 
                         <div class="row">
@@ -161,16 +162,30 @@
                 <div class="tab-pane" id="metadatos">
                     <div class=" contenedor-panel tab-pane " id="tab1">
                         <div class="panel-body">
-                            <h4> <span class="label label-default">General</span></h4>
+                            
                             <div id="result"></div>
                             <form role="form" action="google.com" method="post">
                                 <div class="form-group">
                                     <label for="title">Título: </label>
                                     <input type="text" id="titulo" class="form-control"
-                                           placeholder=""  maxlength="128" disabled>
+                                           placeholder=""  maxlength="128"
+                                           data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                                           disabled>
                                 </div>
-                                <div class="form-group">
-                                    <label for="title">Lenguaje: </label>
+                                <div class="form-group"
+                                  data-container="body"
+                                  data-toggle="popover"
+                                  data-trigger="focus"
+                                  data-placement="right"
+                                  data-content="descripcion del lenguaje"
+                                >
+                                    <label for="title">Lenguaje:
+                                      <span style="font-size:15px;"
+
+                                        class="glyphicon glyphicon-question-sign">
+                                      </span>
+
+                                    </label>
                                     <select id="lenguaje" class="form-control">
                                         <option>Español</option>
                                         <option>Inglés</option>
@@ -180,23 +195,46 @@
 
                                 <div class="form-group">
                                     <label for="title">Descripción: </label>
-                                    <textarea id="meta-descripcion" class="form-control" rows="6" maxlength="2048"></textarea>
+                                    <textarea id="meta-descripcion" data-container="body"
+                                    data-toggle="popover"
+                                    data-trigger="focus"
+                                    data-placement="right"
+                                    data-content="descripcion de la descripcion"
+                                    class="form-control" rows="6" maxlength="2048"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="title">Palabra Clave: </label>
-                                    <input type="text" id="keyword" class="btn form-control"
+                                    <input type="text" data-toggle="popover"
+                                    data-trigger="focus"
+                                    data-placement="right"
+                                    data-content="descripcion de palabras clave"
+                                    id="keyword" class="btn form-control"
                                            maxlength="64">
-                                    <input  type="button" value="+">
+                                    <input  type="button" data-toggle="popover"
+                                    data-trigger="focus"
+                                    data-placement="right"
+                                    data-content="Esto no se que es"
+                                    value="+">
                                     <div class="palabras-clave panel panel-default"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="title">Fecha de creación: </label>
-                                    <input type="date" id="fecha" class="form-control">
+                                    <input type="date" id="fecha" data-toggle="popover"
+                                    data-trigger="focus"
+                                    data-placement="right"
+                                    data-content="descripcion de fecha de creacion"
+                                    class="form-control">
                                 </div>
+
                                 <h4> <span class="label label-default">Ciclo de vida</span></h4>
+
                                 <div class="form-group">
                                     <label for="title">Autor: </label>
-                                    <input type="text" id="autor" class="form-control"  maxlength="128"
+                                    <input type="text" id="autor" data-toggle="popover"
+                                      data-trigger="focus"
+                                      data-placement="right"
+                                      data-content="descripcion de author"
+                                      class="form-control"  maxlength="128"
                                             >
                                 </div>
                                 <label>Formato: SCORM1.2</label><br>
@@ -204,7 +242,11 @@
                                 <h4> <span class="label label-default">Educación</span></h4>
                                 <div class="form-group">
                                     <label for="title">Contexto: </label>
-                                    <select id="contexto" class="form-control">
+                                    <select id="contexto" data-toggle="popover"
+                                      data-trigger="focus"
+                                      data-placement="right"
+                                      data-content="descripcion de Contexto"
+                                      class="form-control">
                                         <option>--</option>
                                         <option> Educación preescolar</option>
                                         <option>Educación básica primaria</option>
@@ -214,6 +256,7 @@
                                         <option>Entrenamiento / capacitación</option>
                                     </select>
                                 </div>
+
                                 <h4> <span class="label label-default">Derechos</span></h4>
                                 <label>Costo: No</label><br>
                                 <label>Derechos de autor:CC BY-NC-ND 4.0</label><br>
@@ -221,12 +264,19 @@
                                 <h4> <span class="label label-default">Clasificacional</span></h4>
                                 <div class="form-group">
                                     <label for="title">Buscar: </label>
-                                    <input type="text" id="buscar" class="form-control"
-                                            >
+                                    <input type="text" id="buscar" data-toggle="popover"
+                                      data-trigger="focus"
+                                      data-placement="right"
+                                      data-content="descripcion de clasificacion"
+                                      class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="title">ó elegir concepto cabecera: </label>
-                                    <select id="ccabecera" class="form-control">
+                                    <select id="ccabecera" class="form-control" data-toggle="popover"
+                                    data-trigger="focus"
+                                    data-placement="right"
+                                    data-content="descripcion del concepto de cabecera"
+                                    >
                                         <option>--</option>
 
                                     </select>
@@ -240,7 +290,7 @@
                                 </div>
                                 <div id="group-subitems" class="form-group" style="display:none">
                                     <label for="title">Subitems conceptos específicos: </label>
-                                    <select id="subitems" class="form-control" >
+                                    <select id="subitems" class="form-control"  >
                                         <option>--</option>
 
                                     </select>
@@ -265,17 +315,22 @@
                           <h4>Respuestas</h4>
                             <div class="respuestas-top">
                               <span>Cifras decimales: </span>
-                              <input type="number" min="0" max="10"/>
+                              <input value="0" type="number" min="0" max="10"/>
                               <span style="font-size:15px;" data-toggle="tooltip" data-placement="top" title="cifras decimales para las respuestas" class="glyphicon glyphicon-question-sign"></span>
+                              <span style="padding: 0 10px;">|</span>
+                              <span> Mostrar labels</span>
+                              <input type="checkbox" style="width: 20px;"/>
+                              <span style="font-size:15px;" data-toggle="tooltip" data-placement="top" title="mostrar los labels en las respuestas" class="glyphicon glyphicon-question-sign"></span>
+
                             </div>
                             <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
                             </div>
 
                             <div class="input-group">
                             <span class="input-group-btn">
+                                </button>
                                 <button class="btn btn-default" id="crearRespuesta" type="button">
                                     <span class="glyphicon glyphicon-plus "></span>
-                                </button>
                             </span>
                                 <input type="text" id="inputNuevaRespuesta" placeholder="nombre de la respuesta-> ej: ancho"class="form-control">
                             </div><!-- /input-group -->
@@ -1168,57 +1223,57 @@
                                     <div class="panel  hide" id="panelParaRespuesta">
                                             <div class="">
 
-                                                 <div class="card" data-id="raiz" data-code="sqrt()">
+                                                 <div class="image-card sqrt card" data-id="raiz" data-code="sqrt()">
                                                     <p><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="raiz-n" data-code="sqrt()">
+                                                <div class="image-card sqrtRoot card" data-id="raiz-n" data-code="sqrt()">
                                                     <p>&nbsp;<code class="spa potencia-exponente"> </code><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="log" data-content="log"  data-code="log((),())">
+                                                <div class="image-card log  card" data-id="log" data-content="log"  data-code="log((),())">
                                                     <p>log &nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-iexponente">             </code>&nbsp;</p>
                                                 </div>
 
-                                                <div class="card" data-id="expo" data-code="pow((),())">
+                                                <div class="image-card card pown" data-id="expo" data-code="pow((),())">
                                                     <p>&nbsp;<code class="spa potencia-base"> </code> &nbsp;<code class="spa potencia-exponente"> </code>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="cos" data-code="cos()">
+                                                <div class="image-card card  cos" data-id="trig" data-content="cos" data-code="cos()">
                                                     <p>cos &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="sin" data-code="sin()">
+                                                <div class="image-card card sin" data-id="trig" data-content="sin" data-code="sin()">
                                                     <p>sin &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="tan" data-code="tan()">
+                                                <div class="image-card card tan" data-id="trig" data-content="tan" data-code="tan()">
                                                     <p>tan &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="csc" data-code="csc()">
+                                                <div class="image-card card csc" data-id="trig" data-content="csc" data-code="csc()">
                                                     <p>csc &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="sec" data-code="sec()">
+                                                <div class="image-card card sec" data-id="trig" data-content="sec" data-code="sec()">
                                                     <p>sec &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="cot" data-code="cot()">
+                                                <div class="image-card card cot" data-id="trig" data-content="cot" data-code="cot()">
                                                     <p>cot &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
 
-                                                <div class="card" data-id="trig" data-content="cosh" data-code="cosh()">
+                                                <div class="image-card card cosh" data-id="trig" data-content="cosh" data-code="cosh()">
                                                     <p>cosh &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="sinh" data-code="sinh()">
+                                                <div class="image-card card sinh" data-id="trig" data-content="sinh" data-code="sinh()">
                                                     <p>sinh &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="tanh" data-code="tanh()">
+                                                <div class="image-card card tanh" data-id="trig" data-content="tanh" data-code="tanh()">
                                                     <p>tanh &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="csch" data-code="csch()">
+                                                <div class="image-card card csch" data-id="trig" data-content="csch" data-code="csch()">
                                                     <p>csch &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="sech" data-code="sech()">
+                                                <div class="image-card card sech" data-id="trig" data-content="sech" data-code="sech()">
                                                     <p>sech &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="coth" data-code="coth()" >
+                                                <div class="image-card card coth" data-id="trig" data-content="coth" data-code="coth()" >
                                                     <p>coth &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
-                                                <div class="card" data-id="trig" data-content="ln" data-code="lg()">
+                                                <div class="image-card card ln" data-id="trig" data-content="ln" data-code="lg()">
                                                     <p>ln &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
                                             </div>

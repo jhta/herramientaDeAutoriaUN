@@ -1,5 +1,5 @@
 var client = new $.RestClient('http://104.236.247.200:4000/api/');
-        
+
 function createFolder(that) {
     var $this = that;
             client.folder.create({name:$("#create-folder").val(),userid:sessionStorage.getItem('id')}).done(function (data) {
@@ -178,9 +178,9 @@ $(document).ready(function(){
                     $("#header-"+$($this).data('id')).parent().remove();
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
-                });    
+                });
             }
-            
+
         });
 
         /*
@@ -278,7 +278,7 @@ $(document).ready(function(){
                     $("#"+$($this).data('id')).remove();
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
-                });    
+                });
             }
         });
 
@@ -315,7 +315,7 @@ $(document).ready(function(){
         $("#previewer").on( "click", function( event) {
             messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
+                var clientScorm = new $.RestClient('http://104.236.247.200/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
                     $("#iframe-preview").attr("src","http://104.236.247.200/gen-scorm1.2-api/scorm-template/launch.html");
@@ -394,10 +394,12 @@ $(document).ready(function(){
                 stringXmlMetadatos = xml_metadatos;
 
                 client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
-                    if(messagesaved)
-                    alert("Datos cargados correctamente");
-                    else
+                    if(messagesaved) {
+                        alert("Datos cargados correctamente");
+                        uploadFiles();
+                    }else {
                         messagesaved = true;
+                    }
                 }).fail(function () {
                     alert("Error, inténtalo de nuevo");
                 });
@@ -411,12 +413,12 @@ $(document).ready(function(){
             unloadactive = false;
             messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://104.236.247.200:4001/api/');
+                var clientScorm = new $.RestClient('http://104.236.247.200:4000/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
-                    window.location = 'http://104.236.247.200:4001/api/scorm/download';
+                    window.location = 'http://104.236.247.200:4000/api/scorm/download';
                 }).fail(function () {
-                    window.location = 'http://104.236.247.200:4001/api/scorm/download';
+                    window.location = 'http://104.236.247.200:4000/api/scorm/download';
                 });
             });
         });

@@ -481,30 +481,6 @@ function removeNode(tree, idFather, pos){
     });
 }
 
-/*
-Tree.prototype.init = function(id, tag, opentag, closetag, children){
-    this.id = id;
-    this.tag = tag;
-    this.opentag = opentag;
-    this.closetag = closetag;
-    this.children = children;
-}
-    
-Tree.prototype.setChildren = function(child){
-    this.children = child;
-}
-
-Tree.prototype.setChildrenPos = function(pos, children){
-    console.log('children');
-    console.log(children);
-    this.children.splice(pos, 1, children);
-}
-
-Tree.prototype.makeString = function(){
-    var r = makeStringRec(this);
-    return r;
-}*/
-
 function makeStringRec(tree){
     var result = '';
     if(tree instanceof Tree || tree instanceof Object){
@@ -534,23 +510,6 @@ function makeStringRec(tree){
     return result;
 }
 
-/*
-
-Tree.prototype.addNode = function(idFather, data, pos){
-    endFunction = false;
-    if(this.children.length == 0){
-        this.children = [data];
-    }else{
-        addNodeRec(this, idFather, function(node, err){
-            if(err)
-                console.log(err);
-            else{
-                node.setChildrenPos(pos, data);
-            }
-        });
-    }
-}*/
-
 function addNodeRec(tree, idFather, callback){
     if(tree.id === idFather){
         endFunction = true;
@@ -571,20 +530,6 @@ function addNodeRec(tree, idFather, callback){
                 callback(null, 'no se encontraron hijos')
     }
 }
-
-/*
-Tree.prototype.removeNode = function(idFather, pos){
-    endFunction = false;
-    removeNodeRec(this, idFather, function(resp, err){
-        if(err)
-            console.log(err);
-        else{
-            resp.children[pos] = '<mi>□</mi>'
-        }
-            
-    });
-}
-*/
 
 function removeNodeRec(tree, idFather, callback){
     if(tree instanceof Tree || tree instanceof Object){
@@ -661,9 +606,11 @@ var focusElement = null;
 var conjuntoVariables = [];
 $(document).ready(function(){
 
-    //popovers
-    $('[data-toggle="tooltip"]').tooltip()
 
+    //popovers
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+    
     //toogle nav superior
     $("#tab-respuestas").click(function(){
         $("#meta-panel").addClass("hide");
