@@ -7,14 +7,15 @@ $(document).ready(function(){
     $("#div-iner").hide();
     var mathml = "";
 
+
     $("#inserteq").click(function(){
         $("#div-iner").fadeIn("slow");
         $("#DeleteEquation").fadeIn();
         inRespuesta = false;
         document.getElementById('eq').focus();
-        var preid ="equation-"+ (++idEquation);
 
-        $("#"+eqactually).css('background-color', '#ccc');
+        $("#"+eqactually).css('background-color', 'white');
+        var preid ="equation-"+ (++idEquation);
 
         pasteHtmlAtCaret('<div class="pre-equation mathBlock" id='+preid+' contenteditable="false"><math></math></div>&nbsp;');
         document.getElementById(preid).innerHTML = "<math></math>";
@@ -35,6 +36,7 @@ $(document).ready(function(){
         $('.drop').html("");
         eqactually = preid;
 
+        $("#"+eqactually).css('background-color', '#ccc');
     });
 
 
@@ -98,7 +100,9 @@ $(document).ready(function(){
         }
     }
 
-        $("#eq").on("click", ".pre-equation", function () {
+
+    $("#eq").on("click", ".pre-equation", function () {
+      $("#div-iner").fadeIn("slow");
         inRespuesta = false;
         var idpre = $(this).attr('id');
         var idsplit = idpre.split('-')[1];
@@ -108,23 +112,23 @@ $(document).ready(function(){
         //--------------
 
         //Quitar color activo al recuadro de la expresión
-        $("#"+eqactually).css('background-color', '#ccc');
-
-
+        $("#"+eqactually).css('background-color', 'white');
 
         //$('#previsualizar').text(html[eqactually]);
         eqactually = idpre;
 
         //Colocar color a la nueva expresión que se ha seleccionado
-        $("#"+eqactually).css('background-color', '#F0F514');
+        $("#"+eqactually).css('background-color', '#ccc');
 
         $('.panel-2').html("");
 
         $('.panel-2').html(html[eqactually]);
 
-        if(html[eqactually] == ""){
+        if(html[eqactually] == "")
             $(".panel-2").droppable(funcDroppableDrop);
-        }
+        else
+            $(".panel-2").droppable(funcDroppableFalse); //desactiva drop en la base
+
         treeActual = treeActivos[idsplit];
         $('.drop div').each(function(index){
             if($(this).hasClass("ultimo-e")){
@@ -139,9 +143,6 @@ $(document).ready(function(){
             }
         });
     });
-
-
-
 
     function equationsToXml(){
 

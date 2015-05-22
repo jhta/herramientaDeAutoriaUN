@@ -116,11 +116,7 @@ var Printer = {
                                     "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>"+
                                 " </a>"+
                             "</div>"+
-                            "<div class='btn-group' role='group' aria-label='...'>"+
-                                "<a  class='addErrorGenuino' data-id='respuesta-"+idRespuesta+"'>"+
-                                    "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>"+
-                                "</a>"+
-                            "</div>"+
+
                         "</div>"+
                     " </div>"+
                 "</div>"+
@@ -129,6 +125,7 @@ var Printer = {
                         "<ul class='list-group'>"+
                              this.correctAnswer( idRespuesta, respactual.nombre, "" ) +
                         "</ul>"+
+												"<a href='#' data-id='" + idRespuesta + "' style='margin:10px' class='addErrorGenuino btn btn-success'>Agregar Error</a>"+
                     "</div>"+
                 "</div>"+
             "</div>"

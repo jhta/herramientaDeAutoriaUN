@@ -35,6 +35,7 @@
     <!--Controladores AngularJS -->
     <script type="text/javascript" src="dev/js/controllers/respuestaController.js"></script>
     <script type="text/javascript" src="dev/js/controllers/variableController.js"></script>
+    <script type="text/javascript" src="dist/js/global-vars.js"></script>
     <script type="text/javascript" src="dev/js/src/appGenerator.js"></script>
     <script type="text/javascript" src="dist/js/tiposMetadatos.js"></script>
     <script type="text/javascript" src="dist/js/metadatos.js"></script>
@@ -106,18 +107,18 @@
                     padding: 7px 16px;
                     border-radius: 4px;
                     background-color: #5cb85c;
-                "><span class="glyphicon glyphicon-export"> </span></a></li>
+                "><span class="glyphicon glyphicon-export" data-toggle="tooltip" data-placement="top" title="Exportar"> </span></a></li>
 
                 <li id="saveData" ><a href="#" class="tab-li btn btn-success" data-toggle="tab" style="
                     padding: 7px 16px;
                     border-radius: 4px;
                     background-color: #5cb85c;
-                "><span class="glyphicon glyphicon-save"> </span></a></li>
+                "><span class="glyphicon glyphicon-save" data-toggle="tooltip" data-placement="top" title="Guardar"> </span></a></li>
                 <li id="previewer" ><a href="#" class="tab-li btn btn-success" data-toggle="tab" style="
                     padding: 7px 16px;
                     border-radius: 4px;
                     background-color: #5cb85c;
-"><span class="glyphicon glyphicon-eye-open"> </span></a></li>
+                "><span class="glyphicon glyphicon-eye-open" data-toggle="tooltip" data-placement="top" title="Tooltip on top" > </span></a></li>
             </ul>
             <div id="my-tab-content" style="height: 100%; overflow: auto;" class=" panel panel-default tab-content">
                 <!--Tab 1: Formulacion -->
@@ -265,6 +266,7 @@
                             <div class="respuestas-top">
                               <span>Cifras decimales: </span>
                               <input type="number" min="0" max="10"/>
+                              <span style="font-size:15px;" data-toggle="tooltip" data-placement="top" title="cifras decimales para las respuestas" class="glyphicon glyphicon-question-sign"></span>
                             </div>
                             <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
                             </div>
@@ -1163,16 +1165,8 @@
                                     </div>
 
                                      <!--PANEL PARA PRESPUESTAS -->
-                                    <div class="panel panel-default hide" id="panelParaRespuesta">
-                                        <div class="panel-heading" role="tab" id="headingTrigonometrica">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#expresiones" href="#collapseTrigonometrica" aria-expanded="true" aria-controls="collapseTrigonometrica">
-                                                    A implementar
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseTrigonometrica" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingTrigonometrica">
-                                            <div class="panel-body">
+                                    <div class="panel  hide" id="panelParaRespuesta">
+                                            <div class="">
 
                                                  <div class="card" data-id="raiz" data-code="sqrt()">
                                                     <p><span style="font-size: 25px;">&#8730;</span><code class="spa"> </code>&nbsp;</p>
@@ -1228,7 +1222,6 @@
                                                     <p>ln &nbsp;<div class="spa code"> </div>&nbsp;</p>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -1241,7 +1234,16 @@
             </div>
         </div>
         <!--FIN: Seccion izquierda-->
-
+        <div class="col-xs-4 hide " id="meta-panel">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">metadatos info</div>
+            </div>
+            <div class="panel-body">
+              hello!!
+            </div>
+          </div>
+        </div>
 
         <!-- Modales -->
         <div class="modal fade" id="modal-previewer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

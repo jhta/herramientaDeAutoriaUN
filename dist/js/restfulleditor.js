@@ -341,6 +341,7 @@ $(document).ready(function(){
             jsonValues = {};
             conjuntoVariables = [];
             eqActuallyIdRespuestaCorrecta = null;
+            idEquation = -1;
             $('#content-drop-respuestas').html("");
             $('#accordion2').html("");
             respuestas = {};

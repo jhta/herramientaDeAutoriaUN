@@ -105,8 +105,8 @@ function respuestaXmlToHtml(xmlRespuestas) {
                 if(respuesta.error_genuino !== undefined ) {
                     console.log(respuesta.error_genuino);
                     printErrorGenuino(respuesta.error_genuino, respuesta.id);
-                } 
-                    
+                }
+
             });
         } else {
             for( var res in xmlRespuestas) {
@@ -119,9 +119,9 @@ function respuestaXmlToHtml(xmlRespuestas) {
                     respuesta.error_genuino.forEach(function(eg) {
                         printHtmlerror(eg, respuesta.id);
                     });
-            }    
+            }
         }
-        
+
     //No se esto pa que putas???
     idRespuesta = getNewGlobalId();
 }
@@ -185,7 +185,7 @@ function editRetroAlimentation( error, respuesta, state) {
         respuestas[respuesta].error_genuino[indexError+1].retro_alimentacion = state;
     } else
         respuestas[respuesta].error_genuino[indexError].retro_alimentacion = state;
-    
+
 }
 
 function validateExpresion( expresion ) {
@@ -228,13 +228,13 @@ $(document).ready(function(){
                 state = "error de formulacion";
                 flag = true;
             }
-            
+
             if(!flag) {
 
                 if($(this).data("tipo")){
                     $("#p-correct-"+$(this).data("respuesta")).removeClass("hide");
                     $("#p-correct-"+$(this).data("respuesta")).data("real",realExpresion);
-                    
+
                     console.log("si tiene ipo", $(this).data("tipo"));
                     EditFormInRes( $(this).data("respuesta"), realExpresion);
                 } else {
@@ -264,7 +264,7 @@ $(document).ready(function(){
         }
     });
 
-    
+
     $("#inputNuevaRespuesta").keyup(function(event){
         if(event.keyCode == 13){
            $("#crearRespuesta").click();
@@ -294,7 +294,7 @@ $(document).ready(function(){
         $("#text-"+id).removeClass("hide");
         $("#p-text-"+id).addClass("hide");
         $("#text-"+id).val($("#p-text-"+id).text());
-        
+
     });
 
 
@@ -307,11 +307,11 @@ $(document).ready(function(){
         RespuestaActual.nombre = $("#inputNuevaRespuesta").val();
         RespuestaActual.formula = "";
         Printer.createHtmlAnswer( idNewRespuesta, RespuestaActual );
-        
+
         $("#inputNuevaRespuesta").val('');
         console.log(respuestas);
-        
-        ////??? que monda es esto????? 
+
+        ////??? que monda es esto?????
         eqActuallyIdRespuestaCorrecta = "";
         $('#content-drop-respuestas').html("");
         respuestas[RespuestaActual.id+""] = RespuestaActual;
@@ -331,7 +331,7 @@ $(document).ready(function(){
         if(Array.isArray( RespuestaActual.error_genuino )) {
             error.id = RespuestaActual.id+ "-" + RespuestaActual.error_genuino.length;
             RespuestaActual.error_genuino.push(error);
-            
+
         }else {
             error.id = RespuestaActual.id+ "-" + 0;
             var aux = RespuestaActual.error_genuino;
@@ -345,7 +345,7 @@ $(document).ready(function(){
             $("#"+$(this).data("id")).addClass('in');
         }
         Printer.addErrorToAnswer( $(this).data("id"), error, RespuestaActual );
-        
+
         eqActuallyIdRespuestaCorrecta = RespuestaActual.id;
         $('#content-drop-respuestas').html("");
         eqactuallyres = error.id;
@@ -367,7 +367,7 @@ $(document).ready(function(){
                 }
             });
         }
-        
+
     });
 
     //Elimina una respuesta tanto desde la vista html como del array
@@ -376,9 +376,9 @@ $(document).ready(function(){
         var ok = confirm("esta seguro que quiere eliminar esto?");
         if(ok) {
             $("#"+$(this).data("id")).parent().remove();
-            delete respuestas[$(this).data("id")+""];    
+            delete respuestas[$(this).data("id")+""];
         }
-        
+
     });
 
     //editar el nombre de la respuesta
@@ -525,16 +525,18 @@ $(document).ready(function(){
 
         var resp = JSON.stringify(respuestas);
         var x2js = new X2JS();
-        console.log("l respuesta", respuestas);
         var resp = x2js.json2xml_str(respuestas);
-
+        console.log("RESPUESTAS ||||||||||",respuestas);
+        var respuestasOk = (respuestas && !jQuery.isEmptyObject(respuestas))? true : false;
+        console.log("OK", respuestasOk);
         xw.writeStartElement('respuestas');
 
         for(var element in respuestas)
         {
             var res = respuestas[element];
             console.log(res);
-            console.log(respuestas[element]);
+            console.log(res.formula);
+            respuestasOk = (!res.formula || res.formula=="")? false : respuestasOk;
             xw.writeStartElement('respuesta');
             xw.writeAttributeString( "nombre", res.nombre );
             xw.writeAttributeString( "id", res.id);
@@ -554,7 +556,7 @@ $(document).ready(function(){
                                 xw.writeAttributeString( "retro_alimentacion", error.retro_alimentacion );
                             xw.writeEndElement();
                         }
-                        
+
                     });
                 } else {
 
@@ -564,30 +566,35 @@ $(document).ready(function(){
                             xw.writeStartElement('error_genuino');
                             xw.writeAttributeString( "id", egen.id );
                             xw.writeAttributeString( "respuesta_id", res.id );
+
                             xw.writeAttributeString( "formula", egen.formula );
                             xw.writeAttributeString( "cifras_decimales", "0.2" );
                             if(egen.retro_alimentacion != undefined && error.retro_alimentacion != null)
                                  xw.writeAttributeString( "retro_alimentacion", egen.retro_alimentacion );
                             xw.writeEndElement();
                        }
-                       
-                   } 
+
+                   }
                 }
             }
-            
+
             xw.writeEndElement();
         }
         xw.writeEndElement();
-        
+
         xw.writeEndElement();
         xw.writeEndDocument();
 
 
         var xml = xw.flush();
-        console.debug("El puto html ressultante D: D:", xml);
         var xml_metadatos = getXmlMetadatos();
-
-        $( "#loadeq").trigger( "guardarxml", [ xml,xml_metadatos ] );
+        if(respuestasOk){
+          console.log(respuestasOk);
+          //console.debug("El puto html ressultante D: D:", xml);
+          $( "#loadeq").trigger( "guardarxml", [ xml,xml_metadatos ] );
+        } else {
+          alert("Debe tener al menos una respuesta para guardar");
+        }
 
     });
 
