@@ -1,4 +1,4 @@
-var client = new $.RestClient('http://104.236.247.200:4000/api/');
+var client = new $.RestClient('http://localhost:4000/api/');
 
 function createFolder(that) {
     var $this = that;
@@ -148,9 +148,9 @@ $(document).ready(function(){
         });
 
         $("#logout").click(function(){
-            sessionStorage.removeItem('id');
-            sessionStorage.removeItem('name');
-            $(location).attr('href','login.html');
+                sessionStorage.removeItem('id');
+                sessionStorage.removeItem('name');
+                $(location).attr('href','login.html');
         });
 
         /*
@@ -351,7 +351,10 @@ $(document).ready(function(){
         }
         //Boton volver
         $("#btnVolver").on("click", function(){
+            messagesaved = false;
+            $.when($( "#loadeq").trigger( "click" )).then(function(event) {
             comeBack();
+            });
         });
 
         $("#title-ticademia").on("click", function(){
@@ -394,9 +397,9 @@ $(document).ready(function(){
                 stringXmlMetadatos = xml_metadatos;
 
                 client.question.update(id,{xml_pregunta:xml,xml_metados:xml_metadatos}).done(function (data) {
+                    uploadFiles();
                     if(messagesaved) {
-                        alert("Datos cargados correctamente");
-                        uploadFiles();
+                        alert("Datos guardados correctamente");
                     }else {
                         messagesaved = true;
                     }
@@ -413,14 +416,13 @@ $(document).ready(function(){
             unloadactive = false;
             messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://104.236.247.200:4000/api/');
+                var clientScorm = new $.RestClient('http://localhost:4000/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
                     window.location = 'http://104.236.247.200:4000/api/scorm/download';
                 }).fail(function () {
                     window.location = 'http://104.236.247.200:4000/api/scorm/download';
                 });
-            });
         });
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
@@ -450,10 +452,11 @@ $(document).ready(function(){
         }
 
         $(window).on("beforeunload", function() {
-            if (unloadactive)
+            if (unloadactive){
                 return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
-            else
+            } else {
                 unloadactive = true;
+            }
         })
 
         }else{

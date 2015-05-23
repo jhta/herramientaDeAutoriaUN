@@ -41,7 +41,7 @@ function formulacionXMLToHtml(xml){
                 conteq = conteq < idEq ? idEq: conteq;
 
             }else if(xml.formulacion.expresion.tipo.localeCompare("imagen")==0){
-                $("#eq").append('<img class="mathBlock" id="'+ xml.formulacion.expresion.texto +'" style="height: 30px; width: 30px" src="dist/images/picture.png" />');
+                $("#eq").append('<img class="mathBlock" id="'+ xml.formulacion.expresion.texto +'" style="height: 30px; width: 30px" src="http://localhost/gen-scorm1.2-api/images/'+xml.formulacion.expresion.texto+'" />');
 
             } else {
                 $("#eq").append(xml.formulacion.expresion.texto + " ");
@@ -62,7 +62,7 @@ function formulacionXMLToHtml(xml){
                 conteq = conteq < idEq ? idEq: conteq;
 
             } else if(xml.formulacion.expresion[i].tipo.localeCompare("imagen")==0){
-            $("#eq").append('<img class="mathBlock" id="'+ xml.formulacion.expresion[i].texto +'" style="height: 30px; width: 30px" src="dist/images/picture.png" />');
+            $("#eq").append('<img class="mathBlock" id="'+ xml.formulacion.expresion[i].texto +'" style="height: 30px; width: 30px" src="http://localhost/gen-scorm1.2-api/images/'+xml.formulacion.expresion[i].texto+'" />');
 
             } else {
                 $("#eq").append(xml.formulacion.expresion[i].texto+" ");
