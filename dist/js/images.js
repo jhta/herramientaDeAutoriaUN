@@ -3,7 +3,7 @@ var formData = new FormData(),
 
 function init(){
         xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http:localhost:4000/api/scorm/uploadfiles', true);
+        xhr.open('POST', 'http:104.236.247.200:4000/api/scorm/uploadfiles', true);
 
         xhr.onload = function () {
             init();
@@ -53,7 +53,6 @@ var uniqueId = function () {
 
 //Request upload file
 function uploadFiles(){
-    alert("Me llamaron papi");
     xhr.send(formData);
 }
 
