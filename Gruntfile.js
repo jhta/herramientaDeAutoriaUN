@@ -27,8 +27,7 @@ module.exports = function(grunt){
               },
               files:{
                   'dist/js/app.min.js': 'dist/js/app.js',   //nombre de archivo que se creara y cual es su fuente
-                  'dist/js/controllers/respuestaController.js':'dev/js/controllers/respuestaController.js',        
-                  
+                  'dist/js/controllers/respuestaController.js':'dev/js/controllers/respuestaController.js'
               }
           }  
         },

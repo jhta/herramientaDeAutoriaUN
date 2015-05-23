@@ -1,4 +1,4 @@
-var client = new $.RestClient('http://localhost:4000/api/');
+var client = new $.RestClient('http://104.236.247.200:4000/api/');
 
 function createFolder(that) {
     var $this = that;
@@ -315,7 +315,7 @@ $(document).ready(function(){
         $("#previewer").on( "click", function( event) {
             messagesaved = false;
             $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://104.236.247.200/api/');
+                var clientScorm = new $.RestClient('http://104.236.247.200:4000/api/');
                 clientScorm.add('scorm');
                 clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
                     $("#iframe-preview").attr("src","http://104.236.247.200/gen-scorm1.2-api/scorm-template/launch.html");
@@ -415,14 +415,18 @@ $(document).ready(function(){
         $("#exportscorm").on( "click", function( event) {
             unloadactive = false;
             messagesaved = false;
-            $.when($( "#loadeq").trigger( "click" )).then(function(event) {
-                var clientScorm = new $.RestClient('http://localhost:4000/api/');
+            $.when($("#loadeq").trigger("click")).then(function (event) {
+                var clientScorm = new $.RestClient('http://104.236.247.200:4000/api/');
                 clientScorm.add('scorm');
-                clientScorm.scorm.create({question:stringXmlFormulacion,metadatos:stringXmlMetadatos}).done(function(){
+                clientScorm.scorm.create({
+                    question: stringXmlFormulacion,
+                    metadatos: stringXmlMetadatos
+                }).done(function () {
                     window.location = 'http://104.236.247.200:4000/api/scorm/download';
                 }).fail(function () {
                     window.location = 'http://104.236.247.200:4000/api/scorm/download';
                 });
+            });
         });
 
         //Transforma el string xml en objetos javascript y carga html correspondientes
