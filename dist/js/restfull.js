@@ -6,7 +6,7 @@ $(document).ready(function(){
         var user = $("#username").val();
         var pass = $("#password").val();
 
-        client = new $.RestClient('http://104.236.247.200:4000/api/', {
+        client = new $.RestClient('http://localhost:4000/api/', {
             username: user,
             password: pass
         });
@@ -33,7 +33,7 @@ $(document).ready(function(){
             newPass = $("#newPass").val(),
             repeatPass = $("#repeatPass").val();
         console.log(newName+" "+newMail+" "+newPass);
-        client = new $.RestClient('http://104.236.247.200:4000/api/');
+        client = new $.RestClient('http://localhost:4000/api/');
         client.add('user');
         client.user.create({email:newMail,pass:newPass, name: newName}).done(function(data){
             alert("bienvenido");
