@@ -1,7 +1,4 @@
-
-
 $(document).ready(function(){
-
 
     //Metadatos
     /* Eventos javascript que se ejecutan con ciertas acciones
@@ -9,6 +6,7 @@ $(document).ready(function(){
 
     var file_json;
     var eleccion;
+
     /* Esta función  obtiene un JSON el cual contiene el contenido de
      la clasificación según la Nomenclatura Internacional de la Unesco
      y lo carga en el primer select
@@ -120,10 +118,51 @@ $(document).ready(function(){
             });
             $("#codigo").text("Codigo: "+eleccion);
             $("#descripcion").text("Descripcion: "+$('#ccabecera').val()+" - "+$('#cespecificos').val()+" - "+$('#subitems').val());
-
-
         }
     });
+
+    var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+            var matches, substringRegex;
+
+            // an array that will be populated with substring matches
+            matches = [];
+
+            // regex used to determine if a string contains the substring `q`
+            substrRegex = new RegExp(q, 'i');
+
+            // iterate through the pool of strings and for any string that
+            // contains the substring `q`, add it to the `matches` array
+            $.each(strs, function(i, str) {
+                if (substrRegex.test(str)) {
+                    matches.push(str);
+                }
+            });
+
+            cb(matches);
+        };
+    };
+
+    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    ];
+
+    $('#buscar').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+            name: 'states',
+            source: substringMatcher(states)
+        });
 });
 
 function getXmlMetadatos(){
@@ -186,8 +225,6 @@ function metadatosXmlToHtml(json){
     $("#meta-descripcion").val(json.description);
     $("#keyword").val(json.keyword);
     $("#fecha").val(json.date);
-    console.log("Mira esta fechaaaaaa");
-    console.log(json.date);
     $("#contexto").val(json.context);
     $("#autor").val(json.autor || $("#autor").val() );
 
@@ -202,7 +239,6 @@ function metadatosXmlToHtml(json){
             $('#cespecificos').trigger( "change" );
 
             if(json.subitems && json.subitems!=="--"){
-                alert(json.subitems);
                 $('#subitems').trigger( "change" );
                 $("#subitems").val(json.subitems);
             }

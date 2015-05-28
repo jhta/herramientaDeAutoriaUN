@@ -9,7 +9,6 @@ var focusElement = null;
 var conjuntoVariables = [];
 $(document).ready(function(){
 
-
     //popovers
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
@@ -560,8 +559,6 @@ function agregarvariableHTML(v,isnew,container){
     v.numb = arrayValues
 
     hashVariables[v.name] = v;
-    console.log("agregada");
-    console.debug(JSON.stringify(hashVariables));
     if(v.type == 'especifica'){
         var result = '[ ';
         for (var i = 0; i < arrayValues.length; i++) {
@@ -631,7 +628,7 @@ function agregarvariableHTML(v,isnew,container){
     if(stringpre.length>36) stringpre = stringpre.substring(0, 30)+"... ]";
 
     var htmlVar = "<span class='panel-title'>" +
-        "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo+"' data-metadatos='"+metadatos+"'> <span class='var'>" + v.name + "</span></div>"+
+        "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo +"' data-metadatos='"+metadatos+"'> <span data-toggle='tooltip' data-placement='top' title data-original-title='"+tipo+"' class='var'>" + v.name + "</span></div>"+
         "</span>" +
         "<div>"+stringpre+"</div>"+
         "<div class='pull-right hide-tools'>"+

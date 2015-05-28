@@ -2,12 +2,12 @@ var formData = new FormData(),
     xhr;
 
 function init(){
-        xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http:104.236.247.200:4000/api/scorm/uploadfiles', true);
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://104.236.247.200:4000/api/scorm/uploadfiles', true);
 
-        xhr.onload = function () {
-            init();
-        };
+    xhr.onload = function () {
+        init();
+    };
 }
 
 function handleFileSelect(evt) {
@@ -29,20 +29,39 @@ function handleFileSelect(evt) {
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
-           
-               var name = uniqueId();
-                    formData.append('files[]', f, name);
-                    return function(e) {
 
-                        pasteHtmlAtCaret('<img class="mathBlock" id="'+ name +'" style="height: 30px; width: 30px" src="'+ e.target.result+'" title="'+ escape(theFile.name) + '"/>');
-                    };
-            
+            var name = uniqueId();
+            formData.append('files[]', f, name);
+            return function(e) {
+
+                resolutionImage(reader,function(ok){
+                    if(ok) {
+                        pasteHtmlAtCaret('<img class="mathBlock" id="' + name + '" style="height: 30px; width: 30px" src="' + e.target.result + '" title="' + escape(theFile.name) + '"/>');
+                    }
+                });
+
+            };
         })(f);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
     }
 }
+
+var resolutionImage = function(image, cb){
+    var img = new Image;
+    img.onload = function() {
+        if(img.width>=640 || img.height>=480){
+            alert("Supera el límite de resolución 640 X 480 permitido");
+            cb(false);
+        }else{
+            cb(true);
+        }
+    };
+    img.src = image.result;
+}
+
+
 
 var uniqueId = function () {
     // Math.random should be unique because of its seeding algorithm.
