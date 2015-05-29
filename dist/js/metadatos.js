@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
     //Metadatos
@@ -6,6 +7,8 @@ $(document).ready(function(){
 
     var file_json;
     var eleccion;
+    var states = [];
+    var metadatos = {};
 
     /* Esta función  obtiene un JSON el cual contiene el contenido de
      la clasificación según la Nomenclatura Internacional de la Unesco
@@ -15,8 +18,7 @@ $(document).ready(function(){
     file_json=json;
     $.each(file_json, function( key, val ) {
         $("#ccabecera").append($("<option>").attr("value", key).text(key));
-
-    });;
+    });
     /*
      Esta función se encarga de actualizar el select cespecificos cuando
      la persona elige  una de las opciones disponibles del select ccabecera
@@ -57,13 +59,13 @@ $(document).ready(function(){
     $('#cespecificos').on('change', function() {
 
 
-        if($('#cespecificos').val()=="--"){
+        if($('#cespecificos').val() == "--"){
             $('#group-subitems').hide();
 
             eleccion= file_json[$('#ccabecera').val()]["codigo"];
             $("#codigo").text("Codigo: "+eleccion);
             $("#descripcion").text("Descripcion: "+$('#ccabecera').val());
-        }else{
+        } else {
             $("#subitems").empty();
             $("#subitems").append($("<option>").attr("value", "--").text("--"));
 
@@ -82,9 +84,9 @@ $(document).ready(function(){
 
                 $("#codigo").text("Codigo: " + eleccion);
                 $("#descripcion").text("Descripcion: " + $('#ccabecera').val() + " - " + $('#cespecificos').val());
-
         }
     });
+
     /*
      Esta funcion se encarga de actualizar la variable "eleccion"
      la cual se usa para mostrar al usuario la informacion de la
@@ -143,16 +145,29 @@ $(document).ready(function(){
         };
     };
 
-    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-    ];
+    $.each(file_json, function( key, val ) {
+        var cabecera = key;
+        metadatos[key] = {};
+        metadatos[key]["codigo"] = file_json[key].codigo;
+        metadatos[key]["nombre"] = key
+        states.push(key);
+
+        $.each(file_json[key].especificos, function( key, val ) {
+            metadatos[val.nombre] = {};
+            metadatos[val.nombre]["codigo"] = val.codigo;
+            metadatos[val.nombre]["nombre"] = cabecera + " - " + val.nombre;
+            states.push(val.nombre);
+
+            var cespecificos = val.nombre;
+
+            $.each(val.subitems, function( key, val ) {
+                metadatos[val.nombre] = {};
+                metadatos[val.nombre]["codigo"] = val.codigo;
+                metadatos[val.nombre]["nombre"] = cabecera + " - " + cespecificos + " - " + val.nombre;
+                states.push(val.nombre);
+            });
+        });
+    });
 
     $('#buscar').typeahead({
             hint: true,
@@ -162,6 +177,10 @@ $(document).ready(function(){
         {
             name: 'states',
             source: substringMatcher(states)
+        }).on('typeahead:selected', function (obj, text) {
+            $('.mostrar').show();
+            $("#codigo").text("Codigo: " + metadatos[text].codigo);
+            $("#descripcion").text("Descripcion: " + metadatos[text].nombre);
         });
 });
 
