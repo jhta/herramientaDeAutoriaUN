@@ -37,6 +37,10 @@ function handleFileSelect(evt) {
                 resolutionImage(reader,function(ok){
                     if(ok) {
                         pasteHtmlAtCaret('<img class="mathBlock" id="' + name + '" style="height: 30px; width: 30px" src="' + e.target.result + '" title="' + escape(theFile.name) + '"/>');
+
+                        //guardar la pregunta
+                        messagesaved = false;
+                        $( "#loadeq").trigger( "click" );
                     }
                 });
 
@@ -59,9 +63,7 @@ var resolutionImage = function(image, cb){
         }
     };
     img.src = image.result;
-}
-
-
+};
 
 var uniqueId = function () {
     // Math.random should be unique because of its seeding algorithm.

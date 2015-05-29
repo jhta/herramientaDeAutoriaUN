@@ -1,3 +1,4 @@
+var messagesaved = true;
 var client = new $.RestClient('http://104.236.247.200:4000/api/');
 
 function createFolder(that) {
@@ -58,8 +59,7 @@ $(document).ready(function(){
         questionactual,
         stringXmlFormulacion,
         stringXmlMetadatos,
-        unloadactive=true,
-        messagesaved = true;
+        unloadactive=true;
 
     if(sessionStorage.getItem('id')) {
         $("#nameUser").html(sessionStorage.getItem('name'));
@@ -150,7 +150,7 @@ $(document).ready(function(){
         $("#logout").click(function(){
                 sessionStorage.removeItem('id');
                 sessionStorage.removeItem('name');
-                $(location).attr('href','login.html');
+                $(location).attr('href', 'login.html');
         });
 
         /*
@@ -359,11 +359,9 @@ $(document).ready(function(){
 
         $("#title-ticademia").on("click", function(){
             comeBack();
-        })
+        });
 
-        /*
-         Cargar toda la información de una pregunta(xml de la pregunta)
-         */
+        // Cargar toda la información de una pregunta(xml de la pregunta)
         $("#accordion").on("click",".LoadQuestion",function(){
             $("#carpetas").fadeOut();
             $("#rootWizard").fadeIn();
@@ -404,11 +402,8 @@ $(document).ready(function(){
                         messagesaved = true;
                     }
                 }).fail(function () {
-                    alert("Error, inténtalo de nuevo");
+                        alert("Error, hubo un problema guardando los datos");
                 });
-
-            }else{
-                alert("Debes seleccionar primero una pregunta para poder guardar los datos");
             }
         });
 
@@ -456,14 +451,14 @@ $(document).ready(function(){
         }
 
         $(window).on("beforeunload", function() {
-            if (unloadactive){
-                return "Guardaste tus datos antes de salir ? , si no es así guarda tus cambios";
+            if (unloadactive) {
+              return "Guardaste tus datos antes de salir ? ";
             } else {
                 unloadactive = true;
             }
         })
 
-        }else{
+        } else {
         $(location).attr('href','login.html');
     }
 });

@@ -256,11 +256,15 @@ $(document).ready(function(){
                 $("#p-"+$(this).attr("id")).text(textExpresion);
                 $("#p-"+$(this).attr("id")).data('real',realExpresion);
                 hideInput("#"+$(this).attr("id"),  "#p-"+$(this).attr("id") );
+
+                //guardar pregunta
+                messagesaved = false;
+                $( "#loadeq").trigger( "click" );
             }else {
                 alert(state);
             }
             event.preventDefault();
-        }else if( checkChar( event.which ) ){
+        } else if( checkChar( event.which ) ){
             return false;
         }
     });
@@ -319,15 +323,15 @@ $(document).ready(function(){
         RespuestaActual.nombre = $("#inputNuevaRespuesta").val();
         RespuestaActual.formula = "";
         Printer.createHtmlAnswer( idNewRespuesta, RespuestaActual );
-
         $("#inputNuevaRespuesta").val('');
-        console.log(respuestas);
         eqActuallyIdRespuestaCorrecta = "";
         $('#content-drop-respuestas').html("");
         respuestas[RespuestaActual.id+""] = RespuestaActual;
-        console.log(respuestas);
-        ///¿¿¿ Y esto????
         eqactuallyres = RespuestaActual.id;
+
+        //guardar la pregunta
+        messagesaved = false;
+        $( "#loadeq").trigger( "click" );
     });
 
     //Agregar error genuino a una respuesta
@@ -359,6 +363,10 @@ $(document).ready(function(){
         eqActuallyIdRespuestaCorrecta = RespuestaActual.id;
         $('#content-drop-respuestas').html("");
         eqactuallyres = error.id;
+
+        //guardar la pregunta
+        messagesaved = false;
+        $( "#loadeq").trigger( "click" );
     });
 
     //Eliminar el error genunio de su respectiva respuesta asociada
@@ -376,6 +384,10 @@ $(document).ready(function(){
                     ;
                 }
             });
+
+            //guardar pregunta
+            messagesaved = false;
+            $( "#loadeq").trigger( "click" );
         }
 
     });
@@ -405,6 +417,10 @@ $(document).ready(function(){
         $(this).remove();
         $("#title-"+RespuestaActual.id).html(RespuestaActual.nombre);
         respuestas[RespuestaActual.id+""]= RespuestaActual;
+
+        //guardar pregunta
+        messagesaved = false;
+        $( "#loadeq").trigger( "click" );
     });
 
     /*
