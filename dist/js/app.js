@@ -1221,8 +1221,8 @@ function agregarvariableHTML(v, isnew, container){
         stringpre = stringpre.substring(0, 30) + "... ]";
     }
 
-    var htmlVar = "<span class='panel-title'>" +
-        "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo +"' data-metadatos='"+metadatos+"'> <span data-toggle='tooltip' data-placement='top' title data-original-title='"+tipo+"' class='var'>" + v.name + "</span></div>"+
+    var htmlVar = "<span  data-toggle='tooltip' data-placement='top'  data-original-title='"+tipo+"' class='panel-title'>" +
+        "<div class='card view-variable' data-id='var' data-content='" + v.name + "'  data-type='"+tipo +"' data-metadatos='"+metadatos+"'> <span class='var'>" + v.name + "</span></div>"+
         "</span>" +
         "<div>"+stringpre+"</div>"+
         "<div class='pull-right hide-tools'>"+
@@ -1250,12 +1250,14 @@ function agregarvariableHTML(v, isnew, container){
         $("#listVars").append(htmlVar);
     }
 
+    $("body").tooltip({ selector: '[data-toggle="tooltip"]' });
+
     $('.view-variable').draggable({
         appendTo: "body",
         cursor: "move",
         helper: "clone",
         revert: "invalid"
-    })
+    });
 
     if(!isnew) {
         for(var index in conjuntoVariables){
@@ -1265,8 +1267,9 @@ function agregarvariableHTML(v, isnew, container){
                 break;
             }
         }
-    }else
+    } else {
         conjuntoVariables.splice(conjuntoVariables.length, 0, v);
+    }
 
 }
 function saveVarUniform(name,max,min,inc,isnew){
